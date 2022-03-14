@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import musicstonelogo from "../img/musicstonelogo.png";
 
-function Nav() {
+function Nav({ connectWallet }) {
   return (
     <div id="nav">
+      <img id="logo" src={musicstonelogo}></img>
       <span id="title">
         <Link to="/" style={{ textDecoration: "none" }}>
           Music Stone
@@ -24,7 +26,11 @@ function Nav() {
         </Link>
       </span>
       <span id="my">
-        <Link to="/mypage" style={{ textDecoration: "none" }}>
+        <Link
+          to="/mypage"
+          style={{ textDecoration: "none" }}
+          onClick={() => connectWallet()}
+        >
           MY
         </Link>
       </span>
