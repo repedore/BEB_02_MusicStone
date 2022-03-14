@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import musicstonelogo from "../img/musicstonelogo.png";
+// import { BsPersonCircle } from "react-icons/bs";
 
 function Nav({ connectWallet }) {
   return (
@@ -34,6 +35,7 @@ function Nav({ connectWallet }) {
           MY
         </Link>
       </span>
+      {/* <BsPersonCircle id="icon" size="22" onClick={() => connectWallet()} /> */}
     </div>
   );
 }
