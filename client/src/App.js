@@ -9,10 +9,24 @@ import Nav from "./components/Nav";
 import "./App.css";
 
 function App() {
+  const kaikasLogin = async () => {
+    try {
+      const wallet = await window.klaytn.enable();
+      alert(wallet);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+  const connectWallet = () => {
+    if (typeof window.klaytn !== "undefined") {
+      const provider = window["klaytn"];
+      kaikasLogin();
+    }
+  };
   return (
     <div>
       <Router>
-        <Nav />
+        <Nav connectWallet={connectWallet} />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/musician" element={<Musician />} />

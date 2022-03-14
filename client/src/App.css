@@ -17,7 +17,12 @@
   text-decoration: none;
   padding: 2rem;
 }
-
+#logo {
+  width: 30px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  position: relative;
+}
 .App {
   text-align: center;
 }
