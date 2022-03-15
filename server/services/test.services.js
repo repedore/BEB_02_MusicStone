@@ -11,6 +11,7 @@ var saveTestData = async () => {
       newTestModel.email = "test@test.com";
       newTestModel.name = "test";
       newTestModel.age = 26;
+      newTestModel.intarr = [1, 2, 3];
       return newTestModel.save();
     }
   } catch (e) {
