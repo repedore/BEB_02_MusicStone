@@ -1,14 +1,14 @@
 import musicstonelogo from "../img/musicstonelogo.png";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Mypage() {
-  const edit = () => {};
+  // const edit = () => {};
   const state = useSelector((state) => state.accountReducer);
   return (
     <div>
       <div id="mypage">
-        <img className="profileimg" src={musicstonelogo}></img>
+        <img className="profileimg" src={musicstonelogo} alt="profile"></img>
         <div className="mypageaccount">{state.account}</div>
         {/* <div>
           <button id="editbtn" onClick={edit}>

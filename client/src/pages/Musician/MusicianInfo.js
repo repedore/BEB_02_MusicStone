@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import AlbumCard from '../../components/AlbumCard';
+import AlbumCard from "../../components/AlbumCard";
+import { BsPersonCircle } from "react-icons/bs";
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
@@ -23,7 +24,7 @@ function MusicianInfo() {
     slidesToShow: 4,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: '0px',
+    centerPadding: "0px",
   };
 
   const handleSNS = (sns) => {
@@ -57,8 +58,8 @@ function MusicianInfo() {
       <a href={sns[key]}>
         <img src={snsSrc} alt={key} width="30" height="30" />
       </a>
-    )
-  }
+    );
+  };
 
   return (
     <Body>
@@ -69,9 +70,10 @@ function MusicianInfo() {
         <InfoWrapper>
           <Name>{MusicianData.name}</Name>
           <SNS>
-            {MusicianData.snsList
+            <BsPersonCircle color="white" size="25" />
+            {/* {MusicianData.snsList
               ? MusicianData.snsList.map((sns) => handleSNS(sns))
-              : null}
+              : null} */}
           </SNS>
           <DESC>{MusicianData.desc}</DESC>
         </InfoWrapper>
@@ -80,9 +82,8 @@ function MusicianInfo() {
         <StyledSlider {...settings}>
           {/* 나중에 데이터 어차피 받아올꺼라 지금은 그냥 다 아이유 앨범으로 해놓음 */}
           {AlbumData.map((album) => {
-            return <AlbumCard album={album} />
+            return <AlbumCard album={album} />;
           })}
-
         </StyledSlider>
       </AlbumContainer>
     </Body>
@@ -95,67 +96,64 @@ const Body = styled.div`
   color: #ffffff;
   height: 100vh;
   font-family: Impact, Charcoal, sans-serif;
-  `;
+`;
 
 const InfoContainer = styled.article`
-  width : 1100px;
-  height : 400px;
+  width: 1100px;
+  height: 400px;
   display: flex;
   align-items: center;
   margin: 0 auto;
   border-bottom: 2px solid #303030;
-  `;
+`;
 const AlbumContainer = styled.section`
-  width : 1100px;
+  width: 1100px;
   margin: 0 auto;
-
-  `;
+`;
 
 const ImgWrapper = styled.div`
   width: 300px;
-  height: 300px; 
+  height: 300px;
   margin: 50px;
   border-radius: 10%;
   overflow: hidden;
-  `;
+`;
 const InfoWrapper = styled.div`
-  width : 750px;
+  width: 750px;
   height: 350px;
-  margin: 25px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  `;
+`;
 
 const Name = styled.h1`
   font-size: 2.5rem;
   margin: 0 auto;
-  `;
+`;
 const SNS = styled.div`
-  height : 30px;
-  margin : 10px 0;
+  height: 30px;
+  margin: 10px 0;
   a {
-    margin : 5px;
+    margin: 5px;
   }
-  `;
-const DESC = styled.div`
-  `;
+`;
+const DESC = styled.div``;
 
 const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  `;
+`;
 
 const StyledSlider = styled(Slider)`
-.slick-dots {
-  bottom : -40px;
-  margin-top: 200px;
-  li{
-    button::before{
-      color: white;
+  .slick-dots {
+    bottom: -40px;
+    margin-top: 200px;
+    li {
+      button::before {
+        color: white;
+      }
     }
   }
-}
-
-  `;
+`;

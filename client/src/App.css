@@ -64,6 +64,15 @@ body {
 #register {
   color: white;
 }
+#registerpage {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#fileinput {
+  text-align: center;
+  margin: 1rem;
+}
 .musicianinfoinput {
   text-align: center;
   width: 20rem;
@@ -75,11 +84,6 @@ body {
   width: 20rem;
   padding: 0.5rem 3rem;
   margin: 1rem;
-}
-#registerpage {
-  text-align: center;
-  margin-top: 5rem;
-  color: white;
 }
 .registertext {
   text-align: center;

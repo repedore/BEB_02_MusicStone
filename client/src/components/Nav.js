@@ -5,7 +5,7 @@ import musicstonelogo from "../img/musicstonelogo.png";
 function Nav({ connectWallet }) {
   return (
     <div id="nav">
-      <img id="logo" src={musicstonelogo}></img>
+      <img id="logo" src={musicstonelogo} alt="logo"></img>
       <span id="title">
         <Link to="/" style={{ textDecoration: "none" }}>
           Music Stone
