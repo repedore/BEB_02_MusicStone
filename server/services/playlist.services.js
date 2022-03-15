@@ -1,1 +1,1 @@
-var PlaylistModel = require("../models/playlist.model");
+var { PlaylistModel } = require("../models/index");

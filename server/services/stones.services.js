@@ -1,1 +1,1 @@
-var StonesModel = require("../models/stones.model");
+var { StoneModel } = require("../models/index");

@@ -1,1 +1,1 @@
-var UserModel = require("../models/user.model");
+var { UserModel } = require("../models/index");
