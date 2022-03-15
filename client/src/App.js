@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Musician from "./pages/Musician";
+import MusicianInfo from "./pages/Musician/MusicianInfo";
 import Stones from "./pages/Stones";
 import Mypage from "./pages/Mypage";
 import Playlist from "./pages/Playlist";
@@ -40,7 +41,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/musician" element={<Musician />} />
+          <Route path="/musician/:id" element={<MusicianInfo />} />
+          {/*앨범은 아직 작업중 */}
           <Route path="/musician/register" element={<RegisterMusician />} />
+          <Route path="/album/:id" element={<MusicianInfo />} />
           <Route path="/stones" element={<Stones />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/playlist" element={<Playlist />} />
