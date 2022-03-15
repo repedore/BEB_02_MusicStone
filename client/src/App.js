@@ -8,13 +8,17 @@ import Playlist from "./pages/Playlist";
 import RegisterMusician from "./pages/RegisterMusician";
 import Nav from "./components/Nav";
 import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
   const [account, setAccount] = useState("");
+  const state = useSelector((state) => state.accountReducer);
   const kaikasLogin = async () => {
     try {
       const wallet = await window.klaytn.enable();
       setAccount(wallet);
+      dispatch({ type: "ON_CONNECT", account: wallet });
       alert(wallet);
     } catch (ex) {
       console.log(ex);
@@ -23,7 +27,10 @@ function App() {
   const connectWallet = () => {
     if (typeof window.klaytn !== "undefined") {
       const provider = window["klaytn"];
+      console.log("connectwallet 실행");
       kaikasLogin();
+    } else {
+      console.log("connectwallet else");
     }
   };
   return (
@@ -33,10 +40,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/musician" element={<Musician />} />
+          <Route path="/musician/register" element={<RegisterMusician />} />
           <Route path="/stones" element={<Stones />} />
-          <Route path="/mypage" element={<Mypage account={account} />} />
+          <Route path="/mypage" element={<Mypage />} />
           <Route path="/playlist" element={<Playlist />} />
-          <Route path="/registermusician" element={<RegisterMusician />} />
         </Routes>
       </Router>
     </div>

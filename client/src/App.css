@@ -64,15 +64,25 @@ body {
 #register {
   color: white;
 }
-#musicianinput {
+.musicianinfoinput {
   text-align: center;
   width: 20rem;
-  color: white;
+  padding: 3rem;
+  margin: 1rem;
+}
+.musicianinput {
+  text-align: center;
+  width: 20rem;
+  padding: 0.5rem 3rem;
+  margin: 1rem;
 }
 #registerpage {
   text-align: center;
   margin-top: 5rem;
   color: white;
+}
+.registertext {
+  text-align: center;
 }
 .profileimg {
   width: 10rem;
