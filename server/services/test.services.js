@@ -1,4 +1,4 @@
-var { TestModel } = require("../models/test.model");
+var { TestModel } = require("../models/index");
 
 var saveTestData = async () => {
   try {
