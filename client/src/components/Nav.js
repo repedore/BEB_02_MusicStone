@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import musicstonelogo from "../img/musicstonelogo.png";
 // import { BsPersonCircle } from "react-icons/bs";
+import React from "react";
 
 function Nav({ connectWallet }) {
   return (

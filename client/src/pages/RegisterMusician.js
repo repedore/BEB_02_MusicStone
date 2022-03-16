@@ -1,10 +1,9 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 function RegisterMusician() {
   const [email, setEmail] = useState("");
-  //   const [musician, setMusician] = useState("");
   const [musicianInfo, setMusicianInfo] = useState("");
   const [KName, setKName] = useState("");
   const [EName, setEName] = useState("");
@@ -14,9 +13,6 @@ function RegisterMusician() {
   const onChangeMusicianInfo = (e) => {
     setMusicianInfo(e.target.value);
   };
-  //   const onChangeMusician = (e) => {
-  //     setMusician(e.target.value);
-  //   };
   const onChangeKName = (e) => {
     setKName(e.target.value);
   };
@@ -27,13 +23,13 @@ function RegisterMusician() {
     setEmail(e.target.value);
   };
   const onChangeImg = (e) => {
-    setImg(e.target.files[0]);
+    setImg(URL.createObjectURL(e.target.files[0]));
   };
   const account = state.account;
   const saveMusician = async () => {
     if ((KName || EName) && email && account && musicianInfo) {
       await axios
-        .post("http://localhost:3000/user/register", {
+        .post("http://localhost:80/musician/register", {
           KName,
           EName,
           account,
@@ -58,7 +54,18 @@ function RegisterMusician() {
   return (
     <div>
       <div id="registerpage">
+        <div className="pagetitle">뮤지션 등록</div>
         <div>
+          <div>
+            {img && (
+              <img
+                className="profileimg"
+                alt="sample"
+                src={img}
+                style={{ margin: "auto" }}
+              />
+            )}
+          </div>
           <input id="fileinput" type="file" onChange={onChangeImg} />
         </div>
         <div>

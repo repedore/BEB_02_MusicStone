@@ -47,6 +47,13 @@ body {
   background-color: white;
   color: black;
 }
+#tokenbtn {
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+}
 #connect {
   color: white;
   padding-left: 1.5rem;
@@ -69,14 +76,46 @@ body {
   margin-top: 5rem;
   color: white;
 }
+#buytokenpage {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#stonespage {
+  text-align: center;
+  color: white;
+  margin-top: 5rem;
+}
+#mainpage {
+  text-align: left;
+  color: white;
+  margin-top: 5rem;
+  margin-left: 5rem;
+}
+#playlistpage {
+  text-align: center;
+  color: white;
+  margin-top: 5rem;
+}
 #fileinput {
   text-align: center;
+  margin: 1rem;
+  margin-left: 6rem;
+}
+#isPlay {
+  margin: 1rem;
+}
+.text {
+  margin: 0.5rem;
+}
+.pagetitle {
+  font-size: 2rem;
   margin: 1rem;
 }
 .musicianinfoinput {
   text-align: center;
   width: 20rem;
-  padding: 3rem;
+  padding: 2rem 3rem;
   margin: 1rem;
 }
 .musicianinput {
@@ -85,6 +124,19 @@ body {
   padding: 0.5rem 3rem;
   margin: 1rem;
 }
+.tokeninput {
+  text-align: center;
+  width: 12rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+}
+.tokenbtn {
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+}
 .registertext {
   text-align: center;
 }
@@ -92,6 +144,16 @@ body {
   width: 10rem;
   margin-top: 5rem;
   margin-bottom: 1.5rem;
+}
+.memberimg {
+  width: 10rem;
+  margin: 2rem;
+  vertical-align: middle;
+}
+.membername {
+  font-weight: bolder;
+  font-size: 2rem;
+  vertical-align: middle;
 }
 .App {
   text-align: center;
