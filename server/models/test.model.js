@@ -9,6 +9,7 @@ const TestSchema = new Schema(
     },
     name: String,
     age: { type: Number, min: 18, max: 50 },
+    intarr: [Number],
   },
   {
     timestamps: true,
