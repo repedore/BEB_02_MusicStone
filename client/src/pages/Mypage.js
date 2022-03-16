@@ -1,13 +1,15 @@
-import musicstonelogo from "../img/musicstonelogoblack.png";
+import musicstonelogo from "../img/musicstonelogo.png";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-function Mypage({ account }) {
-  const edit = () => {};
+function Mypage() {
+  // const edit = () => {};
+  const state = useSelector((state) => state.accountReducer);
   return (
     <div>
       <div id="mypage">
-        <img className="profileimg" src={musicstonelogo}></img>
-        <div id="mypageaccount">{account}</div>
+        <img className="profileimg" src={musicstonelogo} alt="profile"></img>
+        <div className="mypageaccount">{state.account}</div>
         {/* <div>
           <button id="editbtn" onClick={edit}>
             편집
@@ -16,7 +18,7 @@ function Mypage({ account }) {
         <div>
           <Link
             id="register"
-            to="/registermusician"
+            to="/musician/register"
             style={{ textDecoration: "none" }}
           >
             <button id="editbtn"> 뮤지션 등록 </button>
