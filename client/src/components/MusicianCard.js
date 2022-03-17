@@ -18,7 +18,7 @@ const MusicianCard = ({ musician }) => {
 export default MusicianCard;
 
 const CardContainer = styled.a`
-  margin: 20px;
+  margin: 30px 20px;
   width: 200px;
   height: 250px;
   cursor: pointer;
@@ -28,11 +28,13 @@ const ImgBox = styled.div`
   height: 200px;
   border-radius: 70%;
   overflow: hidden;
+  -webkit-user-drag: none;
 `;
 const MusicianImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  -webkit-user-drag: none;
 `;
 
 const MusicianName = styled.h3`
