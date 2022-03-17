@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AlbumCard from "../../components/AlbumCard";
 import { BsPersonCircle } from "react-icons/bs";
+import React from "react";
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";

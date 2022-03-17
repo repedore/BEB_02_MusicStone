@@ -1,24 +1,31 @@
-import { testAdd } from '../actions'
-import { useSelector, useDispatch } from 'react-redux'
-import { useState } from 'react';
+import React from "react";
+import YJ from "../img/YJ.png";
+import CY from "../img/CY.png";
+import UH from "../img/UH.png";
+import CR from "../img/CR.png";
 
 function Main() {
-  const state = useSelector((state) => state.testReducer);
-  const dispatch = useDispatch();
-  const [count, setCount] = useState(0);
-
-  const handleTestBtn = () => {
-    dispatch(testAdd());
-    setCount(state.count);
-  }
-  return <div>main page
-    <div>
-      <button onClick={() => handleTestBtn()}>
-        테스트 버튼 count 1증가
-      </button>
-      {` ${count}`}
+  return (
+    <div id="mainpage">
+      <div>
+        <div>
+          <img className="memberimg" src={YJ} alt="member" />
+          <span className="membername">YJ</span>
+        </div>
+        <div>
+          <img className="memberimg" src={CY} alt="member" />
+          <span className="membername">CY</span>
+        </div>
+        <div>
+          <img className="memberimg" src={UH} alt="member" />
+          <span className="membername">UH</span>
+        </div>
+        <div>
+          <img className="memberimg" src={CR} alt="member" />
+          <span className="membername">CR</span>
+        </div>
+      </div>
     </div>
-
-  </div>;
+  );
 }
 export default Main;
