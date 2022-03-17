@@ -28,10 +28,10 @@ function Musician() {
 }
 export default Musician;
 
+//여기부터 styled
 const Body = styled.div`
   box-sizing: border-box;
-  color: #ffffff;
-  height: 100vh;
+  height: 100%;
   font-family: Impact, Charcoal, sans-serif;
 `;
 
