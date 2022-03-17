@@ -1,1 +1,1 @@
-var MusicianModel = require("../models/musician.model");
+var { MusicianModel } = require("../models/index");
