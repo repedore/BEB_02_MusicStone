@@ -4,7 +4,7 @@ import CY from "../img/CY.png";
 import UH from "../img/UH.png";
 import CR from "../img/CR.png";
 
-function Main() {
+export function Main() {
   return (
     <div id="mainpage">
       <div>
@@ -28,4 +28,3 @@ function Main() {
     </div>
   );
 }
-export default Main;
