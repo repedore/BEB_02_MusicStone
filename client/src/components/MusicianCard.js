@@ -35,6 +35,13 @@ const MusicianImg = styled.img`
   height: 100%;
   object-fit: cover;
   -webkit-user-drag: none;
+  &:hover{
+transition:all 0.6s ease-in-out;
+-webkit-transition:all 0.6s ease-in-out;
+-moz-transition:all 0.6s ease-in-out;
+-ms-transition:all 0.6s ease-in-out;
+-o-transition:all 0.6s ease-in-out;
+  }
 `;
 
 const MusicianName = styled.h3`

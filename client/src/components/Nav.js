@@ -18,9 +18,13 @@ function Nav({ connectWallet }) {
         </Link>
       </span>
       <span id="stones">
-        <Link to="/stones" style={{ textDecoration: "none" }}>
-          Stones
-        </Link>
+        <div className='nav-dropdown'>
+          <button id="nav-stones-btn">Stones</button>
+          <div class="nav-dropdown-content">
+            <Link to="/stones/myStone" style={{ textDecoration: "none" }}><div>My Stone</div></Link>
+            <Link to="/stones/BuyStone" style={{ textDecoration: "none" }}><div>Buy Stone</div></Link>
+          </div>
+        </div>
       </span>
       <span id="playlist">
         <Link to="/playlist" style={{ textDecoration: "none" }}>

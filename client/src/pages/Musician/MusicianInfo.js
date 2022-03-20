@@ -11,7 +11,7 @@ import AlbumCard from '../../components/AlbumCard';
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
-function MusicianInfo() {
+export function MusicianInfo() {
   const { id } = useParams();
 
   //임시 DummyData
@@ -70,7 +70,6 @@ function MusicianInfo() {
     </Body>
   );
 }
-export default MusicianInfo;
 
 //Slider 설정
 const settings = {

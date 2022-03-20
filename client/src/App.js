@@ -1,14 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
-import Musician from "./pages/Musician";
-import MusicianInfo from "./pages/Musician/MusicianInfo";
-import Album from "./pages/Album"
-import Stones from "./pages/Stones";
-import Mypage from "./pages/Mypage";
-import Playlist from "./pages/Playlist";
-import RegisterMusician from "./pages/RegisterMusician";
-import BuyToken from "./pages/BuyToken";
+import { Main, Album, Mypage, PlayList, RegisterMusician, BuyToken } from './pages'
+import { Musician, MusicianInfo } from "./pages/Musician";
+import { MyStone, BuyStone, TradeStone } from "./pages/Stones";
 import Nav from "./components/Nav";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,12 +41,12 @@ function App() {
           <Route path="/musician/:id" element={<MusicianInfo />} />
           <Route path="/musician/register" element={<RegisterMusician />} />
           <Route path="/album/:id" element={<Album />} />
-          <Route path="/stones" element={<Stones />} />
-          <Route path="/stones/myStone" element={<Stones />} />
-          <Route path="/stones/buyStone" element={<Stones />} />
+          <Route path="/stones/myStone" element={<MyStone />} />
+          <Route path="/stones/buyStone" element={<BuyStone />} />
+          <Route path="/stones/tradeStone/:id" element={<TradeStone />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/mypage/buyToken" element={<BuyToken />} />
-          <Route path="/playlist" element={<Playlist />} />
+          <Route path="/playlist" element={<PlayList />} />
         </Routes>
       </Router>
     </div>

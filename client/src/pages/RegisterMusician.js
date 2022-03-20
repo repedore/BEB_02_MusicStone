@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function RegisterMusician() {
+export function RegisterMusician() {
   const [email, setEmail] = useState("");
   const [musicianInfo, setMusicianInfo] = useState("");
   const [KName, setKName] = useState("");
@@ -114,4 +114,3 @@ function RegisterMusician() {
   );
 }
 
-export default RegisterMusician;
