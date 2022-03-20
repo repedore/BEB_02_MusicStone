@@ -8,7 +8,7 @@ import AlbumStone from '../components/AlbumStone';
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../dummyData/dummyData";
 
-const Album = () => {
+export const Album = () => {
     const { id } = useParams();
     const AlbumData = dummyData.albums[id];
     const [isLike, setIsLike] = useState(false);
@@ -72,7 +72,7 @@ const Album = () => {
                     </StoneTitle>
                     <StoneInfo>
                         <div>작사 : Dummy</div>
-                        <div>작사 : Dummy</div>
+                        <div>작곡 : Dummy</div>
                         <div>장르 : Dummy</div>
                         <div>가사 : 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 </div>
                     </StoneInfo>
@@ -81,9 +81,6 @@ const Album = () => {
         </Body>
     )
 }
-
-export default Album;
-
 
 //여기부터 styled
 const Body = styled.div`

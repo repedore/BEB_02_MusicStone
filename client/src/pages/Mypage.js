@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React from "react";
 
-function Mypage() {
+export function Mypage() {
   // const edit = () => {};
   const state = useSelector((state) => state.accountReducer);
   return (
@@ -37,4 +37,3 @@ function Mypage() {
     </div>
   );
 }
-export default Mypage;

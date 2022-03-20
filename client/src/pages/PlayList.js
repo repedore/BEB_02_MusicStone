@@ -1,5 +1,6 @@
 import React from "react";
-function PlayList() {
+
+export function PlayList() {
   return (
     <div id="playlistpage">
       <div id="isPlay">Stopped</div>
@@ -9,4 +10,3 @@ function PlayList() {
     </div>
   );
 }
-export default PlayList;

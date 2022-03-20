@@ -5,7 +5,7 @@ import UH from "../img/UH.png";
 import CR from "../img/CR.png";
 import musicstonelogo from "../img/musicstonelogo.png";
 
-function Main() {
+export function Main() {
   return (
     <div id="mainpage">
       <div>
@@ -41,4 +41,3 @@ function Main() {
     </div>
   );
 }
-export default Main;
