@@ -12,8 +12,6 @@ function accountReducer(state = initialAccount, action) {
         account: String(action.account),
         isConnect: true,
       };
-      // state.concat(action.account);
-      // state.account = action.account;
       console.log("accountreducer" + newState.account);
       return newState;
     default:

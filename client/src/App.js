@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Main, Album, Mypage, PlayList, RegisterMusician, BuyToken } from './pages'
+import { Main, Album, Mypage, PlayList, RegisterMusician } from "./pages";
+import BuyToken from "./pages/BuyToken";
 import { Musician, MusicianInfo } from "./pages/Musician";
 import { MyStone, BuyStone, TradeStone } from "./pages/Stones";
 import Nav from "./components/Nav";

@@ -29,7 +29,7 @@ export function RegisterMusician() {
   const saveMusician = async () => {
     if ((KName || EName) && email && account && musicianInfo) {
       await axios
-        .post("http://localhost:80/musician/register", {
+        .post("http://localhost:80/user/register", {
           KName,
           EName,
           account,
