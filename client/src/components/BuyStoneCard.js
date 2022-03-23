@@ -8,22 +8,23 @@ import styled from "styled-components";
 const BuyStoneCard = ({ stone }) => {
 
     return (
-        <CardContainer>
-            {console.log(stone)}
-            <Balance>
-                {stone.myBalance ? `보유 : ${stone.myBalance}` : " "}
-            </Balance>
-            <Img src={stone.img} />
-            <Name>{stone.name}</Name>
-            <Musician>{stone.musician_name}</Musician>
-            <TradeBox>
-                <Price>{stone.minPrice} klay</Price>
-                <PriceDif color={stone.priceDif > 0 ? "red" : "#00a1ff"}>
-                    {stone.priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-                    {stone.priceDif} %
-                </PriceDif>
-            </TradeBox>
-        </CardContainer>
+        <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }}>
+            <CardContainer>
+                <Balance>
+                    {stone.myBalance ? `보유 : ${stone.myBalance}` : " "}
+                </Balance>
+                <Img src={stone.img} />
+                <Name>{stone.name}</Name>
+                <Musician>{stone.musician_name}</Musician>
+                <TradeBox>
+                    <Price>{stone.minPrice} klay</Price>
+                    <PriceDif color={stone.priceDif > 0 ? "red" : "#00a1ff"}>
+                        {stone.priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                        {stone.priceDif} %
+                    </PriceDif>
+                </TradeBox>
+            </CardContainer>
+        </Link>
     );
 }
 

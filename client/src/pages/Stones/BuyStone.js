@@ -22,7 +22,6 @@ export function BuyStone() {
                     </SearchWrap>
                 </Nav>
                 <StonesWrapper>
-                    {console.log(dummyData.buyStone)}
                     {showStones()}
                 </StonesWrapper>
             </StoneContainer>
