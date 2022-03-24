@@ -222,3 +222,8 @@ a:hover {
 a:active {
   color: rgb(255, 255, 255);
 }
+@keyframes rotate_image {
+  100% {
+    transform: rotate(360deg);
+  }
+}

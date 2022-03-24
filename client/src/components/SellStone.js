@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react"
-const SellStone = ({ trade, klayPrice }) => {
+const SellStone = ({ trade, klayPrice, handleBuyBtn }) => {
 
     const calPrice = () => (trade.unitPrice * klayPrice).toFixed(0);
     const showUser = () => {
@@ -12,10 +12,9 @@ const SellStone = ({ trade, klayPrice }) => {
             <span>{trade.unitPrice}</span>
             <span>₩ {calPrice()}</span>
             <span>{trade.quantity}</span>
-            <span>{trade.ex_date}</span>
             <span>{showUser()}</span>
             <ButtonBox>
-                <button>구매</button>
+                <button onClick={() => handleBuyBtn(trade)}>구매</button>
             </ButtonBox>
         </Trade>
 
