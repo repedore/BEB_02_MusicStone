@@ -29,7 +29,7 @@ export function RegisterMusician() {
   const saveMusician = async () => {
     if ((KName || EName) && email && account && musicianInfo) {
       await axios
-        .post("http://localhost:80/user/register", {
+        .post("http://localhost:12367/user/register", {
           KName,
           EName,
           account,
@@ -66,7 +66,7 @@ export function RegisterMusician() {
               />
             )}
           </div>
-          <input id="fileinput" type="file" onChange={onChangeImg} />
+          <input className="fileinput" type="file" onChange={onChangeImg} />
         </div>
         <div>
           <div className="registertext">name :</div>
@@ -113,4 +113,3 @@ export function RegisterMusician() {
     </div>
   );
 }
-

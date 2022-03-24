@@ -84,6 +84,11 @@ body {
   margin-top: 5rem;
   color: white;
 }
+#stoneregisterpage {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
 #buytokenpage {
   text-align: center;
   margin-top: 5rem;
@@ -99,11 +104,6 @@ body {
   color: white;
   margin-top: 5rem;
 }
-#fileinput {
-  text-align: center;
-  margin: 1rem;
-  margin-left: 6rem;
-}
 #isPlay {
   margin: 1rem;
 }
@@ -111,8 +111,16 @@ body {
   text-align: left;
   padding: 1rem 17rem;
 }
+.fileinput {
+  text-align: center;
+  margin: 1rem;
+  margin-left: 6rem;
+}
 .text {
   margin: 0.5rem;
+}
+.tokentext {
+  margin: 1rem;
 }
 .pagetitle {
   font-size: 2rem;
@@ -148,7 +156,19 @@ body {
   padding: 2rem 3rem;
   margin: 1rem;
 }
+.stoneinfoinput {
+  text-align: center;
+  width: 20rem;
+  padding: 2rem 3rem;
+  margin: 1rem;
+}
 .musicianinput {
+  text-align: center;
+  width: 20rem;
+  padding: 0.5rem 3rem;
+  margin: 1rem;
+}
+.stonenameinput {
   text-align: center;
   width: 20rem;
   padding: 0.5rem 3rem;

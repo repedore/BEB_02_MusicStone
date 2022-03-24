@@ -32,6 +32,11 @@ export function Mypage() {
             </Link>
           </span>
         </div>
+        <div>
+          <Link to="/stones/register" style={{ textDecoration: "none" }}>
+            <button id="tokenbtn"> 스톤 등록 </button>
+          </Link>
+        </div>
       </div>
       <div></div>
     </div>

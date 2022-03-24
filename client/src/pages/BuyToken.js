@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function BuyToken() {
-  const swapRatio = 1000.0; // 클레이 : 뮤직스톤 토큰 교환비율
+  const swapRatio = 500.0; // 클레이 : 뮤직스톤 토큰 교환비율
   const state = useSelector((state) => state.accountReducer);
   const [klayBalance, setKlayBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
@@ -12,6 +12,15 @@ function BuyToken() {
   const { klay, token } = swapAmount;
   // caver-js 연결
   const caver = new Caver(window.klaytn);
+  var tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
+  var accessKeyId = process.env.REACT_APP_ACCESS_KEY_ID; //KAS 콘솔 - Security - Credential에서 발급받은 accessKeyId 인증아이디
+  var secretAccessKey = process.env.REACT_APP_SECRET_ACCESS_KEY; //KAS 콘솔 - Security - Credential에서 발급받은 secretAccessKey 인증비밀번호
+  var walletAddress = process.env.REACT_APP_WALLETADDRESS;
+  var walletPrivateKey = process.env.REACT_APP_WALLETPRIVATEKEY;
+  const CaverExtKAS = require("caver-js-ext-kas");
+  const caverExt = new CaverExtKAS();
+  const chainId = 1001; // 클레이튼 테스트 네트워크 접속 ID
+  caverExt.initKASAPI(chainId, accessKeyId, secretAccessKey); //KAS console 초기화
 
   const [transferData, setTransferData] = useState({
     from: state.account,
@@ -53,8 +62,8 @@ function BuyToken() {
     if (state.isConnect) {
       console.log("account : " + state.account);
       // caver 함수 중 현재 공개키의 klay양을 리턴하는 함수
-      let bal = await caver.klay.getBalance(state.account);
-      bal = caver.utils.fromPeb(bal, "KLAY");
+      let bal = await caverExt.klay.getBalance(state.account);
+      bal = caverExt.utils.fromPeb(bal, "KLAY");
       setKlayBalance(bal);
       console.log("balance : " + bal);
     } else {
@@ -64,14 +73,6 @@ function BuyToken() {
 
   //뮤직스톤 토큰 잔액 조회
   var GetTokenBalance = async () => {
-    var tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
-    var accessKeyId = process.env.REACT_APP_ACCESS_KEY_ID; //KAS 콘솔 - Security - Credential에서 발급받은 accessKeyId 인증아이디
-    var secretAccessKey = process.env.REACT_APP_SECRET_ACCESS_KEY; //KAS 콘솔 - Security - Credential에서 발급받은 secretAccessKey 인증비밀번호
-    const CaverExtKAS = require("caver-js-ext-kas");
-    const caverExt = new CaverExtKAS();
-    const chainId = 1001; // 클레이튼 테스트 네트워크 접속 ID
-    caverExt.initKASAPI(chainId, accessKeyId, secretAccessKey); //KAS console 초기화
-
     if (state.isConnect) {
       const kip7 = new caverExt.kct.kip7(tokenAddress); //생성된 토큰의 Address 입력
       const receipt = await kip7.balanceOf(state.account); //balanceOf('토큰 조회할 주소')
@@ -92,17 +93,31 @@ function BuyToken() {
       alert("지갑을 연결하거나 교환할 클레이/토큰 수량을 입력해주세요.");
       return;
     }
+    // require("dotenv").config();
+    const keyringContainer = new caverExt.keyringContainer();
+    const keyring =
+      keyringContainer.keyring.createFromPrivateKey(walletPrivateKey);
+    keyringContainer.add(keyring);
+    const kip7 = new caverExt.kct.kip7(tokenAddress); //생성된 토큰의 Address 입력
+    kip7.setWallet(keyringContainer); //kip7 내의 wallet 설정
     const { from, to, gas } = transferData;
     const klayAmount = String(swapAmount.klay);
     const tokenAmount = String(swapAmount.token);
+    let toAddress = from;
+    let amount = tokenAmount;
     console.log(`swapKlay2Token(KLAY:${klayAmount}, TOKEN:${tokenAmount})`);
+    //transfer('토큰 받는 주소', 토큰 양, {from:'트랜젝션을 일으키는 주소'})
+    console.log("toAddress:", toAddress);
+    console.log("swapAmount.token:", tokenAmount);
     caver.klay
       .sendTransaction({
         type: "VALUE_TRANSFER",
+        // type: "FEE_DELEGATED_VALUE_TRANSFER_WITH_RATIO",
         from,
         to,
         value: caver.utils.toPeb(klayAmount, "KLAY"),
         gas,
+        // feeRatio: 50,
       })
       .once("transactionHash", (transactionHash) => {
         console.log("txHash", transactionHash);
@@ -112,24 +127,15 @@ function BuyToken() {
         }));
       })
       .once("receipt", async (receipt) => {
+        await kip7.transfer(toAddress, caverExt.utils.toPeb(amount, "KLAY"), {
+          from: keyring.address,
+        });
         console.log("receipt", receipt);
         setTransferData((prevData) => ({
           ...prevData,
           receipt: JSON.stringify(receipt),
         }));
         //서버에 클레이 수량을 전달하고, 뮤직스톤 토큰을 사용자에게 전송.
-
-        console.log("toAddress:", from);
-        console.log("swapAmount.token:", tokenAmount);
-        await axios
-          .post("http://localhost:80/user/buytoken", {
-            toAccount: from,
-            amount: tokenAmount,
-          })
-          .then((res) => {
-            console.log(res.data);
-            alert(res.data.message);
-          });
       })
       .once("error", (error) => {
         console.log("error", error.message);
@@ -138,6 +144,18 @@ function BuyToken() {
           error: error.message,
         }));
       });
+
+    // console.log(`[Token Transaction]\n` + receipt);
+
+    // const receipt2 = await kip7.balanceOf(keyring.address);
+    // console.log(
+    //   "SERVER BALANCE OF TOKEN: " + caver.utils.fromPeb(receipt2, "KLAY")
+    // );
+
+    // const receipt3 = await kip7.balanceOf(toAddress);
+    // console.log(
+    //   "user : BALANCE OF TOKEN" + caver.utils.fromPeb(receipt3, "KLAY")
+    // );
   };
 
   //지갑 잔액 확인
@@ -154,18 +172,21 @@ function BuyToken() {
   return (
     <div id="buytokenpage">
       <div className="pagetitle">토큰 구매</div>
-      <div>
-        <span className="text">지갑 : {state.account}</span>
-      </div>
-      <div>
+      <div className="tokentext">
         <span className="text">
-          *** 구매할 지갑주소가 맞는지 반드시 확인하세요. ***{" "}
+          아래 지갑 주소가 구매할 지갑주소인지 반드시 확인하세요.
         </span>
       </div>
       <div>
-        <button onClick={GetBalance}>지갑 잔액 확인</button>
+        <span className="text">지갑 주소 : {state.account}</span>
       </div>
-      <div>
+
+      <div className="tokentext">
+        <span>
+          <button onClick={GetBalance}>지갑 잔액 확인</button>
+        </span>
+      </div>
+      <div className="tokentext">
         <span className="text">클레이 잔액 : {klayBalance} klays</span>
         <span className="text">뮤직스톤 토큰 잔액 : {tokenBalance} tokens</span>
       </div>
