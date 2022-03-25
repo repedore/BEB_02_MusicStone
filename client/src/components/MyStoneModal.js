@@ -1,32 +1,37 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components";
 
 
-const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen }, ref) => {
+const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen }) => {
     const [quantity, setQuantity] = useState(0);
+    const [price, setPrice] = useState(0);
     const handleClose = () => {
+        setQuantity(0);
+        setPrice(0);
         setModalOpen(false);
     }
-    const handleInput = (e) => {
-
-        if (Number(e.target.value) > modalTrade.quantity) {
-            alert(`현재 남은 판매수량은 ${modalTrade.quantity}개 입니다.`);
-        } else {
-            setQuantity(e.target.value)
+    const handleQuantityInput = (e) => {
+        switch (e.target.id) {
+            case "price":
+                setPrice(e.target.value);
+                break;
+            case "quantity":
+                if (Number(e.target.value) > modalStone.balance) {
+                    alert(`현재 보유한 수량은 ${modalStone.balance}개 입니다.`);
+                } else {
+                    setQuantity(e.target.value)
+                }
+                break;
+            default:
+                break;
         }
     }
-    const handleBuy = () => {
-        console.log('구매!')
+    const handleSell = () => {
+        console.log('판매!')
     }
-
-    useImperativeHandle(ref, () => ({
-        resetQuantity: () => {
-            setQuantity(0);
-        }
-    }));
-
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
+            {console.log(modalStone)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>
@@ -37,34 +42,36 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
                     <Nav>
                         <Item>음원</Item>
                         <PriceQuantity>수량</PriceQuantity>
-                        <PriceQuantity>가격</PriceQuantity>
+                        <PriceQuantity>가격(KLAY)</PriceQuantity>
                     </Nav>
                     <Cart>
                         <Receipt>
-                            <Item>{stoneData.name} - {stoneData.musician_name}</Item>
+                            <Item>{modalStone.name} - {modalStone.musician_name}</Item>
                             <InputWrapper>
-                                <ReceiptInput type="number" min="0" value={quantity} onChange={(e) => handleInput(e)} />
+                                <QuantityInput id="quantity" type="number" min="0" value={quantity} onChange={(e) => handleQuantityInput(e)} />
                             </InputWrapper>
-                            <PriceQuantity>{modalTrade.unitPrice} KLAY</PriceQuantity>
+                            <InputWrapper>
+                                <PriceInput id="price" type="number" min="0" value={price} onChange={(e) => handleQuantityInput(e)} />
+                            </InputWrapper>
                         </Receipt>
                         <Total>
                             <div><h3>Total</h3></div>
                             <TotalPrice>
-                                <div>{(modalTrade.unitPrice * quantity).toFixed(3)} KLAY</div>
-                                <div>{(klayPrice * modalTrade.unitPrice * quantity).toFixed(0)} 원</div>
+                                <div>{(price * quantity).toFixed(3)} KLAY</div>
+                                <div>{(klayPrice * price * quantity).toFixed(0)} 원</div>
                             </TotalPrice>
                         </Total>
                     </Cart>
                     <BtnBox>
-                        <BuyBtn onClick={() => handleBuy()}>구매</BuyBtn>
+                        <BuyBtn onClick={() => handleSell()}>판매 등록</BuyBtn>
                     </BtnBox>
                 </Content>
             </ModalWindow>
         </ModalOverlay >
     )
-});
+}
 
-export default TradeStoneModal;
+export default MyStoneModal;
 
 const ModalOverlay = styled.div`
 width: 100%;
@@ -157,12 +164,22 @@ margin: 0 5px;
 display:flex;
 align-items: center;
 `;
-const ReceiptInput = styled.input`
+const QuantityInput = styled.input`
 width: 80%;
 height: 25px;
 margin: 0 10px;
 padding: 0 5px;
 text-align:right;
+`;
+const PriceInput = styled(QuantityInput)`
+-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;  
+}
+-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 `;
 const Total = styled.div`
 display:flex;

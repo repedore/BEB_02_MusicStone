@@ -3,19 +3,22 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 
-const MyStoneCard = ({ stone }) => {
+const MyStoneCard = ({ stone, handleSellBtn }) => {
 
     return (
         <CardContainer>
-            <Img src={stone.img} />
-            <Name>{stone.name}</Name>
-            <Musician>{stone.musician_name}</Musician>
+            <Balance>보유 : {stone.balance}</Balance>
+
+            <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }} cursor="pointer">
+                <Img src={stone.img} />
+                <Name>{stone.name}</Name>
+                <Musician>{stone.musician_name}</Musician>
+            </Link>
             <TradeBox>
-                <Balance>보유 : {stone.balance}</Balance>
-                <Price>{stone.price} klay</Price>
-                <TradeBtn>거래</TradeBtn>
+                <TradeBtn onClick={() => handleSellBtn(stone)}>판매</TradeBtn>
             </TradeBox>
         </CardContainer>
+
     );
 }
 
@@ -25,7 +28,6 @@ const CardContainer = styled.div`
     margin: 20px;
     width: 200px;
     height: 300px;
-    cursor: pointer;
     font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     `;
 const Img = styled.img`
@@ -57,13 +59,13 @@ text-align: center;
 const TradeBox = styled.div`
 height: 50px;
 display:flex;
+flex-direction: column;
 `;
 const Balance = styled.span`
-margin: 10px auto;
-`;
-const Price = styled.span`
-margin: 10px auto;
+font-size: 0.7rem;
 `;
 const TradeBtn = styled.button`
-margin: 10px auto;
+width: 100px;
+margin: 0 auto;
+cursor: pointer;
 `;

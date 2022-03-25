@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import TradeStoneModal from '../../components/TradeStoneModal';
 import dummyData from "../../dummyData/dummyData";
 
 export function TradeStone() {
+    const modalRef = useRef();
     const { id } = useParams();
     const [klayPrice, setKlayPrice] = useState(0);
     const [isPlay, setIsPlay] = useState(false);
@@ -41,6 +42,7 @@ export function TradeStone() {
             </PriceDif>)
     }
     const handleBuyBtn = (trade) => {
+        modalRef.current.resetQuantity();
         setModalTrade(trade);
         setModalOpen(true);
     }
@@ -92,7 +94,7 @@ export function TradeStone() {
                     {showRules()}
                 </NotifyWrapper>
             </TradeContainer>
-            <TradeStoneModal klayPrice={klayPrice} stoneData={StoneData} modalOpen={modalOpen} modalTrade={modalTrade} setModalOpen={setModalOpen} />
+            <TradeStoneModal ref={modalRef} klayPrice={klayPrice} stoneData={StoneData} modalOpen={modalOpen} modalTrade={modalTrade} setModalOpen={setModalOpen} />
         </Body>
     );
 }
