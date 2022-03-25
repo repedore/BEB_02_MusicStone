@@ -8,7 +8,7 @@ const UserSchema = new Schema({
   musician_id: { type: Number, default: 0 },
   name: String,
   account: String,
-  register_date: { type: String, default: Date.now },
+  register_date: { type: Date, default: Date.now },
   playlist_id_array: { type: [Number], defualut: [] },
 });
 UserSchema.plugin(autoIncrement.plugin, {

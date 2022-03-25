@@ -12,6 +12,8 @@ const AlbumSchema = new Schema({
   name: String,
   image: String,
   like: { type: [Number], default: [] },
+  release_date: { type: Date, default: Date.now },
+  titleStoneId: Number,
 });
 AlbumSchema.plugin(autoIncrement.plugin, {
   model: "Album",

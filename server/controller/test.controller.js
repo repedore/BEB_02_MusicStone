@@ -1,11 +1,15 @@
 require("dotenv").config();
 
-var TestService = require("../services/test.services");
+const TestService = require("../services/test.services");
 
 exports.test = async (req, res, next) => {
   try {
-    // var data = await TestService.getTestData({ name: "test" });
-    var data = await TestService.getAllDataInTestTable();
+    // testDataSave
+    // const data = await TestService.setAllTestData();
+    const data = await TestService.addTestData();
+    // const data = await TestService.getTestData({ name: "test" });
+    // const data = await TestService.getAllDataInTestTable();
+
     // await TestService.makeTestData({
     //   email: "test1@test.com",
     //   name: "test1",

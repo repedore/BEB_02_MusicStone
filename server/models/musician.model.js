@@ -11,11 +11,11 @@ const MusicianSchema = new Schema({
   name_korea: String,
   name_english: String,
   email: String,
-  register_data: String,
+  register_data: { type: Date, default: Date.now },
   image: { type: String, default: "None" },
   description: { type: String, default: "None" },
-  contract_accress: { type: String, default: "None" },
   like: { type: [Number], default: [] },
+  snsList: { type: [Object], default: [] },
 });
 MusicianSchema.plugin(autoIncrement.plugin, {
   model: "Musician",
