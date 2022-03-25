@@ -18,7 +18,7 @@ const BuyStoneCard = ({ stone }) => {
                 <Musician>{stone.musician_name}</Musician>
                 <TradeBox>
                     <Price>{stone.minPrice} klay</Price>
-                    <PriceDif color={stone.priceDif > 0 ? "red" : "#00a1ff"}>
+                    <PriceDif color={stone.priceDif > 0 ? "#e81a46" : "#00a1ff"}>
                         {stone.priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                         {stone.priceDif} %
                     </PriceDif>
@@ -40,6 +40,7 @@ const CardContainer = styled.div`
 const Img = styled.img`
 width: 200px;
 height: 200px;
+-webkit-user-drag: none;
 transition:all .2s ease-in-out;
 -webkit-transition:all .2s ease-in-out;
 -moz-transition:all .2s ease-in-out;

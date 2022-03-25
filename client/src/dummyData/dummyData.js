@@ -568,7 +568,7 @@ const dummyData = {
         {
             "id": 13,
             "musician_name": "아이유(IU)",
-            "img": "../img/Album/0.jpg",
+            "img": "../../img/Album/0.jpg",
             "name": "있잖아(Rock ver.)",
             "url": "http://localhost:3000/test/13.mp4",
             "lyricist": "최갑원",
@@ -580,25 +580,21 @@ const dummyData = {
             "sellList": [{
                 "unitPrice": 8.13,
                 "quantity": 10,
-                "ex_date": "2달",
                 "seller": "0x21cBcace38eE023C871F07b4e05c0f2995c17DDa",
             },
             {
                 "unitPrice": 8.16,
                 "quantity": 23,
-                "ex_date": "3일",
                 "seller": "0x21cBcace38eE023C871F07b4e05c0f2995c17DDa",
             },
             {
                 "unitPrice": 8.28,
                 "quantity": 5,
-                "ex_date": "2주",
                 "seller": "0x21cBcace38eE023C871F07b4e05c0f2995c17DDa",
             },
             {
                 "unitPrice": 8.5,
                 "quantity": 24,
-                "ex_date": "3주",
                 "seller": "0xa81eabe6efe58174450096048352e7210Bdb190f",
             },
             ]
