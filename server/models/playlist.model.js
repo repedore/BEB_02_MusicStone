@@ -6,7 +6,7 @@ autoIncrement.initialize(mongoose.connection);
 const PlaylistSchema = new Schema({
   id: { type: Number, required: true },
   user_id: { type: Number, required: true },
-  stone_id_arr: [Number],
+  stone_id_arr: { type: [Number], default: [] },
 });
 PlaylistSchema.plugin(autoIncrement.plugin, {
   model: "Playlist",

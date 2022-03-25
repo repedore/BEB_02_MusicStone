@@ -11,6 +11,10 @@ const StoneSchema = new Schema({
   description: String,
   category: String,
   like: { type: [Number], default: [] },
+  lyricist: String,
+  composer: String,
+  lyrics: String,
+  release_date: { type: Date, default: Date.now },
 });
 StoneSchema.plugin(autoIncrement.plugin, {
   model: "Stone",
