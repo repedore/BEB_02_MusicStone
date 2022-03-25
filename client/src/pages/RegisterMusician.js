@@ -3,16 +3,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 export function RegisterMusician() {
-  const [email, setEmail] = useState("");
-  const [musicianInfo, setMusicianInfo] = useState("");
   const [KName, setKName] = useState("");
   const [EName, setEName] = useState("");
-  const [img, setImg] = useState(null);
   const state = useSelector((state) => state.accountReducer);
+  const account = state.account;
+  const [email, setEmail] = useState("");
+  const [img, setImg] = useState(null);
+  const [imgsrc, setImgsrc] = useState(null);
+  const [description, setDescription] = useState("");
 
-  const onChangeMusicianInfo = (e) => {
-    setMusicianInfo(e.target.value);
-  };
   const onChangeKName = (e) => {
     setKName(e.target.value);
   };
@@ -23,32 +22,53 @@ export function RegisterMusician() {
     setEmail(e.target.value);
   };
   const onChangeImg = (e) => {
-    setImg(URL.createObjectURL(e.target.files[0]));
+    setImg(e.target.files[0]);
+    setImgsrc(URL.createObjectURL(e.target.files[0]));
   };
-  const account = state.account;
+
+  const onChangeDescription = (e) => {
+    setDescription(e.target.value);
+  };
   const saveMusician = async () => {
-    if ((KName || EName) && email && account && musicianInfo) {
+    if ((KName || EName) && account && email && img && description) {
+      const formData = new FormData();
+      formData.append("KName", KName);
+      formData.append("EName", EName);
+      formData.append("account", account);
+      formData.append("email", email);
+      formData.append("img", img);
+      formData.append("description", description);
       await axios
-        .post("http://localhost:12367/user/register", {
-          KName,
-          EName,
-          account,
-          email,
-          img,
-          musicianInfo,
-        })
+        .post(
+          "http://localhost:12367/user/register",
+          {
+            KName,
+            EName,
+            account,
+            email,
+            img,
+            description,
+          },
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           console.log(res.data);
           alert(res.data.message);
         });
+    } else if (!KName && !EName) {
+      alert("이름을 입력해주세요.");
     } else if (!account) {
       alert("지갑을 연결해주세요.");
     } else if (!email) {
       alert("이메일을 입력해주세요.");
-    } else if (!KName && !EName) {
-      alert("이름을 입력해주세요.");
-    } else if (!musicianInfo) {
+    } else if (!description) {
       alert("소개글을 입력해주세요.");
+    } else if (!img) {
+      alert("뮤지션의 사진 선택해주세요.");
     }
   };
   return (
@@ -61,12 +81,17 @@ export function RegisterMusician() {
               <img
                 className="profileimg"
                 alt="sample"
-                src={img}
+                src={imgsrc}
                 style={{ margin: "auto" }}
               />
             )}
           </div>
-          <input className="fileinput" type="file" onChange={onChangeImg} />
+          <input
+            className="fileinput"
+            type="file"
+            onChange={(e) => onChangeImg(e)}
+            name="musicianfile"
+          />
         </div>
         <div>
           <div className="registertext">name :</div>
@@ -96,12 +121,11 @@ export function RegisterMusician() {
         </div>
         <div>
           <div className="registertext">info:</div>
-
           <textarea
             className="musicianinfoinput"
             type="text"
             placeholder="뮤지션의 소개글을 입력해주세요."
-            onChange={onChangeMusicianInfo}
+            onChange={onChangeDescription}
           ></textarea>
           <div>
             <button id="editbtn" onClick={saveMusician}>

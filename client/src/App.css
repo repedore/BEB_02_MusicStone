@@ -3,8 +3,12 @@ body {
   color: white;
 }
 #title {
-  margin-right: 50rem;
+  /* margin-right: 46rem; */
   color: white;
+}
+#navmenu {
+  margin-left: 50rem;
+  text-align: center;
 }
 #musician {
   margin: 2rem;
@@ -24,13 +28,6 @@ body {
   text-decoration: none;
   padding: 2rem;
   border-bottom: 1px solid #333333;
-}
-#logo {
-  width: 30px;
-  margin-right: 0.5rem;
-  vertical-align: middle;
-  position: relative;
-  color: white;
 }
 #mypage {
   text-align: center;
@@ -64,12 +61,11 @@ body {
 }
 #connect {
   color: white;
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
 }
 #icon {
   color: white;
   vertical-align: middle;
-  padding-left: 1rem;
 }
 #Edit {
   text-align: center;
@@ -111,10 +107,33 @@ body {
   text-align: left;
   padding: 1rem 17rem;
 }
+.selectbox {
+  text-align: center;
+  margin: 0.2rem;
+  font-size: 1rem;
+  padding: 0.3rem 6rem;
+}
+.logo {
+  width: 30px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  position: relative;
+  color: white;
+}
+.categorytext {
+  margin: 1rem;
+}
 .fileinput {
   text-align: center;
   margin: 1rem;
   margin-left: 6rem;
+}
+.lyricsinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 1rem 5rem 15rem 1rem;
+  margin: 1rem;
 }
 .text {
   margin: 0.5rem;
@@ -151,24 +170,28 @@ body {
   background-color: #ddd;
 }
 .musicianinfoinput {
-  text-align: center;
+  font-size: 1rem;
+  text-align: left;
   width: 20rem;
   padding: 2rem 3rem;
   margin: 1rem;
 }
 .stoneinfoinput {
-  text-align: center;
+  font-size: 1rem;
+  text-align: left;
   width: 20rem;
-  padding: 2rem 3rem;
+  padding: 1rem 5rem 4rem 1rem;
   margin: 1rem;
 }
 .musicianinput {
+  font-size: 1rem;
   text-align: center;
   width: 20rem;
   padding: 0.5rem 3rem;
   margin: 1rem;
 }
 .stonenameinput {
+  font-size: 1rem;
   text-align: center;
   width: 20rem;
   padding: 0.5rem 3rem;
@@ -221,9 +244,4 @@ a:hover {
 }
 a:active {
   color: rgb(255, 255, 255);
-}
-@keyframes rotate_image {
-  100% {
-    transform: rotate(360deg);
-  }
 }

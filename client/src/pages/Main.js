@@ -1,8 +1,4 @@
 import React from "react";
-import YJ from "../img/YJ.png";
-import CY from "../img/CY.png";
-import UH from "../img/UH.png";
-import CR from "../img/CR.png";
 import musicstonelogo from "../img/musicstonelogo.png";
 
 export function Main() {
