@@ -31,6 +31,7 @@ const CardContainer = styled.div`
 const Img = styled.img`
 width: 200px;
 height: 200px;
+-webkit-user-drag: none;
 transition:all .2s ease-in-out;
 -webkit-transition:all .2s ease-in-out;
 -moz-transition:all .2s ease-in-out;

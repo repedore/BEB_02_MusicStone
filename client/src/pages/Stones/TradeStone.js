@@ -4,13 +4,19 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 import SellStone from '../../components/SellStone';
+import TradeStoneModal from '../../components/TradeStoneModal';
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
 export function TradeStone() {
     const { id } = useParams();
     const [klayPrice, setKlayPrice] = useState(0);
+    const [isPlay, setIsPlay] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalTrade, setModalTrade] = useState("");
     //dummyData
     const StoneData = dummyData.tradeStone.filter((el) => el.id === parseInt(id))[0];
 
@@ -22,37 +28,39 @@ export function TradeStone() {
 
     const showSellList = () => {
         return (StoneData.sellList.map((trade) => {
-            return <SellStone trade={trade} klayPrice={klayPrice} />
+            return <SellStone trade={trade} klayPrice={klayPrice} handleBuyBtn={handleBuyBtn} />
         }))
     }
     const showPriceDif = () => {
         const priceDif = (StoneData.minPrice - StoneData.prevPrice).toFixed(2)
         const difPercent = (((StoneData.minPrice / StoneData.prevPrice) - 1) * 100).toFixed(2);
         return (
-            <PriceDif color={priceDif > 0 ? "red" : "#00a1ff"} >
+            <PriceDif color={priceDif > 0 ? "#e81a46" : "#00a1ff"} >
                 {priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 {`${priceDif} (${difPercent}%)`}
             </PriceDif>)
+    }
+    const handleBuyBtn = (trade) => {
+        setModalTrade(trade);
+        setModalOpen(true);
+    }
+    const handlePlayBtn = () => {
+        setIsPlay(!isPlay);
     }
     return (
         <Body>
             {console.log(StoneData)}
             <StoneContainer>
                 <StreamingWrapper>
-                    <ImgBox>
-                        <div>
-                            나중에 audio태그 & css 더 공부해서 재생시 여기 이미지 돌아가고
-                        </div>
-                        <div>
-                            재생시 여기 이미지 돌아가고
-                        </div>
-                        <div>
-                            아래 audio컨트롤 커스텀
-                        </div>
-                    </ImgBox>
-                    <Streaming controls controlsList="nodownload">
-                        <source src={StoneData.url} type="video/mp4" />
-                    </Streaming>
+                    <Play>
+                        <ImgBox>
+                            <Img src={StoneData.img} alt={StoneData.name} animation={isPlay ? "rotate_image 10s linear infinite" : ""} />
+                        </ImgBox>
+                        <BtnWrapper>
+                            <StreamingBtn onClick={() => handlePlayBtn()}>{isPlay ? <PauseIcon /> : <PlayArrowIcon />}</StreamingBtn>
+                        </BtnWrapper>
+                    </Play>
+                    <Timer>나중에 시간 카운트 0:43 / 3:10</Timer>
                 </StreamingWrapper>
                 <StoneWrapper>
                     <Title>
@@ -73,7 +81,9 @@ export function TradeStone() {
             </StoneContainer>
             <TradeContainer>
                 <SellListWrapper>
-                    {showNav()}
+                    <SellNav>
+                        <span>가격(Klay)</span><span>가격(원)</span><span>수량</span><span>판매자</span><span>구매</span>
+                    </SellNav>
                     <SellList >
                         {showSellList()}
                     </SellList>
@@ -82,18 +92,9 @@ export function TradeStone() {
                     {showRules()}
                 </NotifyWrapper>
             </TradeContainer>
+            <TradeStoneModal klayPrice={klayPrice} stoneData={StoneData} modalOpen={modalOpen} modalTrade={modalTrade} setModalOpen={setModalOpen} />
         </Body>
     );
-}
-const showNav = () => {
-    return (<SellNav>
-        <span>가격(Klay)</span>
-        <span>가격(원)</span>
-        <span>수량</span>
-        <span>만료일</span>
-        <span>판매자</span>
-        <span>구매</span>
-    </SellNav>)
 }
 const showRules = () => {
     return (
@@ -134,7 +135,6 @@ box-sizing: border-box;
 height: 100%;
 font-family: Impact, Charcoal, sans-serif;
 `;
-
 const StoneContainer = styled.div`
 width : 1100px;
 height : 400px;
@@ -152,19 +152,47 @@ display flex;
 const StreamingWrapper = styled.div`
 width: 100%;
 height: 100%;
-display: flex;
+display:flex;
 flex-direction: column;
 `;
-const ImgBox = styled.div`
-height: 80%;
-text-align: center;
-line-height: 50px;
-`;
-const Streaming = styled.audio`
+const Play = styled.div`
 width: 100%;
-height: 20%;
-margin : 10px auto;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+`
+const ImgBox = styled.div`
+margin: 50px;
+height: 300px;
+width: 300px;
+position:absolute;
+border-radius: 70%;
+overflow: hidden;
 `;
+const Timer = styled.div`
+color: #ABABAB;
+height: 50px;
+text-align: center;
+`;
+const BtnWrapper = styled.div`
+position:absolute;
+`;
+const StreamingBtn = styled.button`
+background-color:#333333;
+width: 60px;
+height: 60px;
+border-radius: 30px 30px 30px 30px;
+cursor: pointer;
+color: white;
+`;
+const Img = styled.img`
+width: 300px;
+height: 300px;
+-webkit-user-drag: none;
+animation: ${({ animation }) => animation};
+transform-origin: 50% 50%;
+`
 const StoneWrapper = styled.div`
 height: 100%;
 width: 100%;
