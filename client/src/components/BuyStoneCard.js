@@ -17,7 +17,7 @@ const BuyStoneCard = ({ stone }) => {
                 <Name>{stone.name}</Name>
                 <Musician>{stone.musician_name}</Musician>
                 <TradeBox>
-                    <Price>{stone.minPrice} klay</Price>
+                    <Price>{stone.minPrice} KLAY</Price>
                     <PriceDif color={stone.priceDif > 0 ? "#e81a46" : "#00a1ff"}>
                         {stone.priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                         {stone.priceDif} %

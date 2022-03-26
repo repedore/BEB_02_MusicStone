@@ -107,6 +107,9 @@ body {
   text-align: left;
   padding: 1rem 17rem;
 }
+#observer {
+  white-space: pre;
+}
 .selectbox {
   text-align: center;
   margin: 0.2rem;
