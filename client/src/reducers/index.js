@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
-import testReducer from "./testReducer";
+import musicianReducer from './musicianReducer';
 import accountReducer from "./accountReducer";
+import buyStoneReducer from './buyStoneReducer';
 
 const rootReducer = combineReducers({
-  testReducer,
+  musicianReducer,
+  buyStoneReducer,
   accountReducer,
 });
 

@@ -1,28 +1,70 @@
 import styled from "styled-components";
 import MusicianCard from "../../components/MusicianCard";
 import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { useSelector, useDispatch } from "react-redux";
+import { loadMusicianList, resetMusicianList } from '../../actions';
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
 export function Musician() {
+  const [loading, setLoading] = useState(true);
+  //불러오는 시작 Idx
+  const [startIdx, setStartIdx] = useState(0);
+
+  const [ref, inView] = useInView();
+
+  const musicianList = useSelector((state) => state.musicianReducer);
+  const dispatch = useDispatch();
+
+  const loadMusicians = () => {
+    setLoading(true);
+    //여기는 dummyData 로딩부분
+    const tempArr = [];
+    for (let i = startIdx;
+      i < (dummyData.musicians.length > startIdx + 20 ? startIdx + 20 : dummyData.musicians.length);
+      i++) {
+      tempArr.push(dummyData.musicians[i]);
+    }
+    dispatch(loadMusicianList(tempArr, startIdx));
+
+    setStartIdx(startIdx + 20);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    //현재 dummyData사용 추후 서버데이터로 변경
+    setStartIdx(musicianList.startIdx);
+    //추후에 서버랑 통신되면 받아온 개수로 변경
+    setLoading(false);
+  }, []);
+  // 로딩중이 아닐 때 사용자가 마지막 요소를 보면 추가 로드
+  useEffect(() => {
+    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+    if (inView && !loading) {
+      loadMusicians();
+    }
+  }, [inView, loading])
+
   return (
     <Body>
       <Nav>
         <h1>Find your Musician</h1>
         <SearchWrap>
           <SearchInput type="text" placeholder="찾는 뮤지션을 검색해 주세요." />
-          <SearchButton>
+          <SearchButton onClick={() => console.log(startIdx)}>
             <SearchIcon />
           </SearchButton>
         </SearchWrap>
       </Nav>
-      <CardsWrap>
-        {dummyData.musicians.map((musician) => {
-          return <MusicianCard key={musician.id} musician={musician} />;
+      <CardsWrap >
+        {musicianList.musicians.map((musician, idx) => {
+          return <MusicianCard key={musician} musician={musician} />;
         })}
       </CardsWrap>
+      <div id="observer" ref={ref}> </div>
     </Body>
   );
 }

@@ -100,6 +100,372 @@ const dummyData = {
             "name": "방탄소년단",
             "img": "../img/Photo/방탄소년단.jpeg"
         },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 6,
+            "name": "방탄소년단",
+            "img": "../img/Photo/방탄소년단.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+        {
+            "id": 11,
+            "name": "태연",
+            "img": "../img/Photo/태연.jpeg"
+        },
+        {
+            "id": 12,
+            "name": "임영웅",
+            "img": "../img/Photo/임영웅.jpeg"
+        },
+
 
     ],
     "albums": [
@@ -562,6 +928,828 @@ const dummyData = {
             "priceDif": 9.32,
             "myBalance": 0,
         },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+        {
+            "id": 24,
+            "musician_name": "아이유(IU)",
+            "img": "../img/Album/2.jpeg",
+            "name": "Modern Times (Modern Times)",
+            "minPrice": 3.5,
+            "priceDif": -1.8,
+            "myBalance": 643,
+        },
+
 
     ],
     "tradeStone": [

@@ -1,12 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 import BuyStoneCard from '../../components/BuyStoneCard';
 import SearchIcon from "@mui/icons-material/Search";
+import { useInView } from "react-intersection-observer";
+import { loadStoneList, resetStoneList } from '../../actions';
+
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
 export function BuyStone() {
+    const [loading, setLoading] = useState(true);
+    //불러오는 시작 Idx
+    const [startIdx, setStartIdx] = useState(0);
+
+    const [ref, inView] = useInView();
+
+    const stoneList = useSelector((state) => state.buyStoneReducer);
+    const dispatch = useDispatch();
+
+    const loadStones = () => {
+        setLoading(true);
+        //여기는 dummyData 로딩부분
+        const tempArr = [];
+        for (let i = startIdx;
+            i < (dummyData.buyStone.length > startIdx + 20 ? startIdx + 20 : dummyData.buyStone.length);
+            i++) {
+            tempArr.push(dummyData.buyStone[i]);
+        }
+        dispatch(loadStoneList(tempArr, startIdx));
+
+        setStartIdx(startIdx + 20);
+        setLoading(false);
+    }
+    const showStones = () => {
+        return (stoneList.stones.map((stone, idx) => {
+            return <BuyStoneCard stone={stone} />
+        }))
+    }
+
+
+    useEffect(() => {
+        //현재 dummyData사용 추후 서버데이터로 변경
+        setStartIdx(stoneList.startIdx);
+        //추후에 서버랑 통신되면 받아온 개수로 변경
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+        if (inView && !loading) {
+            loadStones();
+        }
+    }, [inView, loading])
 
     return (
         <Body>
@@ -16,7 +63,7 @@ export function BuyStone() {
                     <Notify>*가격변동률은 전일의 평균 거래가 기준으로 산출됩니다. </Notify>
                     <SearchWrap>
                         <SearchInput type="text" placeholder="찾는 음원이나 뮤지션을 검색해 주세요." />
-                        <SearchButton>
+                        <SearchButton onClick={() => console.log(stoneList)}>
                             <SearchIcon />
                         </SearchButton>
                     </SearchWrap>
@@ -25,16 +72,10 @@ export function BuyStone() {
                     {showStones()}
                 </StonesWrapper>
             </StoneContainer>
+            <div id="observer" ref={ref}> </div>
         </Body>
     );
 }
-
-const showStones = () => {
-    return (dummyData.buyStone.map((stone, idx) => {
-        return <BuyStoneCard stone={stone} />
-    }))
-}
-
 
 //여기부터 styled
 const Body = styled.div`
