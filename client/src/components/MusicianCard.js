@@ -3,13 +3,27 @@ import styled from "styled-components";
 import React from "react";
 
 const MusicianCard = ({ musician }) => {
+
+  const showName = () => {
+    const kName = musician.name_korea;
+    const eName = musician.name_english;
+
+    if (kName && eName) {
+      return `${kName}(${eName})`;
+    } else if (kName) {
+      return kName;
+    } else {
+      return eName;
+    }
+  }
+
   return (
     <Link to={`/musician/${musician.id}`} style={{ textDecoration: "none" }}>
       <CardContainer>
         <ImgBox>
-          <MusicianImg src={musician.img} alt={musician.name} />
+          <MusicianImg src={musician.image} alt={musician.name} />
         </ImgBox>
-        <MusicianName>{musician.name}</MusicianName>
+        <MusicianName>{showName()}</MusicianName>
       </CardContainer>
     </Link>
   );

@@ -4,14 +4,10 @@ export const LOAD_MUSICIAN_LIST = "LOAD_MUSICIAN_LIST"
 export const RESET_MUSICIAN_LIST = "RESET_STONE_LIST";
 
 // action functions
-export const loadMusicianList = (musicians, startIdx) => {
+export const loadMusicianList = (musicians) => {
     return {
         type: LOAD_MUSICIAN_LIST,
-        payload: {
-            musicians,
-            startIdx
-        }
-
+        payload: musicians
     }
 }
 
