@@ -8,12 +8,10 @@ const initialState = {
 const musicianReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_MUSICIAN_LIST:
-      state.musicians = [...state.musicians, ...action.payload.musicians];
-      state.startIdx = action.payload.startIdx;
+      state.musicians = [...state.musicians, ...action.payload];
       return state;
     case RESET_MUSICIAN_LIST:
       state.musicians = [];
-      state.startIdx = 0;
       return state;
     default:
       return state;

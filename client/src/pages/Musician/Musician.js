@@ -1,60 +1,92 @@
 import styled from "styled-components";
 import MusicianCard from "../../components/MusicianCard";
 import SearchIcon from "@mui/icons-material/Search";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import { loadMusicianList, resetMusicianList } from '../../actions';
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
 export function Musician() {
+  /* state
+  loading: 로딩중 true 로딩완료 false
+  loadAll: 서버가 응답한 결과값이 20개 미만이면 모두 검색된 것이므로 true면 더이상 요청 안보내게 
+  startIdx: 불러오는 Idx의 시작점 20개씩 증가
+  keyword: 서버에 요청할 검색어, search시 현재 검색input창에 있는 값으로 갱신
+  */
   const [loading, setLoading] = useState(true);
-  //불러오는 시작 Idx
-  const [startIdx, setStartIdx] = useState(0);
+  const [loadAll, setLoadAll] = useState(false);
+  const [startIdx, setStartIdx] = useState(1);
+  const [keyword, setKeyword] = useState("");
 
+  //scroll체크
   const [ref, inView] = useInView();
-
   const musicianList = useSelector((state) => state.musicianReducer);
   const dispatch = useDispatch();
+  const keywordInput = useRef();
 
   const loadMusicians = () => {
-    setLoading(true);
-    //여기는 dummyData 로딩부분
-    const tempArr = [];
-    for (let i = startIdx;
-      i < (dummyData.musicians.length > startIdx + 20 ? startIdx + 20 : dummyData.musicians.length);
-      i++) {
-      tempArr.push(dummyData.musicians[i]);
-    }
-    dispatch(loadMusicianList(tempArr, startIdx));
+    const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+    const req = `${server}/musician?startIndex=${startIdx}&endIndex=${startIdx + 20}&keyword=${keyword}`
 
-    setStartIdx(startIdx + 20);
-    setLoading(false);
+    console.log(keyword);
+    console.log(startIdx);
+    console.log(loadAll);
+
+    axios.get(req)
+      .then((res) => {
+        setLoading(true);
+        const musicianData = res.data.data;
+        dispatch(loadMusicianList(musicianData));
+        if (musicianData.length < 20) setLoadAll(true);
+
+        setStartIdx(startIdx + 20);
+        setLoading(false);
+      })
+  }
+
+  const handleInputEnter = (e) => {
+    if (e.key == 'Enter') {
+      search();
+    }
+  }
+  const search = () => {
+    setKeyword(keywordInput.current.value);
   }
 
   useEffect(() => {
-    //현재 dummyData사용 추후 서버데이터로 변경
-    setStartIdx(musicianList.startIdx);
-    //추후에 서버랑 통신되면 받아온 개수로 변경
+    //페이지 로딩시 초기화
+    dispatch(resetMusicianList());
     setLoading(false);
   }, []);
-  // 로딩중이 아닐 때 사용자가 마지막 요소를 보면 추가 로드
+
   useEffect(() => {
-    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
-    if (inView && !loading) {
+    // 보여줄 결과가 남아 있을때 스크롤이 마지막이고 로딩 중이 아니면 load
+    if (inView && !loading && !loadAll && startIdx !== 1) {
       loadMusicians();
     }
-  }, [inView, loading])
+  }, [inView, loading]);
+
+  //검색어 입력시
+  useEffect(() => {
+    setLoadAll(false);
+  }, [keyword]);
+  useEffect(() => {
+    setStartIdx(1);
+    dispatch(resetMusicianList());
+    loadMusicians();
+  }, [loadAll]);
 
   return (
     <Body>
       <Nav>
         <h1>Find your Musician</h1>
         <SearchWrap>
-          <SearchInput type="text" placeholder="찾는 뮤지션을 검색해 주세요." />
-          <SearchButton onClick={() => console.log(startIdx)}>
+          <SearchInput ref={keywordInput} type="text" placeholder="찾는 뮤지션을 검색해 주세요." onKeyPress={handleInputEnter} />
+          <SearchButton onClick={search}>
             <SearchIcon />
           </SearchButton>
         </SearchWrap>
