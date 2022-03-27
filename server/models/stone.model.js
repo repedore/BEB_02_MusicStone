@@ -14,6 +14,9 @@ const StoneSchema = new Schema({
   lyricist: String,
   composer: String,
   lyrics: String,
+  filename: String,
+  realfilename: String,
+  filepath: String,
   release_date: { type: Date, default: Date.now },
 });
 StoneSchema.plugin(autoIncrement.plugin, {

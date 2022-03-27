@@ -6,7 +6,7 @@ exports.test = async (req, res, next) => {
   try {
     // testDataSave
     // const data = await TestService.setAllTestData();
-    const data = await TestService.addTestData();
+    const data = await TestService.getUser();
     // const data = await TestService.getTestData({ name: "test" });
     // const data = await TestService.getAllDataInTestTable();
 
@@ -28,6 +28,7 @@ exports.test = async (req, res, next) => {
     //   age: 29,
     //   intarr: [1, 2, 3, 5],
     // });
+    console.log(data);
     return res
       .status(200)
       .json({ status: 200, data: data, message: "Succesfully" });
