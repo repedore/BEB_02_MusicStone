@@ -16,6 +16,9 @@ const MusicianSchema = new Schema({
   description: { type: String, default: "None" },
   like: { type: [Number], default: [] },
   snsList: { type: [Object], default: [] },
+  filename: String,
+  realfilename: String,
+  filepath: String,
 });
 MusicianSchema.plugin(autoIncrement.plugin, {
   model: "Musician",
