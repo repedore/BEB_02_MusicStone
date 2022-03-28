@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-var main = require("./main.route");
-var musician = require("./musician.route");
-var playlist = require("./playlist.route");
-var stones = require("./stones.route");
-var user = require("./user.route");
+const main = require("./main.route");
+const musician = require("./musician.route");
+const playlist = require("./playlist.route");
+const stones = require("./stones.route");
+const user = require("./user.route");
+const album = require("./album.route");
 
 router.use("/", main);
 router.use("/musician", musician);
 router.use("/playlist", playlist);
 router.use("/stones", stones);
 router.use("/user", user);
+router.use("/album", album);
 
-var test = require("./test.route");
+const test = require("./test.route");
 router.use("/test", test);
 
 module.exports = router;

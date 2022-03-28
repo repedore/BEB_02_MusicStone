@@ -10,10 +10,13 @@ const AlbumSchema = new Schema({
   },
   musician_id: Number,
   name: String,
-  image: String,
   like: { type: [Number], default: [] },
   release_date: { type: Date, default: Date.now },
-  titleStoneId: Number,
+  titleStoneId: { type: Number, default: 0 },
+  description: { type: String, default: "None" },
+  filename: String,
+  realfilename: String,
+  filepath: String,
 });
 AlbumSchema.plugin(autoIncrement.plugin, {
   model: "Album",
