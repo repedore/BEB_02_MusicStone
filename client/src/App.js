@@ -7,11 +7,23 @@ import { MyStone, BuyStone, TradeStone } from "./pages/Stones";
 import Nav from "./components/Nav";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
-import { RegisterStone } from "./pages/RegisterStone";
+import { RegisterAlbum } from "./pages/RegisterAlbum";
+import RegisterStone from "./pages/RegisterStone";
+import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.accountReducer);
+  const getUserId = async (account) => {
+    alert(account);
+    await axios
+      .get(`http://localhost:12367/user/${account}`)
+      .then((res) => {
+        dispatch({ type: "GET_USERID", userId: res.data.userId });
+        console.log("userId 값 : " + res.data.userId);
+      })
+      .catch((e) => alert(e));
+  };
   const kaikasLogin = async () => {
     if (typeof window.klaytn !== "undefined") {
       const provider = window["klaytn"];
@@ -19,7 +31,7 @@ function App() {
     try {
       const wallet = await window.klaytn.enable();
       dispatch({ type: "ON_CONNECT", account: wallet });
-      alert(wallet);
+      getUserId(wallet);
     } catch (ex) {
       console.log(ex);
     }
@@ -43,6 +55,7 @@ function App() {
           <Route path="/musician/:id" element={<MusicianInfo />} />
           <Route path="/musician/register" element={<RegisterMusician />} />
           <Route path="/album/:id" element={<Album />} />
+          <Route path="/album/register" element={<RegisterAlbum />} />
           <Route path="/stones/myStone" element={<MyStone />} />
           <Route path="/stones/register" element={<RegisterStone />} />
           <Route path="/stones/buyStone" element={<BuyStone />} />

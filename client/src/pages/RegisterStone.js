@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import select from "react-select";
+import { Link } from "react-router-dom";
 
-export function RegisterStone() {
+export default function RegisterStone() {
   const [stoneName, setStoneName] = useState("");
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
@@ -13,6 +14,8 @@ export function RegisterStone() {
   const [composer, setComposer] = useState("");
   const [lyrics, setLyrics] = useState("");
   const [category, setCategory] = useState("default");
+  const [album, setAlbum] = useState("");
+  const [albumName, setAlbumName] = useState([]);
 
   const onChangeStoneName = (e) => {
     setStoneName(e.target.value);
@@ -35,6 +38,7 @@ export function RegisterStone() {
 
   const saveStone = async () => {
     if (
+      // album &&
       stoneName &&
       account &&
       description &&
@@ -44,6 +48,7 @@ export function RegisterStone() {
       lyrics
     ) {
       const formData = new FormData();
+      formData.append("album", album);
       formData.append("stoneName", stoneName);
       formData.append("account", account);
       formData.append("description", description);
@@ -51,29 +56,19 @@ export function RegisterStone() {
       formData.append("lyricist", lyricist);
       formData.append("composer", composer);
       formData.append("lyrics", lyrics);
+      formData.append("category", category);
       await axios
-        .post(
-          "http://localhost:12367/stones/register",
-          {
-            stoneName,
-            account,
-            description,
-            stonefile,
-            lyricist,
-            composer,
-            lyrics,
-            category,
+        .post("http://localhost:12367/stones/register", formData, {
+          headers: {
+            "content-type": "multipart/form-data",
           },
-          {
-            headers: {
-              "content-type": "multipart/form-data",
-            },
-          }
-        )
+        })
         .then((res) => {
           console.log(res.data);
           alert(res.data.message);
         });
+      // } else if (!album) {
+      //   alert("앨범을 선택해주세요. 원하는 앨범이 없다면 앨범을 등록해주세요.");
     } else if (!stoneName) {
       alert("이름을 입력해주세요.");
     } else if (!account) {
@@ -90,11 +85,53 @@ export function RegisterStone() {
       alert("가사를 입력해주세요");
     }
   };
+  // const getAlbum = async () => {
+  //   alert("getalbum");
+  //   await axios
+  //     .get("http://localhost:12367/stones/", {
+  //       params: { account: account },
+  //     })
+  //     .then((res) => {
+  //       setAlbumName(res.data.albumName);
+  //     })
+  //     .catch((e) => alert(e));
+  // };
   return (
     <div>
       <div id="stoneregisterpage">
-        <div className="pagetitle">스톤 등록</div>
-        <div>{state.isConnect ? state.account : "지갑을 연결하세요."}</div>
+        <div>
+          <span className="pagetitle">스톤 등록</span>
+          <span>
+            <Link to="/album/register" style={{ textDecoration: "none" }}>
+              <button className="albumbtn"> 앨범 등록 </button>
+            </Link>
+          </span>
+        </div>
+        {state.isConnect ? (
+          <div>
+            <div className="text">지금 연결된 계정 주소 :</div>
+            <div>
+              {state.account}
+              {/*  {getAlbum()} */}
+            </div>
+          </div>
+        ) : (
+          <div className="text">계정을 먼저 연결하세요.</div>
+        )}
+        <div>
+          <select
+            className="Aselectbox"
+            onChange={(e) => {
+              const selectedAlbum = e.target.value;
+              setAlbum(selectedAlbum);
+            }}
+          >
+            <option value="">앨범을 선택해주세요.</option>
+            {albumName.map((albumname) => {
+              return <option value={albumname}>{albumname}</option>;
+            })}
+          </select>
+        </div>
         <div>
           <input
             className="fileinput"
@@ -191,7 +228,7 @@ export function RegisterStone() {
             </div>
           </div>
           <div>
-            <button id="editbtn" onClick={saveStone}>
+            <button className="editbtn" onClick={saveStone}>
               등록
             </button>
           </div>
