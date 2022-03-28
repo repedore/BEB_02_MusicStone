@@ -85,17 +85,14 @@ export default function RegisterStone() {
       alert("가사를 입력해주세요");
     }
   };
-  // const getAlbum = async () => {
-  //   alert("getalbum");
-  //   await axios
-  //     .get("http://localhost:12367/stones/", {
-  //       params: { account: account },
-  //     })
-  //     .then((res) => {
-  //       setAlbumName(res.data.albumName);
-  //     })
-  //     .catch((e) => alert(e));
-  // };
+  const getAlbum = async () => {
+    await axios
+      .get(`http://localhost:12367/stones/register`)
+      .then((res) => {
+        setAlbumName(res.data.albumName);
+      })
+      .catch((e) => alert(e));
+  };
   return (
     <div>
       <div id="stoneregisterpage">
@@ -110,10 +107,7 @@ export default function RegisterStone() {
         {state.isConnect ? (
           <div>
             <div className="text">지금 연결된 계정 주소 :</div>
-            <div>
-              {state.account}
-              {/*  {getAlbum()} */}
-            </div>
+            <div>{state.account}</div>
           </div>
         ) : (
           <div className="text">계정을 먼저 연결하세요.</div>
