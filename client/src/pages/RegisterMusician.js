@@ -39,22 +39,11 @@ export function RegisterMusician() {
       formData.append("img", img);
       formData.append("description", description);
       await axios
-        .post(
-          "http://localhost:12367/user/register",
-          {
-            KName,
-            EName,
-            account,
-            email,
-            img,
-            description,
+        .post("http://localhost:12367/user/register", formData, {
+          headers: {
+            "content-type": "multipart/form-data",
           },
-          {
-            headers: {
-              "content-type": "multipart/form-data",
-            },
-          }
-        )
+        })
         .then((res) => {
           console.log(res.data);
           alert(res.data.message);
@@ -128,7 +117,7 @@ export function RegisterMusician() {
             onChange={onChangeDescription}
           ></textarea>
           <div>
-            <button id="editbtn" onClick={saveMusician}>
+            <button className="editbtn" onClick={saveMusician}>
               등록
             </button>
           </div>

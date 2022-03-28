@@ -4,18 +4,12 @@ import { useSelector } from "react-redux";
 import React from "react";
 
 export function Mypage() {
-  // const edit = () => {};
   const state = useSelector((state) => state.accountReducer);
   return (
     <div>
       <div id="mypage">
         <img className="profileimg" src={musicstonelogo} alt="profile"></img>
         <div className="mypageaccount">{state.account}</div>
-        {/* <div>
-          <button id="editbtn" onClick={edit}>
-            편집
-          </button>
-        </div> */}
         <div>
           <span>
             <Link
@@ -23,17 +17,16 @@ export function Mypage() {
               to="/musician/register"
               style={{ textDecoration: "none" }}
             >
-              <button id="editbtn"> 뮤지션 등록 </button>
+              <button className="editbtn"> 뮤지션 등록 </button>
             </Link>
           </span>
           <span>
-            <Link to="/mypage/buyToken" style={{ textDecoration: "none" }}>
-              <button id="tokenbtn"> 토큰 구매창 </button>
+            <Link to="/stones/buyStone" style={{ textDecoration: "none" }}>
+              <button className="tokenbtn"> 토큰 구매창 </button>
             </Link>
           </span>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }
