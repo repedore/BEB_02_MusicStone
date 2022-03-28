@@ -9,6 +9,16 @@ var {
   TestModel,
 } = require("../models/index");
 
+const getUser = async () => {
+  try {
+    const userList = await UserModel.find();
+    console.log(userList);
+    return userList;
+  } catch (e) {
+    throw Error(e);
+  }
+};
+
 var saveTestData = async () => {
   try {
     var data = await getTestData({ email: "test@test.com" });
@@ -42,6 +52,37 @@ var getTestData = async (query) => {
     throw Error("Error");
   }
 };
+
+const insertUser = async () => {
+  const User1 = new UserModel();
+
+  User1.musician_id = 2;
+  User1.name = "아이유";
+  User1.account = "0x0001";
+  User1.save();
+
+  const User2 = new UserModel();
+  User2.name = "박우현";
+  User2.account = "0x0002";
+  User2.save();
+
+  const User3 = new UserModel();
+  User3.musician_id = 1;
+  User3.name = "박재범";
+  User3.account = "0x0003";
+  User3.save();
+
+  const User4 = new UserModel();
+  User4.name = "고은초롱";
+  User4.account = "0x0004";
+  User4.save();
+
+  const User5 = new UserModel();
+  User5.name = "원성연";
+  User5.account = "0x0007";
+  User5.save();
+};
+
 var getAllDataInTestTable = async () => {
   try {
     return TestModel.find();
@@ -57,7 +98,7 @@ var setAllTestData = async () => {
   // }).exec();
   const User1 = new UserModel();
   // User1.id = 1;
-  User1.musician_id = 0;
+  User1.musician_id = 1;
   User1.name = "아이유";
   User1.account = "0x0001";
   // User1.register_date= Date.now;
@@ -238,4 +279,6 @@ module.exports = {
   getTestData: getTestData,
   getAllDataInTestTable: getAllDataInTestTable,
   setAllTestData: setAllTestData,
+  insertUser,
+  getUser,
 };

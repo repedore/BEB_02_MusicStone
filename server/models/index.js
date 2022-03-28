@@ -16,6 +16,5 @@ module.exports = {
   TradeModel: TradeModel,
   TransactionModel: TransactionModel,
   UserModel: UserModel,
-
   TestModel: TestModel,
 };
