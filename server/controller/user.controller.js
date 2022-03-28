@@ -1,49 +1,49 @@
-require("dotenv").config();
-//const buyTokenController = require("../controller/user.buytoken.controller");
+const UserService = require("../services/user.services");
 
-exports.musician_get = (req, res, next) => {};
-
-exports.user_buytoken_post = (req, res, next) => {
-  const { toAccount, amount } = req.body;
+// userId 반환
+exports.user_account_get = async (req, res, next) => {
   try {
-    // var data = await TestService.getTestData({ name: "test" });
-    require("../controller/user.buytoken.controller")
-      .transferToken(toAccount, amount)
-      .then((sendResult) => {
-        return res
-          .status(200)
-          .json({
-            status: 200,
-            data: sendResult,
-            message: "토큰 구매가 완료되었습니다.",
-          });
-      });
+    const userAccount = req.params.user_account;
+    const user = await UserService.getUserId(userAccount);
+    res.status(201).json({ userId: user.id });
   } catch (e) {
-    console.log(e);
-    return res.status(400).json({ status: 400, message: e.message });
+    res.status(500).json({ message: e.message });
   }
 };
 
-//아래 코드는 시뮬레이션 코드
-exports.musician_register_post = (req, res, next) => {
-  const { KName, EName, account, email, img, musicianInfo } = req.body;
-  console.log(
-    "musician register : " + KName,
-    EName,
-    account,
-    email,
-    img,
-    musicianInfo
-  );
-  if (musicianInfo === "1") {
-    res.send({
-      message: "뮤지션 등록이 완료되었습니다.",
-      success: true,
-    });
-  } else {
-    res.send({
-      message: "이미 등록된 email 입니다.",
-      success: false,
-    });
+// userInfo반환
+exports.user_get = async (req, res, next) => {
+  try {
+    const userId = req.query.userId;
+    const userInfo = await UserService.getUserInfo(userId);
+    res.status(200).json({ userInfo });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
   }
+};
+
+// musician등록
+exports.user_register_post = async (req, res, next) => {
+  try {
+    const musicianInfo = req.body;
+    const fileInfo = req.file;
+
+    const isOk = await UserService.insertMusician(musicianInfo, fileInfo);
+    isOk
+      ? res.status(201).json({
+          message: "뮤지션 등록이 완료되었습니다.",
+          success: true,
+        })
+      : res.status(500).json({
+          message: "이미 등록된 email 입니다.",
+          success: false,
+        });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// klay로 토큰구매 (+ contract)
+exports.user_buytoken_post = async (req, res, next) => {
+  const { toAccount, amount } = req.body;
 };
