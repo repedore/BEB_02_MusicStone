@@ -105,6 +105,11 @@ body {
 #maintext {
   text-align: left;
   padding: 1rem 17rem;
+  @keyframes rotate_image {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 #observer {
   white-space: pre;
@@ -275,4 +280,9 @@ a:hover {
 }
 a:active {
   color: rgb(255, 255, 255);
+}
+@keyframes rotate_image {
+  100% {
+    transform: rotate(360deg);
+  }
 }

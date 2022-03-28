@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import axios from "axios";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Slider from "react-slick";
@@ -8,78 +9,123 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AlbumCard from '../../components/AlbumCard';
 
-//아직 서버데이터 없어서 임의로 만든 dummyData
-import dummyData from "../../dummyData/dummyData";
-
 export function MusicianInfo() {
   const { id } = useParams();
+  const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
-  //임시 DummyData
-  const MusicianData = dummyData.musicians[id];
-  const AlbumData = dummyData.albums;
   const [isLike, setIsLike] = useState(false);
+  const [musicianData, setMusicianData] = useState(initialState);
+  const musicianInfo = musicianData.musicianInfo[0];
+  const albumInfo = musicianData.albumInfo;
 
-  const handleLikeBtn = (type, id) => {
-    setIsLike(!isLike);
+
+  //Slider 설정
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    //설정값보다 앨범수량이 적으면 페이지 깨져서 4미만은 변경
+    slidesToShow: albumInfo.length >= 4 ? 4 : albumInfo.length,
+    slidesToScroll: 1,
+    centerPadding: '0px',
+  };
+
+  const handleLikeBtn = () => {
+
+    axios.post(`${server}/musician/${id}`, {
+      "userId": 1,
+      "isLike": isLike
+    })
+      .then((res) => setIsLike(!isLike))
   }
 
   const showSNS = () => {
-    return (MusicianData.snsList
-      ? MusicianData.snsList.map((sns) => handleSNS(sns))
+    return (musicianInfo.snsList
+      ? musicianInfo.snsList.map((sns) => handleSNS(sns))
       : null)
   }
 
   const showLike = () => {
     return (isLike
       ? <div>
-        <FavoriteIcon /><span>좋아요 1235</span>
+        <FavoriteIcon /><span>좋아요 {musicianInfo.like.length}</span>
       </div>
 
       : <div>
-        <FavoriteBorderIcon /><span>좋아요 1234</span>
+        <FavoriteBorderIcon /><span>좋아요 {musicianInfo.like.length}</span>
       </div>)
   }
+  const showMusicianName = () => {
+    const korName = musicianInfo.name_korea;
+    const engName = musicianInfo.name_english;
+    if (korName && engName) {
+      return `${korName} (${engName})`
+    } else if (korName) {
+      return korName
+    } else {
+      return engName
+    }
+
+  }
+
+  useEffect(() => {
+    //현재 userId값 어딨는지 몰라서 임의로 임시값 넣어놓음
+    const tempUserId = 1;
+    const req = `${server}/musician/${id}?userId=${tempUserId}`
+
+    axios.get(req)
+      .then((res) => {
+        setMusicianData(res.data.data);
+      })
+  }, [isLike])
+
+  useEffect(() => {
+    setIsLike(musicianData.isLike)
+  }, [musicianData])
 
   return (
-    <Body>
-      <InfoContainer>
-        <ImgWrapper>
-          <Img src={MusicianData.img} alt={MusicianData.name} />
-        </ImgWrapper>
-        <InfoWrapper>
-          <Name>{MusicianData.name}</Name>
-          <SNSandLike>
-            <SNS>
-              {showSNS()}
-            </SNS>
-            <Like onClick={() => handleLikeBtn()}>
-              {showLike()}
-            </Like>
-          </SNSandLike>
-          <DESC>{MusicianData.desc}</DESC>
-        </InfoWrapper>
-      </InfoContainer>
-      <AlbumContainer>
-        <StyledSlider {...settings}>
-          {/* 나중에 데이터 어차피 받아올꺼라 지금은 그냥 다 아이유 앨범으로 해놓음 */}
-          {AlbumData.map((album) =>
-            <AlbumCard key={album.id} album={album} />
-          )}
-        </StyledSlider>
-      </AlbumContainer>
-    </Body>
+    musicianInfo
+      ? (
+        <Body>
+          <InfoContainer>
+            <ImgWrapper>
+              <Img src={musicianInfo.image} alt={showMusicianName()} />
+            </ImgWrapper>
+            <InfoWrapper>
+              <Name>{showMusicianName()}</Name>
+              <SNSandLike>
+                <SNS>
+                  {showSNS()}
+                </SNS>
+                <Like onClick={() => handleLikeBtn()}>
+                  {showLike()}
+                </Like>
+              </SNSandLike>
+              <DESC>{musicianInfo.description}</DESC>
+            </InfoWrapper>
+          </InfoContainer>
+          <AlbumContainer>
+            <StyledSlider {...settings}>
+              {/* 나중에 데이터 어차피 받아올꺼라 지금은 그냥 다 아이유 앨범으로 해놓음 */}
+              {albumInfo
+                ?
+                albumInfo.map((album) =>
+                  <AlbumCard key={album.id} album={album} />
+                )
+                : null}
+            </StyledSlider>
+          </AlbumContainer>
+        </Body >
+      )
+      : null
   );
 }
-
-//Slider 설정
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  //설정값보다 앨범수량이 적으면 페이지 깨져서 4미만은 변경
-  slidesToShow: 4,
-  slidesToScroll: 1,
-  centerPadding: '0px',
+//초기 state
+const initialState = {
+  "musicianInfo": [
+  ],
+  "albumInfo": [],
+  "isLike": false
 };
 
 //SNS 구분 함수

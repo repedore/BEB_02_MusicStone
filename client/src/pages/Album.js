@@ -1,20 +1,25 @@
 import { useParams } from "react-router-dom";
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import styled from 'styled-components';
 import AlbumStone from '../components/AlbumStone';
-
-//아직 서버데이터 없어서 임의로 만든 dummyData
-import dummyData from "../dummyData/dummyData";
+import PreviewStream from '../components/PreviewStream';
 
 export const Album = () => {
     const { id } = useParams();
-    const AlbumData = dummyData.albums[id];
+    const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+
     const [isLike, setIsLike] = useState(false);
     const [selectNum, setSelectNum] = useState(0);
+    const [albumData, setAlbumData] = useState(initialState);
+    const albumInfo = albumData.albumInfo[0];
+    const stoneList = albumData.stoneList.map((stone) => Object.assign(stone, { image: `${albumInfo.image}` }));
 
     const handleLikeBtn = (type, id) => {
+        const req = ``
+        console.log(albumInfo.like)
         setIsLike(!isLike);
     }
     const handleStoneClick = (idx) => {
@@ -24,63 +29,88 @@ export const Album = () => {
     const showlike = () => {
         return (isLike
             ? <div>
-                <FavoriteIcon /><span>좋아요 {AlbumData.like + 1}</span>
+                <FavoriteIcon /><span>좋아요 {albumInfo.like.length}</span>
             </div>
 
             : <div>
-                <FavoriteBorderIcon /><span>좋아요 {AlbumData.like}</span>
+                <FavoriteBorderIcon /><span>좋아요 {albumInfo.like.length}</span>
             </div>)
     }
-
+    const showReleaseDate = () => {
+        const tempSplit = albumInfo.release_date.split('-');
+        return `${tempSplit[0]}년 ${tempSplit[1]}월 ${tempSplit[2].substr(0, 2)}일`
+    }
     const showStones = () => {
-        return (AlbumData.stones.map((stone, idx) => {
+        return (stoneList.map((stone, idx) => {
             return <AlbumStone key={idx} stone={stone} selectNum={selectNum} idx={idx} handleStoneClick={handleStoneClick} />
         }))
     }
 
+    useEffect(() => {
+        const req = `${server}/album/${id}`;
+        axios.get(req)
+            .then((res) => {
+                setAlbumData(res.data)
+            })
+    }, [isLike])
+
+    useEffect(() => {
+        setIsLike(!albumData.isLike);
+    }, [albumData])
+
     return (
-        <Body>
-            <AlbumContainer>
-                <ImgWrapper>
-                    <Img src={AlbumData.img} alt={AlbumData.name} />
-                </ImgWrapper>
-                <InfoWrapper>
-                    <Title>{AlbumData.name}</Title>
-                    <InfoBox>
-                        <Info>
-                            <Like onClick={() => handleLikeBtn()}>
-                                {showlike()}
-                            </Like>
-                            <Musician>뮤지션 : {AlbumData.musicianName}</Musician>
-                            <ReleaseDate>발매일 : {AlbumData.releaseDate}</ReleaseDate>
-                            <TitleSong>타이틀곡 : {AlbumData.titleSong}</TitleSong>
-                        </Info>
-                        <StoneList>
-                            {showStones()}
-                        </StoneList>
-                    </InfoBox>
-                </InfoWrapper>
-            </AlbumContainer>
-            <StoneContainer>
-                <StreamingWrapper>
-                    <Streaming src={AlbumData.stones[selectNum].url} />
-                    <Memo>(Streaming 공간 임시로 유튜브로 대체)</Memo>
-                </StreamingWrapper>
-                <StoneWrapper>
-                    <StoneTitle>
-                        <h2>{AlbumData.stones[selectNum].name}</h2>
-                    </StoneTitle>
-                    <StoneInfo>
-                        <div>작사 : Dummy</div>
-                        <div>작곡 : Dummy</div>
-                        <div>장르 : Dummy</div>
-                        <div>가사 : 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 일단은 복붙 </div>
-                    </StoneInfo>
-                </StoneWrapper>
-            </StoneContainer>
-        </Body>
+        albumInfo
+            ? (
+                <Body>
+                    <AlbumContainer>
+                        <ImgWrapper>
+                            <Img src={albumInfo.image} alt={albumInfo.musician_id} />
+                        </ImgWrapper>
+                        <InfoWrapper>
+                            <Title>{albumInfo.name}</Title>
+                            <InfoBox>
+                                <Info>
+                                    {/* 현재 userId값 받아오기 힘들어서 임의로 1로 고정*/}
+                                    <Like onClick={() => handleLikeBtn("album", 1)}>
+                                        {showlike()}
+                                    </Like>
+                                    {/* 현재 서버에서 id값만 받아올 수 있어서 임시로 이름대신 */}
+                                    <Musician>뮤지션 : {albumInfo.musician_id}</Musician>
+                                    <ReleaseDate>발매일 : {showReleaseDate()}</ReleaseDate>
+                                    <Desc>소개 : {albumInfo.description}</Desc>
+                                </Info>
+                                <StoneList>
+                                    {showStones()}
+                                </StoneList>
+                            </InfoBox>
+                        </InfoWrapper>
+                    </AlbumContainer>
+                    <StoneContainer>
+                        <PreviewStream stone={stoneList[selectNum]} />
+                        <StoneWrapper>
+                            <StoneTitle>
+                                <h2>{stoneList[selectNum].name}</h2>
+                            </StoneTitle>
+                            <StoneInfo>
+                                {/* 현재 서버에서 장르값만 받아올 수 있어서 임시로 */}
+                                <div>작사 : Dummy</div>
+                                <div>작곡 : Dummy</div>
+                                <div>장르 : {stoneList[selectNum].category}</div>
+                                <div>가사 : Dummy </div>
+                            </StoneInfo>
+                        </StoneWrapper>
+                    </StoneContainer>
+                </Body>)
+            : null
     )
 }
+//초기 state
+const initialState = {
+    "albumInfo": [
+    ],
+    "stoneList": [],
+    "isLike": false
+};
 
 //여기부터 styled
 const Body = styled.div`
@@ -100,7 +130,7 @@ border-bottom: 2px solid #303030;
 
 const StoneContainer = styled.div`
 width : 1100px;
-height: 300px;
+height: 400px;
 margin: 0 auto;
 display flex;
 `;
@@ -167,7 +197,7 @@ margin : 10px 0 0;
 
 const ReleaseDate = styled.div`
 `;
-const TitleSong = styled.div`
+const Desc = styled.div`
 `;
 
 const StoneList = styled.li`
@@ -180,21 +210,6 @@ li {
     margin: 5px 0;
 }
 `;
-
-const StreamingWrapper = styled.div`
-width: 100%;
-height: 100%;
-`;
-
-const Memo = styled.div`
-text-align: center;
-`;
-
-const Streaming = styled.iframe`
-width: 100%;
-height: 100%;
-`;
-
 const StoneWrapper = styled.div`
 width: 100%;
 display:flex;

@@ -7,7 +7,7 @@ const AlbumCard = ({ album }) => {
   return (
     <Link to={`/album/${album.id}`} style={{ textDecoration: 'none' }}>
       <CardContainer>
-        <Img src={album.img} />
+        <Img src={album.image} />
         <Name>{album.name}</Name>
       </CardContainer>
     </Link>

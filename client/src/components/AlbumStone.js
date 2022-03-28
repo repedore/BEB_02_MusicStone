@@ -9,11 +9,11 @@ const AlbumStone = ({ stone, selectNum, idx, handleStoneClick }) => {
     const showlike = () => {
         return (isLike
             ? <div>
-                <FavoriteIcon fontSize='small' /><span>{stone.like + 1}</span>
+                <FavoriteIcon fontSize='small' /><span>{stone.like.length}</span>
             </div>
 
             : <div>
-                <FavoriteBorderIcon fontSize='small' /><span>{stone.like}</span>
+                <FavoriteBorderIcon fontSize='small' /><span>{stone.like.length}</span>
             </div>)
     }
 
