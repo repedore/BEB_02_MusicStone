@@ -4,10 +4,7 @@ const mongoose = require("mongoose");
 module.exports = () => {
   const connect = () => {
     console.log(process.env.MONGODB_URL);
-    mongoose.connect(
-      "mongodb+srv://koasis03:dmschfhd03!!@cluster0.t8lkv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-      { useNewUrlParser: true }
-    );
+    mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true });
   };
   connect();
   mongoose.connection.on("connected", () => {
