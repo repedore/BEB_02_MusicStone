@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import musicstonelogo from "../img/musicstonelogo.png";
 import { BsWallet2 } from "react-icons/bs";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 function Nav({ connectWallet }) {
   const state = useSelector((state) => state.accountReducer);
+  const account = state.account;
+  const dispatch = useDispatch();
   return (
     <div id="nav">
       <img className="logo" src={musicstonelogo} alt="logo"></img>
@@ -42,13 +45,18 @@ function Nav({ connectWallet }) {
           {state.isConnect ? (
             <span id="my">
               <Link to="/mypage" style={{ textDecoration: "none" }}>
-                {/* <img className="logo" src={musicstonelogo} alt="logo" /> */}
                 MY
               </Link>
             </span>
           ) : (
             <span id="connect">
-              <BsWallet2 id="icon" size="22" onClick={() => connectWallet()} />
+              <BsWallet2
+                id="icon"
+                size="22"
+                onClick={() => {
+                  connectWallet();
+                }}
+              />
             </span>
           )}
         </span>

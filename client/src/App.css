@@ -3,12 +3,11 @@ body {
   color: white;
 }
 #title {
-  /* margin-right: 46rem; */
   color: white;
 }
 #navmenu {
-  margin-left: 50rem;
-  text-align: center;
+  float: right;
+  margin-top: -0.6rem;
 }
 #musician {
   margin: 2rem;
@@ -44,7 +43,7 @@ body {
   border: none;
   cursor: pointer;
 }
-#editbtn {
+.editbtn {
   margin: 1rem;
   padding: 0.5rem 2rem;
   border: 0;
@@ -52,7 +51,7 @@ body {
   background-color: white;
   color: black;
 }
-#tokenbtn {
+.tokenbtn {
   padding: 0.5rem 2rem;
   border: 0;
   outline: 0;
@@ -93,7 +92,7 @@ body {
 #mainpage {
   text-align: center;
   color: white;
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 #playlistpage {
   text-align: center;
@@ -110,11 +109,40 @@ body {
 #observer {
   white-space: pre;
 }
+#playlisttext {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+#registeralbumpage {
+  text-align: center;
+  margin-top: 3rem;
+}
+.albumbtn {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+  vertical-align: middle;
+}
+.line {
+  margin-top: 5rem;
+  width: 45rem;
+}
+
 .selectbox {
   text-align: center;
   margin: 0.2rem;
   font-size: 1rem;
-  padding: 0.3rem 6rem;
+  padding: 0.3rem 5.6rem;
+}
+.Aselectbox {
+  text-align: center;
+  margin: 0.2rem;
+  font-size: 1rem;
+  padding: 0.3rem 8.2rem;
 }
 .logo {
   width: 30px;

@@ -40,7 +40,7 @@ export function RegisterMusician() {
       formData.append("description", description);
       formData.append("musicianfile", img);
 
-      axios
+      await axios
         .post("http://localhost:12367/user/register", formData, {
           headers: {
             "content-type": "multipart/form-data",
