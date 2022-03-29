@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import SNSList from '../components/SNSList';
 
 export function RegisterMusician() {
   const [KName, setKName] = useState("");
@@ -11,6 +12,8 @@ export function RegisterMusician() {
   const [img, setImg] = useState(null);
   const [imgsrc, setImgsrc] = useState(null);
   const [description, setDescription] = useState("");
+  const [snsList, setSnsList] = useState([]);
+  const [count, setCount] = useState(0);
 
   const onChangeKName = (e) => {
     setKName(e.target.value);
@@ -29,17 +32,16 @@ export function RegisterMusician() {
   const onChangeDescription = (e) => {
     setDescription(e.target.value);
   };
-  const saveMusician = async (e) => {
-    e.preventDefault();
+  const saveMusician = async () => {
     if ((KName || EName) && account && email && img && description) {
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append("KName", KName);
       formData.append("EName", EName);
       formData.append("account", account);
       formData.append("email", email);
+      formData.append("img", img);
       formData.append("description", description);
-      formData.append("musicianfile", img);
-
+      formData.append("snsList", snsList);
       await axios
         .post("http://localhost:12367/user/register", formData, {
           headers: {
@@ -62,7 +64,18 @@ export function RegisterMusician() {
       alert("뮤지션의 사진 선택해주세요.");
     }
   };
-
+  const addSNS = () => {
+    setCount(count + 1);
+  }
+  useEffect(() => {
+    if (count) {
+      setSnsList([...snsList, {
+        type: "homepage",
+        url: "",
+        idx: count
+      }]);
+    }
+  }, [count])
   return (
     <div>
       <div id="registerpage">
@@ -81,13 +94,12 @@ export function RegisterMusician() {
           <input
             className="fileinput"
             type="file"
-            accept="image/*"
             onChange={(e) => onChangeImg(e)}
             name="musicianfile"
           />
         </div>
         <div>
-          <div className="registertext">name :</div>
+          <div className="registertext">name </div>
           <input
             className="musicianinput"
             type="text"
@@ -104,7 +116,7 @@ export function RegisterMusician() {
           ></input>
         </div>
         <div>
-          <div className="registertext">email:</div>
+          <div className="registertext">email</div>
           <input
             className="musicianinput"
             type="text"
@@ -113,18 +125,24 @@ export function RegisterMusician() {
           ></input>
         </div>
         <div>
-          <div className="registertext">info:</div>
+          <div className="registertext">info</div>
           <textarea
             className="musicianinfoinput"
             type="text"
             placeholder="뮤지션의 소개글을 입력해주세요."
             onChange={onChangeDescription}
           ></textarea>
-          <div>
-            <button id="editbtn" onClick={(e) => saveMusician(e)}>
-              등록
-            </button>
-          </div>
+        </div>
+        <div id='sns_wrapper'>
+          <div className='registertext'>SNS <button className='snsAddBtn' onClick={addSNS}>+</button></div>
+          <ul id='snsList'>
+            {snsList.map((sns) => <SNSList snsList={snsList} setSnsList={setSnsList} idx={sns.idx} />)}
+          </ul>
+        </div>
+        <div>
+          <button className="editbtn" onClick={saveMusician}>
+            등록
+          </button>
         </div>
       </div>
     </div>

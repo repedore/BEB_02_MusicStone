@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import MyStoneCard from '../../components/MyStoneCard';
-import MyStoneModal from '../../components/MyStoneModal';
+import MyStoneCard from '../../components/Stones/MyStoneCard';
+import MyStoneModal from '../../components/Stones/MyStoneModal';
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";

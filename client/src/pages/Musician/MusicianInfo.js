@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import AlbumCard from '../../components/AlbumCard';
+import AlbumCard from '../../components/Musician/AlbumCard';
 
 export function MusicianInfo() {
   const { id } = useParams();
