@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MusicianCard from "../../components/MusicianCard";
+import MusicianCard from '../../components/Musician/MusicianCard';
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useState, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";

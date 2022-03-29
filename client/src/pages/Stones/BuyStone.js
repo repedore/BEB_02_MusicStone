@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import BuyStoneCard from '../../components/BuyStoneCard';
+import BuyStoneCard from '../../components/Stones/BuyStoneCard';
 import SearchIcon from "@mui/icons-material/Search";
 import { useInView } from "react-intersection-observer";
 import { loadStoneList, resetStoneList } from '../../actions';

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import SellStone from '../../components/SellStone';
-import TradeStoneModal from '../../components/TradeStoneModal';
+import SellStone from '../../components/Stones/SellStone';
+import TradeStoneModal from '../../components/Stones/TradeStoneModal';
 import PreviewStream from '../../components/PreviewStream';
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
