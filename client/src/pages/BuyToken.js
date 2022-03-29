@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import Caver from "caver-js";
 import React, { useState } from "react";
 import axios from "axios";
+import service_abi from "../abi/Service";
 
 function BuyToken() {
   const swapRatio = 500.0; // 클레이 : 뮤직스톤 토큰 교환비율
@@ -13,6 +14,7 @@ function BuyToken() {
   // caver-js 연결
   const caver = new Caver(window.klaytn);
   var tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
+  var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
   var accessKeyId = process.env.REACT_APP_ACCESS_KEY_ID; //KAS 콘솔 - Security - Credential에서 발급받은 accessKeyId 인증아이디
   var secretAccessKey = process.env.REACT_APP_SECRET_ACCESS_KEY; //KAS 콘솔 - Security - Credential에서 발급받은 secretAccessKey 인증비밀번호
   var walletAddress = process.env.REACT_APP_WALLETADDRESS;
@@ -93,69 +95,23 @@ function BuyToken() {
       alert("지갑을 연결하거나 교환할 클레이/토큰 수량을 입력해주세요.");
       return;
     }
-    // require("dotenv").config();
-    const keyringContainer = new caverExt.keyringContainer();
-    const keyring =
-      keyringContainer.keyring.createFromPrivateKey(walletPrivateKey);
-    keyringContainer.add(keyring);
-    const kip7 = new caverExt.kct.kip7(tokenAddress); //생성된 토큰의 Address 입력
-    kip7.setWallet(keyringContainer); //kip7 내의 wallet 설정
-    const { from, to, gas } = transferData;
     const klayAmount = String(swapAmount.klay);
     const tokenAmount = String(swapAmount.token);
-    let toAddress = from;
-    let amount = tokenAmount;
-    console.log(`swapKlay2Token(KLAY:${klayAmount}, TOKEN:${tokenAmount})`);
-    //transfer('토큰 받는 주소', 토큰 양, {from:'트랜젝션을 일으키는 주소'})
-    console.log("toAddress:", toAddress);
-    console.log("swapAmount.token:", tokenAmount);
-    caver.klay
-      .sendTransaction({
-        type: "VALUE_TRANSFER",
-        // type: "FEE_DELEGATED_VALUE_TRANSFER_WITH_RATIO",
-        from,
-        to,
+    var myContract2 = new caver.klay.Contract(service_abi, serviceAddress);
+    const tx = await myContract2.methods
+      .buyToken()
+      .send({
+        type: "SMART_CONTRACT_EXECUTION",
+        from: state.account,
         value: caver.utils.toPeb(klayAmount, "KLAY"),
-        gas,
-        // feeRatio: 50,
+        gas: 1000000,
       })
-      .once("transactionHash", (transactionHash) => {
-        console.log("txHash", transactionHash);
-        setTransferData((prevData) => ({
-          ...prevData,
-          txHash: transactionHash,
-        }));
+      .then((data) => {
+        console.log(data);
       })
-      .once("receipt", async (receipt) => {
-        await kip7.transfer(toAddress, caverExt.utils.toPeb(amount, "KLAY"), {
-          from: keyring.address,
-        });
-        console.log("receipt", receipt);
-        setTransferData((prevData) => ({
-          ...prevData,
-          receipt: JSON.stringify(receipt),
-        }));
-        //서버에 클레이 수량을 전달하고, 뮤직스톤 토큰을 사용자에게 전송.
-      })
-      .once("error", (error) => {
-        console.log("error", error.message);
-        setTransferData((prevData) => ({
-          ...prevData,
-          error: error.message,
-        }));
+      .catch((err) => {
+        console.log(err);
       });
-
-    // console.log(`[Token Transaction]\n` + receipt);
-
-    // const receipt2 = await kip7.balanceOf(keyring.address);
-    // console.log(
-    //   "SERVER BALANCE OF TOKEN: " + caver.utils.fromPeb(receipt2, "KLAY")
-    // );
-
-    // const receipt3 = await kip7.balanceOf(toAddress);
-    // console.log(
-    //   "user : BALANCE OF TOKEN" + caver.utils.fromPeb(receipt3, "KLAY")
-    // );
   };
 
   //지갑 잔액 확인

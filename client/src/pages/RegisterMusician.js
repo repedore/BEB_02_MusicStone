@@ -8,6 +8,7 @@ export function RegisterMusician() {
   const [EName, setEName] = useState("");
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
+  const userId = state.userId;
   const [email, setEmail] = useState("");
   const [img, setImg] = useState(null);
   const [imgsrc, setImgsrc] = useState(null);
@@ -34,7 +35,7 @@ export function RegisterMusician() {
   };
   // userId 추가
   const saveMusician = async () => {
-    if ((KName || EName) && account && email && img && description) {
+    if ((KName || EName) && account && email && img && description && userId) {
       const formData = new FormData();
       formData.append("KName", KName);
       formData.append("EName", EName);
@@ -43,6 +44,7 @@ export function RegisterMusician() {
       formData.append("musicianfile", img);
       formData.append("description", description);
       formData.append("snsList", snsList);
+      formData.append("userId", userId);
       await axios
         .post("http://localhost:12367/user/register", formData, {
           headers: {
