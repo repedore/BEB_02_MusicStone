@@ -50,7 +50,6 @@ export default function RegisterStone() {
       const formData = new FormData();
       formData.append("album", album);
       formData.append("stoneName", stoneName);
-      formData.append("account", account);
       formData.append("description", description);
       formData.append("stonefile", stonefile);
       formData.append("lyricist", lyricist);
@@ -58,7 +57,7 @@ export default function RegisterStone() {
       formData.append("lyrics", lyrics);
       formData.append("category", category);
       await axios
-        .post("http://localhost:12367/stones/register", formData, {
+        .post(`http://localhost:12367/stones/register/${account}`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },

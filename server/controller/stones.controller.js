@@ -40,10 +40,11 @@ exports.stones_mystone_post = async (req, res, next) => {
 exports.stones_register_post = async (req, res, next) => {
   const stoneInfo = req.body;
   const fileInfo = req.file;
+  const account = req.params.account;
   console.log(req.file);
   console.log(req.body);
   try {
-    const isOk = await StoneService.insertStone(stoneInfo, fileInfo);
+    const isOk = await StoneService.insertStone(stoneInfo, fileInfo, account);
     isOk
       ? res.status(201).json({ message: "Ok", success: true })
       : res.status(500).json({ message: "Fail", success: false });

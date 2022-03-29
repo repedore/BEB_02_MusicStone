@@ -21,7 +21,7 @@ router.get("/info/:musicstone_id", controller.stones_info_get);
 router.get("/tradestone/:musicstone_id", controller.stones_tradestone_get);
 router.post("/tradestone/:musicstone_id", controller.stones_tradestone_post);
 router.post(
-  "/register",
+  "/register/:account",
   stones.single("stonefile"),
   controller.stones_register_post
 );

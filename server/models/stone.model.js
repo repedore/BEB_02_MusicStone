@@ -6,7 +6,7 @@ autoIncrement.initialize(mongoose.connection);
 const StoneSchema = new Schema({
   id: { type: Number, required: true },
   musician_id: Number,
-  album_id: Number,
+  album_id: { Number, default: 0 },
   name: String,
   description: String,
   category: String,
@@ -17,6 +17,7 @@ const StoneSchema = new Schema({
   filename: String,
   realfilename: String,
   filepath: String,
+  total_balance: Number,
   release_date: { type: Date, default: Date.now },
 });
 StoneSchema.plugin(autoIncrement.plugin, {
