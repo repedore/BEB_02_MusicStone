@@ -29,15 +29,17 @@ export function RegisterMusician() {
   const onChangeDescription = (e) => {
     setDescription(e.target.value);
   };
-  const saveMusician = async () => {
+  const saveMusician = async (e) => {
+    e.preventDefault();
     if ((KName || EName) && account && email && img && description) {
-      const formData = new FormData();
+      let formData = new FormData();
       formData.append("KName", KName);
       formData.append("EName", EName);
       formData.append("account", account);
       formData.append("email", email);
-      formData.append("img", img);
       formData.append("description", description);
+      formData.append("musicianfile", img);
+
       await axios
         .post("http://localhost:12367/user/register", formData, {
           headers: {
@@ -60,6 +62,7 @@ export function RegisterMusician() {
       alert("뮤지션의 사진 선택해주세요.");
     }
   };
+
   return (
     <div>
       <div id="registerpage">
@@ -78,6 +81,7 @@ export function RegisterMusician() {
           <input
             className="fileinput"
             type="file"
+            accept="image/*"
             onChange={(e) => onChangeImg(e)}
             name="musicianfile"
           />
@@ -117,7 +121,7 @@ export function RegisterMusician() {
             onChange={onChangeDescription}
           ></textarea>
           <div>
-            <button className="editbtn" onClick={saveMusician}>
+            <button id="editbtn" onClick={(e) => saveMusician(e)}>
               등록
             </button>
           </div>

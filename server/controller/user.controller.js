@@ -27,7 +27,6 @@ exports.user_register_post = async (req, res, next) => {
   try {
     const musicianInfo = req.body;
     const fileInfo = req.file;
-
     const isOk = await UserService.insertMusician(musicianInfo, fileInfo);
     isOk
       ? res.status(201).json({
@@ -41,9 +40,4 @@ exports.user_register_post = async (req, res, next) => {
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
-};
-
-// klay로 토큰구매 (+ contract)
-exports.user_buytoken_post = async (req, res, next) => {
-  const { toAccount, amount } = req.body;
 };

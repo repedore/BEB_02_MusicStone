@@ -6,7 +6,7 @@ exports.test = async (req, res, next) => {
   try {
     // testDataSave
     // const data = await TestService.setAllTestData();
-    const data = await TestService.getUser();
+    const data = await TestService.insertMusicians();
     // const data = await TestService.getTestData({ name: "test" });
     // const data = await TestService.getAllDataInTestTable();
 
