@@ -47,7 +47,7 @@ export function RegisterStone() {
       formData.append("stoneName", stoneName);
       formData.append("account", account);
       formData.append("description", description);
-      formData.append("file", stonefile);
+      formData.append("stonefile", stonefile);
       formData.append("lyricist", lyricist);
       formData.append("composer", composer);
       formData.append("lyrics", lyrics);

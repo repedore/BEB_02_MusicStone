@@ -66,7 +66,7 @@ const insertStone = async (stoneInfo, fileInfo) => {
       category,
       albumId,
     } = stoneInfo;
-    const { filename, realfilename, filepath } = fileInfo;
+    const { filename, originalname, path } = fileInfo;
     // account로 UserModel에서 musician_id찾기
     const musicianId = await UserModel.findOne(
       { account: account },
@@ -83,8 +83,8 @@ const insertStone = async (stoneInfo, fileInfo) => {
       lyrics,
       category,
       filename,
-      realfilename,
-      filepath,
+      realfilename: originalname,
+      filepath: path,
     });
     return await Stone.save();
   } catch (e) {
@@ -93,14 +93,15 @@ const insertStone = async (stoneInfo, fileInfo) => {
 };
 
 // getSellStoneList (+ 검색, errorhandling)
-const getSellStone = async (listInfo) => {
-  const { startIndex, endIndex, keyword, userId } = listInfo;
+const getSellStone = async (userId, listInfo) => {
+  const { startIndex, endIndex, keyword } = listInfo;
   try {
+    console.log(listInfo);
     let sellList = [];
     if (keyword === undefined || keyword === "") {
       sellList = await TradeModel.find()
         .skip(startIndex - 1)
-        .limit(endIndex);
+        .limit(endIndex - startIndex + 1);
     } else {
       const regex = (pattern) => new RegExp(`.*${pattern}.*`);
       const keywordRegex = regex(keyword);
@@ -110,7 +111,9 @@ const getSellStone = async (listInfo) => {
       const stoneIdList = (await StoneModel.find(query, { id: 1 })).map(
         (el) => el.id
       );
-      //검색어로 검색한 stone_id가 여러개가 나오는 경우 TradeStone에서 가져오기
+      console.log(stoneIdList);
+
+      // 검색어로 검색한 stone_id가 여러개가 나오는 경우 TradeStone에서 가져오기
       // 이 때, 하나의 stone_id에서도 여러가지의 TradeStone정보가 나올 수 있다.
     }
     return sellList;

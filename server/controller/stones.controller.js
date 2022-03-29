@@ -40,6 +40,8 @@ exports.stones_mystone_post = async (req, res, next) => {
 exports.stones_register_post = async (req, res, next) => {
   const stoneInfo = req.body;
   const fileInfo = req.file;
+  console.log(req.file);
+  console.log(req.body);
   try {
     const isOk = await StoneService.insertStone(stoneInfo, fileInfo);
     isOk
@@ -53,10 +55,14 @@ exports.stones_register_post = async (req, res, next) => {
 // 판매등록 되어 있는 스톤 요청한 개수만큼 반환
 exports.stones_buystone_get = async (req, res, next) => {
   try {
+    const userId = req.params.user_id;
     const listInfo = req.query;
-    const sellStones = await StoneService.getSellStone(listInfo);
+    console.log(listInfo);
+    const sellStones = await StoneService.getSellStone(userId, listInfo);
+    console.log(sellStones);
     res.status(201).json({ data: sellStones });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: e.message });
   }
 };
@@ -72,7 +78,7 @@ exports.stones_info_get = async (req, res, next) => {
   }
 };
 
-// 거래중인 스톤의 상세내용
+// 거래중인 스톤의 상세내용 DB저장
 exports.stones_tradestone_get = async (req, res, next) => {
   try {
     const stoneId = req.params.musicstone_id;
@@ -83,7 +89,7 @@ exports.stones_tradestone_get = async (req, res, next) => {
   }
 };
 
-// stone 구매 눌렀을때 구매 요청
+// stone 구매 눌렀을때 구매 요청( 거래 성공시 db내용 변경 )
 exports.stones_tradestone_post = async (req, res, next) => {
   try {
     const tradeInfo = req.body;

@@ -15,7 +15,7 @@ const MusicianSchema = new Schema({
   image: { type: String, default: "None" },
   description: { type: String, default: "None" },
   like: { type: [Number], default: [] },
-  snsList: { type: [Object], default: [] },
+  sns_list: { type: [Object], default: [] },
   filename: String,
   realfilename: String,
   filepath: String,

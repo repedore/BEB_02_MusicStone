@@ -22,17 +22,19 @@ const getUserInfo = async (id) => {
 
 // registMusician
 const insertMusician = async (musicianInfo, fileInfo) => {
-  const { userId, KName, EName, email, description } = stoneInfo;
-  const { filename, realfilename, filepath } = fileInfo;
-  // 먼저 musiciaon에 넣고
+  const { userId, KName, EName, email, description, snsList } = musicianInfo;
+  const { filename, originalname, path } = fileInfo;
+  console.log(typeof snsList);
+  // 먼저 musician에 넣고 id값 User에 musician_id로 업데이트
   const Musician = new MusicianModel({
     name_korea: KName,
     name_english: EName,
     email,
     description,
-    filename,
-    realfilename,
-    filepath,
+    filename: filename,
+    sns_list: [snsList],
+    realfilename: originalname,
+    filepath: path,
   });
   const isIn = await Musician.save();
   // musiciain id 가져와서 user에 업데이트 해주기

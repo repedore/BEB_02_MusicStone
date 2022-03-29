@@ -8,7 +8,7 @@ const getMusicians = async (musicianReq) => {
     if (keyword === undefined || keyword === "") {
       musicianList = await MusicianModel.find()
         .skip(startIndex - 1)
-        .limit(endIndex);
+        .limit(endIndex - startIndex + 1);
     } else {
       const regex = (pattern) => new RegExp(`.*${pattern}.*`);
       const keywordRegex = regex(keyword);
@@ -20,7 +20,7 @@ const getMusicians = async (musicianReq) => {
       };
       musicianList = await MusicianModel.find(query)
         .skip(startIndex - 1)
-        .limit(endIndex);
+        .limit(endIndex - startIndex + 1);
     }
     return musicianList;
   } catch (e) {
@@ -66,11 +66,6 @@ const updateLike = async (musicianId, userId, isLike) => {
   try {
     let isOk;
     if (isLike) {
-      isOk = await MusicianModel.updateOne(
-        { id: musicianId },
-        { $pull: { like: userId } }
-      );
-    } else {
       if (userId !== null && userId !== "" && userId !== undefined) {
         isOk = await MusicianModel.update(
           { id: musicianId },
@@ -79,6 +74,11 @@ const updateLike = async (musicianId, userId, isLike) => {
       } else {
         isOk = { acknwledged: false };
       }
+    } else {
+      isOk = await MusicianModel.updateOne(
+        { id: musicianId },
+        { $pull: { like: userId } }
+      );
     }
     return isOk;
   } catch (e) {

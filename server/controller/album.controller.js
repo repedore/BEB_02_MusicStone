@@ -16,10 +16,9 @@ exports.album_album_id_get = async (req, res, next) => {
 // Album isLike
 exports.album_album_id_post = async (req, res, next) => {
   try {
-    const albumId = req.params.album_id;
-    const userId = req.body.userId;
-    const isLike = req.body.isLike;
-    const isOk = await AlbumService.updateLike(albumId, userId, isLike);
+    const likeInfo = req.body;
+    console.log(likeInfo);
+    const isOk = await AlbumService.updateLike(likeInfo);
     isOk.acknowledged
       ? res.status(201).json({ message: "ok" })
       : res.status(500).json({ message: "fail" });
