@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
 import SellStone from '../../components/SellStone';
 import TradeStoneModal from '../../components/TradeStoneModal';
+import PreviewStream from '../../components/PreviewStream';
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
@@ -15,7 +14,6 @@ export function TradeStone() {
     const modalRef = useRef();
     const { id } = useParams();
     const [klayPrice, setKlayPrice] = useState(0);
-    const [isPlay, setIsPlay] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTrade, setModalTrade] = useState("");
     //dummyData
@@ -46,24 +44,11 @@ export function TradeStone() {
         setModalTrade(trade);
         setModalOpen(true);
     }
-    const handlePlayBtn = () => {
-        setIsPlay(!isPlay);
-    }
     return (
         <Body>
             {console.log(StoneData)}
             <StoneContainer>
-                <StreamingWrapper>
-                    <Play>
-                        <ImgBox>
-                            <Img src={StoneData.img} alt={StoneData.name} animation={isPlay ? "rotate_image 10s linear infinite" : ""} />
-                        </ImgBox>
-                        <BtnWrapper>
-                            <StreamingBtn onClick={() => handlePlayBtn()}>{isPlay ? <PauseIcon /> : <PlayArrowIcon />}</StreamingBtn>
-                        </BtnWrapper>
-                    </Play>
-                    <Timer>나중에 시간 카운트 0:43 / 3:10</Timer>
-                </StreamingWrapper>
+                <PreviewStream stone={StoneData} />
                 <StoneWrapper>
                     <Title>
                         {StoneData.name} - {StoneData.musician_name}
@@ -151,50 +136,6 @@ height: 350px;
 margin: 0 auto;
 display flex;
 `;
-const StreamingWrapper = styled.div`
-width: 100%;
-height: 100%;
-display:flex;
-flex-direction: column;
-`;
-const Play = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-`
-const ImgBox = styled.div`
-margin: 50px;
-height: 300px;
-width: 300px;
-position:absolute;
-border-radius: 70%;
-overflow: hidden;
-`;
-const Timer = styled.div`
-color: #ABABAB;
-height: 50px;
-text-align: center;
-`;
-const BtnWrapper = styled.div`
-position:absolute;
-`;
-const StreamingBtn = styled.button`
-background-color:#333333;
-width: 60px;
-height: 60px;
-border-radius: 30px 30px 30px 30px;
-cursor: pointer;
-color: white;
-`;
-const Img = styled.img`
-width: 300px;
-height: 300px;
--webkit-user-drag: none;
-animation: ${({ animation }) => animation};
-transform-origin: 50% 50%;
-`
 const StoneWrapper = styled.div`
 height: 100%;
 width: 100%;

@@ -7,9 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { loadMusicianList, resetMusicianList } from '../../actions';
 
-//아직 서버데이터 없어서 임의로 만든 dummyData
-import dummyData from "../../dummyData/dummyData";
-
 export function Musician() {
   /* state
   loading: 로딩중 true 로딩완료 false
@@ -21,20 +18,18 @@ export function Musician() {
   const [loadAll, setLoadAll] = useState(false);
   const [startIdx, setStartIdx] = useState(1);
   const [keyword, setKeyword] = useState("");
-
   //scroll체크
   const [ref, inView] = useInView();
+
+  //redux
   const musicianList = useSelector((state) => state.musicianReducer);
   const dispatch = useDispatch();
   const keywordInput = useRef();
 
+  //서버에서 musician 데이터 불러오기
   const loadMusicians = () => {
     const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
-    const req = `${server}/musician?startIndex=${startIdx}&endIndex=${startIdx + 20}&keyword=${keyword}`
-
-    console.log(keyword);
-    console.log(startIdx);
-    console.log(loadAll);
+    const req = `${server}/musician?startIndex=${startIdx}&endIndex=${startIdx + 19}&keyword=${keyword}`
 
     axios.get(req)
       .then((res) => {
@@ -58,12 +53,6 @@ export function Musician() {
   }
 
   useEffect(() => {
-    //페이지 로딩시 초기화
-    dispatch(resetMusicianList());
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
     // 보여줄 결과가 남아 있을때 스크롤이 마지막이고 로딩 중이 아니면 load
     if (inView && !loading && !loadAll && startIdx !== 1) {
       loadMusicians();
@@ -74,10 +63,13 @@ export function Musician() {
   useEffect(() => {
     setLoadAll(false);
   }, [keyword]);
+
   useEffect(() => {
     setStartIdx(1);
-    dispatch(resetMusicianList());
-    loadMusicians();
+    if (!loadAll) {
+      dispatch(resetMusicianList());
+      loadMusicians();
+    }
   }, [loadAll]);
 
   return (
