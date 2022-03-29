@@ -21,11 +21,10 @@ export function RegisterAlbum() {
     if (albumName && account && albumImg && description) {
       const formData = new FormData();
       formData.append("albumName", albumName);
-      formData.append("account", account);
-      formData.append("albumImg", albumImg);
+      formData.append("albumfile", albumImg);
       formData.append("description", description);
       await axios
-        .post("http://localhost:12367/album/register", formData, {
+        .post(`http://localhost:12367/album/register/${account}`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -54,7 +53,7 @@ export function RegisterAlbum() {
             className="fileinput"
             type="file"
             onChange={(e) => onChangeAlbumImg(e)}
-            name="stonefile"
+            name="albumfile"
           />
         </div>
         <div className="registertext">composer</div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import SNSList from '../components/SNSList';
+import SNSList from "../components/SNSList";
 
 export function RegisterMusician() {
   const [KName, setKName] = useState("");
@@ -32,6 +32,7 @@ export function RegisterMusician() {
   const onChangeDescription = (e) => {
     setDescription(e.target.value);
   };
+  // userId 추가
   const saveMusician = async () => {
     if ((KName || EName) && account && email && img && description) {
       const formData = new FormData();
@@ -39,7 +40,7 @@ export function RegisterMusician() {
       formData.append("EName", EName);
       formData.append("account", account);
       formData.append("email", email);
-      formData.append("img", img);
+      formData.append("musicianfile", img);
       formData.append("description", description);
       formData.append("snsList", snsList);
       await axios
@@ -66,16 +67,19 @@ export function RegisterMusician() {
   };
   const addSNS = () => {
     setCount(count + 1);
-  }
+  };
   useEffect(() => {
     if (count) {
-      setSnsList([...snsList, {
-        type: "homepage",
-        url: "",
-        idx: count
-      }]);
+      setSnsList([
+        ...snsList,
+        {
+          type: "homepage",
+          url: "",
+          idx: count,
+        },
+      ]);
     }
-  }, [count])
+  }, [count]);
   return (
     <div>
       <div id="registerpage">
@@ -133,10 +137,21 @@ export function RegisterMusician() {
             onChange={onChangeDescription}
           ></textarea>
         </div>
-        <div id='sns_wrapper'>
-          <div className='registertext'>SNS <button className='snsAddBtn' onClick={addSNS}>+</button></div>
-          <ul id='snsList'>
-            {snsList.map((sns) => <SNSList snsList={snsList} setSnsList={setSnsList} idx={sns.idx} />)}
+        <div id="sns_wrapper">
+          <div className="registertext">
+            SNS{" "}
+            <button className="snsAddBtn" onClick={addSNS}>
+              +
+            </button>
+          </div>
+          <ul id="snsList">
+            {snsList.map((sns) => (
+              <SNSList
+                snsList={snsList}
+                setSnsList={setSnsList}
+                idx={sns.idx}
+              />
+            ))}
           </ul>
         </div>
         <div>

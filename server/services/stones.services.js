@@ -54,17 +54,17 @@ const insertTrade = async (sellStoneInfo, userId) => {
 };
 
 // insertStone
-const insertStone = async (stoneInfo, fileInfo) => {
+const insertStone = async (stoneInfo, fileInfo, account) => {
   try {
     const {
       stoneName,
-      account,
       description,
       lyricist,
       composer,
       lyrics,
       category,
       albumId,
+      totalBalance,
     } = stoneInfo;
     const { filename, originalname, path } = fileInfo;
     // account로 UserModel에서 musician_id찾기
@@ -83,8 +83,9 @@ const insertStone = async (stoneInfo, fileInfo) => {
       lyrics,
       category,
       filename,
-      realfilename: originalname,
-      filepath: path,
+      originalname,
+      path,
+      totalBalance,
     });
     return await Stone.save();
   } catch (e) {

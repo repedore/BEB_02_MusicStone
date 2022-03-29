@@ -62,25 +62,22 @@ const updateLike = async (likeInfo) => {
 };
 
 // insertAlbum
-const insertAlbum = async (albumInfo, fileInfo) => {
+const insertAlbum = async (albumInfo, fileInfo, account) => {
   try {
-    const { albumName, userId, description } = albumInfo;
-    const { filename, realfilename, filepath } = fileInfo;
-    //userId로 musicianId가져오기
-    const musician = await UserModel.findOne(
-      { id: userId },
-      { musician_id: 1 }
-    );
+    const { albumName, description } = albumInfo;
+    const { filename, originalname, path } = fileInfo;
+    //account로 musicianId가져오기
+    const musician = await UserModel.findOne({ account }, { musician_id: 1 });
+    console.log(musician.musician_id);
     const Album = new AlbumModel({
       musician_id: musician.musician_id,
       name: albumName,
       description,
       filename,
-      realfilename,
-      filepath,
+      originalname,
+      path,
     });
-    const isIn = await Album.save();
-    return;
+    return await Album.save();
   } catch (e) {
     throw Error(e);
   }
