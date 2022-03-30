@@ -16,7 +16,7 @@ export function PlayList() {
   const getPlayList = async () => {
     alert("getplaylist");
     await axios
-      .get(`http://localhost:12367/playlist?${account}`)
+      .get(`http://localhost:12367/playlist/${account}`)
       .then((res) => {
         setPlayList(res.data);
       })
@@ -35,7 +35,7 @@ export function PlayList() {
   const handleStoneId = (e) => {
     console.log(`e.value: ${e.target.value}`);
     setStoneId(e.target.value);
-    setStoneSrc(`http://localhost:4000/streaming/${e.target.value}`);
+    setStoneSrc(`http://localhost:4000/streaming/{stoneId}`);
   };
 
   const handleStreaming = (e) => {
