@@ -1,5 +1,5 @@
 var { UserModel, MusicianModel } = require("../models/index");
-const CaverExtKAS = require("caver-js-ext-kas");
+
 // insertUser and getUserId
 const getUserId = async (account) => {
   try {
@@ -32,6 +32,7 @@ const insertMusician = async (musicianInfo, fileInfo) => {
     name_english: EName,
     email,
     description,
+    playlist_id_array,
     sns_list: [snsList],
     filename,
     originalname,
@@ -47,12 +48,6 @@ const insertMusician = async (musicianInfo, fileInfo) => {
         { $addToSet: { musician_id: isIn.id } }
       )
     : {};
-};
-
-const addMinter = async (account) => {
-  const caver = new CaverExtKAS();
-  const chainId = 1001;
-  caver.initKASAPI();
 };
 
 module.exports = {

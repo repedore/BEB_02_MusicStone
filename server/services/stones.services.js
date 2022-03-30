@@ -57,16 +57,17 @@ const insertTrade = async (sellStoneInfo, userId) => {
 const insertStone = async (stoneInfo, fileInfo, account) => {
   try {
     const {
+      album,
       stoneName,
       description,
       lyricist,
       composer,
       lyrics,
       category,
-      albumId,
       totalBalance,
     } = stoneInfo;
     const { filename, originalname, path } = fileInfo;
+    //console.log(fileInfo);
     // account로 UserModel에서 musician_id찾기
     const musicianId = await UserModel.findOne(
       { account: account },
@@ -76,7 +77,7 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
     const Stone = new StoneModel({
       musician_id: musicianId.musician_id,
       name: stoneName,
-      album_id: albumId,
+      album_id: album,
       description,
       lyricist,
       composer,
@@ -87,6 +88,7 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
       path,
       totalBalance,
     });
+    console.log(await Stone.save());
     return await Stone.save();
   } catch (e) {
     throw Error(e);
