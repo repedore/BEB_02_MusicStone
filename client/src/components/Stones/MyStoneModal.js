@@ -1,10 +1,14 @@
 import React, { useState } from "react"
+import Caver from "caver-js";
 import styled from "styled-components";
+import sft_abi from '../../abi/SFT';
+import service_abi from '../../abi/Service';
 
-
-const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen }) => {
+const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account }) => {
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
+    const caver = new Caver(window.klaytn);
+
     const handleClose = () => {
         setQuantity(0);
         setPrice(0);
@@ -26,8 +30,93 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen }) => {
                 break;
         }
     }
-    const handleSell = () => {
-        console.log('판매!')
+
+    //현재 서버에서 리스트 받아오는게 아직이라 하드코딩값 판매등록됨
+    const handleSell = async () => {
+        const sft = new caver.klay.Contract(sft_abi, process.env.REACT_APP_SFT_ADDRESS);
+        const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
+
+        if (account.isConnect) {
+            const tx = await sft.methods
+                .isApprovedForAll(account.account, process.env.REACT_APP_SERVICE_ADDRESS)
+                .call()
+                .then((approved) => {
+                    //아직 승인받지 않은 경우에는 setApprovalForAll 수행
+                    if (!approved) {
+                        alert('판매 승인을 먼저 진행해주세요.')
+                        sft.methods
+                            .setApprovalForAll(process.env.REACT_APP_SERVICE_ADDRESS, true)
+                            .send({
+                                from: account.account,
+                                gas: 1000000,
+                            })
+                            .then(console.log)
+                    } else {
+                        console.log(`approved : ${approved}`);
+
+                        //item 등록 현재는 서버에서 mystone 받아오는게 없어서 하드코딩된거 판매등록함
+                        //1번 토큰이 제(찬영) 계정으로 민팅한거라 판매등록 테스트하려면 바꿔줘야
+
+                        try {
+                            service.methods
+                                //(tokenId, unitPrice, amount)
+                                .addItemToMarket(1, 10, 10)
+                                .send({
+                                    from: account.account,
+                                    gas: 1000000,
+                                })
+                                .then(console.log)
+                        } catch (e) {
+                            console.log(e)
+                        }
+
+                        // try {
+                        //     service.methods
+                        //         //(itemId), amount)
+                        //         .purchaseItem(0, 3)
+                        //         .send({
+                        //             from: account.account,
+                        //  value = amount * unitPrice
+                        //             value: 30,
+                        //             gas: 1000000,
+                        //         })
+                        //         .then(console.log)
+                        // } catch (e) {
+                        //     console.log(e)
+                        // }
+
+                        //등록된 itemId 확인용
+                        // service.methods
+                        //     .getMarketItemById(0)
+                        //     .call()
+                        //     .then(console.log)
+
+                        //계정이 등록한 item 확인용
+                        // service.methods
+                        //     .getItemsBySeller(account.account)
+                        //     .call()
+                        //     .then(console.log)
+
+                        //balance 확인용
+                        // sft.methods
+                        //     .balanceOf(account.account, 0)
+                        //     .call()
+                        //     .then(console.log)
+
+                        //mintTest용
+                        // service.methods
+                        //     .mintSFT(1000)
+                        //     .send({
+                        //         from: account.account,
+                        //         gas: 1000000,
+                        //     })
+                        //     .then(console.log)
+
+                    }
+                })
+        } else {
+            alert("지갑을 연결해주세요.");
+        }
     }
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
@@ -83,7 +172,6 @@ display:${({ display }) => display};;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 backdrop-filter: blur(1.5px);
 `;
 const ModalWindow = styled.div`
@@ -114,7 +202,7 @@ span{
     float: right;
     padding-right: 10px;
     text-shadow: 1px 1px 2px gray;
-}   
+}
 `;
 const Content = styled.div`
 width: 100%;
@@ -174,7 +262,7 @@ text-align:right;
 const PriceInput = styled(QuantityInput)`
 -webkit-outer-spin-button {
     -webkit-appearance: none;
-    margin: 0;  
+    margin: 0;
 }
 -webkit-inner-spin-button {
   -webkit-appearance: none;

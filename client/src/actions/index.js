@@ -16,13 +16,10 @@ export const resetMusicianList = () => {
         type: RESET_MUSICIAN_LIST
     }
 }
-export const loadStoneList = (stones, startIdx) => {
+export const loadStoneList = (stones) => {
     return {
         type: LOAD_STONE_LIST,
-        payload: {
-            stones,
-            startIdx
-        }
+        payload: stones
 
     }
 }

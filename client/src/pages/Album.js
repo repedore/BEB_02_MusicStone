@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react"
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,17 +11,35 @@ import PreviewStream from '../components/PreviewStream';
 export const Album = () => {
     const { id } = useParams();
     const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+    const account = useSelector(state => state.accountReducer)
 
     const [isLike, setIsLike] = useState(false);
     const [selectNum, setSelectNum] = useState(0);
     const [albumData, setAlbumData] = useState(initialState);
-    const albumInfo = albumData.albumInfo[0];
-    const stoneList = albumData.stoneList.map((stone) => Object.assign(stone, { image: `${albumInfo.image}` }));
+    const albumInfo = albumData.albumInfo;
+    //    const stoneList = albumData.stones.map((stone) => Object.assign(stone, { image: `${albumInfo.image}` }));
+    const stoneList = albumData.stones.map((stone) => Object.assign(stone, { image: `${albumInfo.image}` }));
 
-    const handleLikeBtn = (type, id) => {
-        const req = ``
-        console.log(albumInfo.like)
-        setIsLike(!isLike);
+
+    const handleLikeBtn = (type, likeId, isLike) => {
+        const req = `${server}/album/${id}`;
+        if (account.isConnect) {
+            axios.post((req), {
+                type,
+                userId: account.userId,
+                likeId,
+                isLike
+            })
+                .then(() => {
+                    if (type === "album") {
+                        setIsLike(isLike)
+                    } else {
+                        loadData();
+                    }
+                })
+        } else {
+            alert("지갑을 연결해주세요.");
+        }
     }
     const handleStoneClick = (idx) => {
         setSelectNum(idx);
@@ -29,7 +48,7 @@ export const Album = () => {
     const showlike = () => {
         return (isLike
             ? <div>
-                <FavoriteIcon /><span>좋아요 {albumInfo.like.length}</span>
+                <FavoriteIcon /><span>좋아요  {albumInfo.like.length}</span>
             </div>
 
             : <div>
@@ -42,26 +61,26 @@ export const Album = () => {
     }
     const showStones = () => {
         return (stoneList.map((stone, idx) => {
-            return <AlbumStone key={idx} stone={stone} selectNum={selectNum} idx={idx} handleStoneClick={handleStoneClick} />
+            return <AlbumStone key={idx} stone={stone} selectNum={selectNum} idx={idx} handleStoneClick={handleStoneClick} handleLikeBtn={handleLikeBtn} isConnect={account.isConnect} />
         }))
     }
-
-    useEffect(() => {
-        const req = `${server}/album/${id}`;
+    const loadData = () => {
+        const req = `${server}/album/${id}?userId=${account.userId}`;
         axios.get(req)
-            .then((res) => {
-                setAlbumData(res.data)
-            })
-    }, [isLike])
+            .then((res) => { setAlbumData(res.data) })
+    }
+
+    useEffect(loadData, [account, isLike])
 
     useEffect(() => {
-        setIsLike(!albumData.isLike);
+        console.log(albumData)
+        setIsLike(albumData.isLike);
     }, [albumData])
 
     return (
         albumInfo
             ? (
-                <Body>
+                <Body Body >
                     <AlbumContainer>
                         <ImgWrapper>
                             <Img src={albumInfo.image} alt={albumInfo.musician_id} />
@@ -70,8 +89,7 @@ export const Album = () => {
                             <Title>{albumInfo.name}</Title>
                             <InfoBox>
                                 <Info>
-                                    {/* 현재 userId값 받아오기 힘들어서 임의로 1로 고정*/}
-                                    <Like onClick={() => handleLikeBtn("album", 1)}>
+                                    <Like onClick={() => handleLikeBtn("album", id, !isLike)}>
                                         {showlike()}
                                     </Like>
                                     {/* 현재 서버에서 id값만 받아올 수 있어서 임시로 이름대신 */}
@@ -89,26 +107,25 @@ export const Album = () => {
                         <PreviewStream stone={stoneList[selectNum]} />
                         <StoneWrapper>
                             <StoneTitle>
-                                <h2>{stoneList[selectNum].name}</h2>
+                                <h2>{/*stoneList[selectNum].name*/}</h2>
                             </StoneTitle>
                             <StoneInfo>
                                 {/* 현재 서버에서 장르값만 받아올 수 있어서 임시로 */}
                                 <div>작사 : Dummy</div>
                                 <div>작곡 : Dummy</div>
-                                <div>장르 : {stoneList[selectNum].category}</div>
+                                <div>장르 : {/*stoneList[selectNum].category*/}</div>
                                 <div>가사 : Dummy </div>
                             </StoneInfo>
                         </StoneWrapper>
                     </StoneContainer>
-                </Body>)
+                </Body >)
             : null
     )
 }
 //초기 state
 const initialState = {
-    "albumInfo": [
-    ],
-    "stoneList": [],
+    "albumInfo": undefined,
+    "stones": [],
     "isLike": false
 };
 

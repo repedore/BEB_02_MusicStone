@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react"
-import axios from "axios";
+import { useSelector } from "react-redux";
+import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Slider from "react-slick";
@@ -17,7 +18,7 @@ export function MusicianInfo() {
   const [musicianData, setMusicianData] = useState(initialState);
   const musicianInfo = musicianData.musicianInfo[0];
   const albumInfo = musicianData.albumInfo;
-
+  const account = useSelector(state => state.accountReducer)
 
   //Slider 설정
   const settings = {
@@ -32,11 +33,15 @@ export function MusicianInfo() {
 
   const handleLikeBtn = () => {
 
-    axios.post(`${server}/musician/${id}`, {
-      "userId": 1,
-      "isLike": isLike
-    })
-      .then((res) => setIsLike(!isLike))
+    if (account.isConnect) {
+      axios.post(`${server}/musician/${id}`, {
+        "userId": account.userId,
+        "isLike": !isLike
+      })
+        .then((res) => setIsLike(!isLike))
+    } else {
+      alert('지갑을 연결해 주세요');
+    }
   }
 
   const showSNS = () => {
@@ -69,15 +74,12 @@ export function MusicianInfo() {
   }
 
   useEffect(() => {
-    //현재 userId값 어딨는지 몰라서 임의로 임시값 넣어놓음
-    const tempUserId = 1;
-    const req = `${server}/musician/${id}?userId=${tempUserId}`
-
+    const req = `${server}/musician/${id}?userId=${account.userId}`
     axios.get(req)
       .then((res) => {
         setMusicianData(res.data.data);
       })
-  }, [isLike])
+  }, [isLike, account])
 
   useEffect(() => {
     setIsLike(musicianData.isLike)
@@ -87,6 +89,7 @@ export function MusicianInfo() {
     musicianInfo
       ? (
         <Body>
+          {console.log(account)}
           <InfoContainer>
             <ImgWrapper>
               <Img src={musicianInfo.image} alt={showMusicianName()} />

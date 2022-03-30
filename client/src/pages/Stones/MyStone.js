@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MyStoneCard from '../../components/Stones/MyStoneCard';
 import MyStoneModal from '../../components/Stones/MyStoneModal';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 //아직 서버데이터 없어서 임의로 만든 dummyData
 import dummyData from "../../dummyData/dummyData";
 
 export function MyStone() {
+  /*
+  stones : 내가 보유한 stone정보
+  modalOpen : 판매 modal창 open 여부
+  modalStone : 현재 열린 modal창의 stone 정보
+  klayPrice : 현재 KLAY의 거래가격(빗썸기준)
+  totalPages : 페이지당 8개를 보여주는 기준으로 내 보유 stone들의 페이지 수
+  curPage : 현재 선택된 page
+  */
+  const [stones, setStones] = useState(dummyData.mystones);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStone, setModalStone] = useState("");
   const [klayPrice, setKlayPrice] = useState(0);
+  const [totalPages, setTotalPages] = useState(3);
+  const [curPage, setCurPage] = useState(1);
+
+
+  const account = useSelector((state) => state.accountReducer);
 
   const handleSellBtn = (stone) => {
     setModalOpen(true);
@@ -25,9 +42,36 @@ export function MyStone() {
   }, []);
 
   const showMyStones = () => {
-    return (dummyData.mystones.map((stone, idx) => {
-      return <MyStoneCard stone={stone} handleSellBtn={handleSellBtn} />
-    }))
+    return (stones.filter((stone, idx) => (idx >= (curPage - 1) * 8) && idx < (curPage - 1) * 8 + 8).map((stone) => <MyStoneCard stone={stone} handleSellBtn={handleSellBtn} />)
+    )
+  }
+
+  const pageReduce = () => {
+    if (curPage > 1) {
+      setCurPage(curPage - 1);
+    }
+  }
+  const pageIncrese = () => {
+    if (curPage < totalPages) {
+      setCurPage(curPage + 1);
+    }
+  }
+
+  const changePage = (page) => {
+    setCurPage(page);
+  }
+
+  const drawPageIndex = () => {
+    const result = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === curPage) {
+        result.push(<span key={i} ><b> {i}</b> </span>);
+      } else {
+        result.push(<span key={i} onClick={() => changePage(i)}> {i} </span>);
+      }
+    }
+    return result
+
   }
 
   return (
@@ -42,13 +86,22 @@ export function MyStone() {
           </RegisterStone>
         </Header>
         <StonesWrapper>
-          {console.log(dummyData.mystones)}
           {dummyData.mystones.length
             ? showMyStones()
             : <div>보유한 스톤이 없습니다.</div>}
         </StonesWrapper>
+        <PageSelector>
+          {totalPages > 1
+            ? <PagingWapper>
+              <span onClick={pageReduce}><ChevronLeftIcon /></span>
+              {drawPageIndex()}
+              <span onClick={pageIncrese}><ChevronRightIcon /></span>
+            </PagingWapper>
+            : null}
+
+        </PageSelector>
       </StoneContainer>
-      <MyStoneModal modalStone={modalStone} modalOpen={modalOpen} setModalOpen={setModalOpen} klayPrice={klayPrice} />
+      <MyStoneModal modalStone={modalStone} modalOpen={modalOpen} setModalOpen={setModalOpen} klayPrice={klayPrice} account={account} />
     </Body>
   );
 }
@@ -59,7 +112,7 @@ export function MyStone() {
 //여기부터 styled
 const Body = styled.div`
 height: 100%;
-margin-top: 2rem;
+margin-top: 1rem;
 `;
 
 const StoneContainer = styled.div`
@@ -96,4 +149,19 @@ margin: 0 auto;
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
+`;
+
+const PageSelector = styled.div`
+width: 980px;
+margin: 10px auto;
+display: flex;
+justify-content: center;
+`;
+const PagingWapper = styled.div`
+display: flex;
+align-items: center;
+span{
+  margin: 0 5px;
+  cursor: pointer;
+}
 `;
