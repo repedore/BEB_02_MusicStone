@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Main, Album, Mypage, PlayList, RegisterMusician } from "./pages";
 import BuyToken from "./pages/BuyToken";
@@ -14,6 +14,7 @@ import axios from "axios";
 function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.accountReducer);
+  const [userId, setUserId] = useState("");
   const getUserId = async (account) => {
     alert(account);
     await axios
@@ -21,6 +22,7 @@ function App() {
       .then((res) => {
         dispatch({ type: "GET_USERID", userId: res.data.userId });
         console.log("userId 값 : " + res.data.userId);
+        setUserId(res.data.userId);
       })
       .catch((e) => alert(e));
   };

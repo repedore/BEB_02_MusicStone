@@ -3,6 +3,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import select from "react-select";
 import { Link } from "react-router-dom";
+import Caver from "caver-js";
+import service_abi from "../abi/Service";
 
 export default function RegisterStone() {
   const [stoneName, setStoneName] = useState("");
@@ -16,6 +18,10 @@ export default function RegisterStone() {
   const [category, setCategory] = useState("default");
   const [album, setAlbum] = useState("");
   const [albumName, setAlbumName] = useState([]);
+  const [SFTAmount, setSFTAmount] = useState("");
+  const caver = new Caver(window.klaytn);
+  var tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
+  var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
 
   const onChangeStoneName = (e) => {
     setStoneName(e.target.value);
@@ -35,7 +41,26 @@ export default function RegisterStone() {
   const onChangeLyrics = (e) => {
     setLyrics(e.target.value);
   };
-
+  const onChangeSFTAmount = (e) => {
+    setSFTAmount(e.target.value);
+  };
+  const mintSFT = async () => {
+    var myContract2 = new caver.klay.Contract(service_abi, serviceAddress);
+    const tx = await myContract2.methods
+      .mintSFT(SFTAmount)
+      .send({
+        type: "SMART_CONTRACT_EXECUTION",
+        from: state.account,
+        // value: caver.utils.toPeb(SFTAmount, "KLAY"),
+        gas: 1000000,
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const saveStone = async () => {
     if (
       // album &&
@@ -56,6 +81,7 @@ export default function RegisterStone() {
       formData.append("composer", composer);
       formData.append("lyrics", lyrics);
       formData.append("category", category);
+      formData.append("totalBalance", SFTAmount);
       await axios
         .post(`http://localhost:12367/stones/register/${account}`, formData, {
           headers: {
@@ -86,15 +112,17 @@ export default function RegisterStone() {
   };
   const getAlbum = async () => {
     await axios
-      .get(`http://localhost:12367/stones/register`)
+      .get(`http://localhost:12367/stones/${account}`)
       .then((res) => {
         setAlbumName(res.data.albumName);
+        console.log("album name " + res.data.albumName);
       })
       .catch((e) => alert(e));
   };
   return (
     <div>
       <div id="stoneregisterpage">
+        <button onClick={mintSFT}>mintSFT</button>
         <div>
           <span className="pagetitle">스톤 등록</span>
           <span>
@@ -112,6 +140,7 @@ export default function RegisterStone() {
           <div className="text">계정을 먼저 연결하세요.</div>
         )}
         <div>
+          <button onclick={getAlbum()}>getAlbum</button>
           <select
             className="Aselectbox"
             onChange={(e) => {
@@ -220,6 +249,11 @@ export default function RegisterStone() {
               </select>
             </div>
           </div>
+          <input
+            className="stonenameinput"
+            placeholder="등록할 SFT 개수를 입력해주세요."
+            onChange={onChangeSFTAmount}
+          ></input>
           <div>
             <button className="editbtn" onClick={saveStone}>
               등록

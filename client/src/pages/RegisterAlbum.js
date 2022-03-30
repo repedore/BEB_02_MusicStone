@@ -6,6 +6,7 @@ export function RegisterAlbum() {
   const [albumName, setAlbumName] = useState("");
   const [albumImg, setAlbumImg] = useState(null);
   const [description, setDescription] = useState("");
+  const [imgsrc, setImgsrc] = useState("");
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
   const onChangeAlbumName = (e) => {
@@ -13,6 +14,7 @@ export function RegisterAlbum() {
   };
   const onChangeAlbumImg = (e) => {
     setAlbumImg(e.target.files[0]);
+    setImgsrc(URL.createObjectURL(e.target.files[0]));
   };
   const onChangeDescription = (e) => {
     setDescription(e.target.value);
@@ -49,6 +51,16 @@ export function RegisterAlbum() {
         <div className="pagetitle">앨범 등록</div>
         <div>{state.isConnect ? state.account : "지갑을 연결하세요."}</div>
         <div>
+          {albumImg && (
+            <img
+              className="profileimg"
+              alt="sample"
+              src={imgsrc}
+              style={{ margin: "auto" }}
+            />
+          )}
+        </div>
+        <div>
           <input
             className="fileinput"
             type="file"
@@ -56,7 +68,7 @@ export function RegisterAlbum() {
             name="albumfile"
           />
         </div>
-        <div className="registertext">composer</div>
+        <div className="registertext">album name</div>
         <input
           className="stonenameinput"
           type="text"
