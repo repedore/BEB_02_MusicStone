@@ -1,5 +1,5 @@
 const UserService = require("../services/user.services");
-
+//const serviceContract = require("../contracts/serviceContract");
 // userId 반환
 exports.user_account_get = async (req, res, next) => {
   try {
@@ -28,15 +28,21 @@ exports.user_register_post = async (req, res, next) => {
     const musicianInfo = req.body;
     const fileInfo = req.file;
     const isOk = await UserService.insertMusician(musicianInfo, fileInfo);
-    isOk
-      ? res.status(201).json({
-          message: "뮤지션 등록이 완료되었습니다.",
-          success: true,
-        })
-      : res.status(500).json({
-          message: "이미 등록된 email 입니다.",
-          success: false,
-        });
+    //serviceContract.addMinter(musicianInfo.address//);
+    console.log(isOk);
+    if (isOk === "Double") {
+      res.status(200).json({
+        message: "이미 뮤지션 등록이 되어있습니다.",
+        success: false,
+      });
+    } else if (isOk === {}) {
+      res.status(500).json({ message: e.message });
+    } else {
+      res.status(201).json({
+        message: "뮤지션 등록이 완료되었습니다.",
+        success: true,
+      });
+    }
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

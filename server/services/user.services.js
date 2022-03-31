@@ -1,4 +1,4 @@
-var { UserModel, MusicianModel } = require("../models/index");
+const { UserModel, MusicianModel } = require("../models/index");
 
 // insertUser and getUserId
 const getUserId = async (account) => {
@@ -20,34 +20,31 @@ const getUserInfo = async (id) => {
   }
 };
 
-// registerMusician (+ Contract연결하기)
+// registerMusician (+ Contract연결하기, sns추가하기 )
 const insertMusician = async (musicianInfo, fileInfo) => {
-  const { userId, KName, EName, email, description, snsList, account } =
-    musicianInfo;
+  const { userId, KName, EName, email, description, account } = musicianInfo;
   const { filename, originalname, path } = fileInfo;
-  console.log(typeof snsList);
-  // 먼저 musician에 넣고 id값 User에 musician_id로 업데이트
-  const Musician = new MusicianModel({
-    name_korea: KName,
-    name_english: EName,
-    email,
-    description,
-    playlist_id_array,
-    sns_list: [snsList],
-    filename,
-    originalname,
-    path,
-  });
-  const isIn = await Musician.save();
-  // musiciain id 가져와서 user에 업데이트 해주기
-  // return 전 contract에 addMinter
-  // 체크
-  return isIn
-    ? await UserModel.updateOne(
-        { id: userId },
-        { $addToSet: { musician_id: isIn.id } }
-      )
-    : {};
+  const isMusician = (
+    await UserModel.findOne({ account }, { musician_id: 1, _id: 0 })
+  ).musician_id;
+  if (isMusician === 0) {
+    const Musician = new MusicianModel({
+      name_korea: KName,
+      name_english: EName,
+      email,
+      description,
+      filename,
+      originalname,
+      path,
+    });
+    const isIn = await Musician.save();
+    console.log(isIn);
+    return isIn !== {}
+      ? await UserModel.updateOne({ id: userId }, { musician_id: isIn.id })
+      : {};
+  } else {
+    return "Double";
+  }
 };
 
 module.exports = {
