@@ -1,39 +1,45 @@
-// require("dotenv").config();
-// const CaverExtKAS = require("caver-js-ext-kas");
-// const abi = require("./abi/Service");
-// console.log(address);
-// const caverExt = new CaverExtKAS();
-// const chainId = 1001; // 클레이튼 테스트 네트워크 접속 ID
-// caverExt.initKASAPI(
-//   chainId,
-//   process.env.ACCESS_KEY_ID,
-//   process.env.SECRET_ACCESS_KEY
-// ); //KAS console 초기화
+require("dotenv").config();
+const CaverExtKAS = require("caver-js-ext-kas");
+const abi = require("./abi/Service");
 
-// // caver.contract will work with KAS Wallet API or KeyringContainer.
-// const keyringContainer = new caverExt.keyringContainer();
-// const keyring = keyringContainer.keyring.createWithSingleKey(
-//   process.env.SERVER_ADDRESS,
-//   process.env.SERVER_PRIVATE_KEY
-// );
-// keyringContainer.add(keyring);
+const caverExt = new CaverExtKAS();
+const chainId = 1001;
+caverExt.initKASAPI(
+  chainId,
+  process.env.ACCESS_KEY_ID,
+  process.env.SECRET_ACCESS_KEY
+);
 
-// const contract = new caverExt.contract(
-//   abi,
-//   process.env.SERVICE_CONTRACT_ADDRESS
-// );
+const keyringContainer = new caverExt.keyringContainer();
+const keyring = keyringContainer.keyring.createWithSingleKey(
+  process.env.SERVER_ADDRESS,
+  process.env.SERVER_PRIVATE_KEY
+);
+keyringContainer.add(keyring);
 
-// const addMinter = async (address) => {
-//   contract.methods.isMinter(address).call().then(console.log);
-//   contract.setWallet(keyringContainer);
-//   contract.methods
-//     .addMinter(address)
-//     .send({ from: process.env.SERVER_ADDRESS, gas: 2000000 })
-//     .then((res) => {
-//       return res;
-//     });
-// };
+const contract = new caverExt.contract(
+  abi,
+  process.env.SERVICE_CONTRACT_ADDRESS
+);
 
-// module.exports = {
-//   addMinter,
-// };
+const addMinter = async (address) => {
+  contract.setWallet(keyringContainer);
+  return contract.methods
+    .addMinter(address)
+    .send({ from: process.env.SERVER_ADDRESS, gas: 2000000 });
+};
+
+const isMinter = async (address) => {
+  return contract.methods.isMinter(address).call();
+};
+
+const getUserDeposit = async (address) => {
+  const deposit = await contract.methods.getUserDeposit(address).call();
+  return caverExt.utils.fromPeb(`${deposit}`, "KLAY");
+};
+
+module.exports = {
+  addMinter,
+  isMinter,
+  getUserDeposit,
+};
