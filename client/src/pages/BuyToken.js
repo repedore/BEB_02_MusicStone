@@ -41,7 +41,6 @@ function BuyToken() {
   // 토큰 교환을 위한 토큰 수량 입력 이벤트(Klay & Token)
   const onChangeValue = (e) => {
     const { value, name } = e.target;
-    //console.log("e.target.value:"+value+"   e.target.name:"+name);
     //klay로 입력되면 Token 입력창에 토큰 교환비율에 따라 값을 계산해서 넣어준다.
     if (name === "klay") {
       setSwapAmount(() => ({
@@ -66,7 +65,6 @@ function BuyToken() {
   };
   const GetKlayBalance = async () => {
     if (state.isConnect) {
-      console.log("account : " + state.account);
       // caver 함수 중 현재 공개키의 klay양을 리턴하는 함수
       let bal = await caverExt.klay.getBalance(state.account);
       bal = caverExt.utils.fromPeb(bal, "KLAY");
@@ -149,7 +147,7 @@ function BuyToken() {
       .getUserDistribution(state.account)
       .call()
       .then((data) => {
-        console.log(caver.utils.fromPeb(data));
+        console.log(data);
         setRewardTokenBal(caver.utils.fromPeb(data));
       })
       .catch((err) => {
@@ -203,7 +201,6 @@ function BuyToken() {
     if (!isSend) {
       alert("오류로 인해 전송이 실패했습니다.");
     } else {
-      alert("토큰이 예치완료되었습니다.");
       saveDeposit();
     }
   };

@@ -82,13 +82,12 @@ export function PlayList() {
   };
 
   const handleStreaming = (e) => {
-    // console.log(audioRef.current.currentTime);
-    if (audioRef.current.currentTime > 5) {
+    console.log(audioRef.current.currentTime);
+    if (audioRef.current.currentTime > 60) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
   };
-  let onclick = false;
   return (
     <div id="playlistpage">
       <div className="playlisttext">
@@ -98,11 +97,21 @@ export function PlayList() {
             <div>{account}</div>
           </div>
         ) : (
-          <div className="text">
-            플레이리스트를 가지고 오려면 계정을 먼저 연결하세요.
-          </div>
+          <div className="pagetitle">계정을 먼저 연결하세요.</div>
         )}
       </div>
+      {state.isConnect ? (
+        <div className="playlisttokentext">
+          <span>사용가능한 토큰의 수량 : {keepingTokenBal}</span>
+          <AiOutlineCheckSquare
+            className="checkicon"
+            size="30"
+            onClick={GetKeepingTokenBal}
+          />
+        </div>
+      ) : (
+        ""
+      )}
       <div className="text">당신이 듣고싶은 스톤을 찾아보세요.</div>
       <span>
         <Link to="/musician" style={{ textDecoration: "none" }}>
@@ -115,14 +124,7 @@ export function PlayList() {
         </Link>
       </span>
       <div></div>
-      <div className="playlisttokentext">
-        <span>사용가능한 토큰의 수량 : {keepingTokenBal}</span>
-        <AiOutlineCheckSquare
-          className="checkicon"
-          size="30"
-          onClick={GetKeepingTokenBal}
-        />
-      </div>
+
       <div id="playlisttext">
         <AiFillCustomerService className="playlisticon" size="30" />
         PlayList

@@ -25,31 +25,31 @@ export default function RegisterStone() {
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
-  // useEffect(() => {
-  //   async function req() {
-  //     await axios
-  //       .get(`${server}/stones/${account}`)
-  //       .then((res) => {
-  //         const albums = res.data.albumList.map((data) => ({
-  //           albumName: data.name,
-  //         }));
-  //         setAlbumList(albumList.concat(albums));
-  //       })
-  //       .catch((e) => console.log(e));
-  //   }
-  //   req();
-  // }, []);
-  const getAlbum = async () => {
-    await axios
-      .get(`${server}/stones/${account}`)
-      .then((res) => {
-        const albums = res.data.map((data) => ({
-          albumName: data.name,
-        }));
-        setAlbumList(albums);
-      })
-      .catch((e) => console.log(e));
-  };
+  useEffect(() => {
+    async function req() {
+      await axios
+        .get(`${server}/stones/${account}`)
+        .then((res) => {
+          const albums = res.data.albumList.map((data) => ({
+            albumName: data.name,
+          }));
+          setAlbumList(albumList.concat(albums));
+        })
+        .catch((e) => console.log(e));
+    }
+    req();
+  }, []);
+  // const getAlbum = async () => {
+  //   await axios
+  //     .get(`${server}/stones/${account}`)
+  //     .then((res) => {
+  //       const albums = res.data.map((data) => ({
+  //         albumName: data.name,
+  //       }));
+  //       setAlbumList(albums);
+  //     })
+  //     .catch((e) => console.log(e));
+  // };
 
   const onChangeStoneName = (e) => {
     setStoneName(e.target.value);
@@ -147,7 +147,6 @@ export default function RegisterStone() {
   return (
     <div>
       <div id="stoneregisterpage">
-        <button onClick={getAlbum}>GET ALBUM</button>
         <div>
           <span className="pagetitle">스톤 등록</span>
           <span>
