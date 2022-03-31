@@ -2,7 +2,24 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { AiFillDelete, AiFillCustomerService } from "react-icons/ai";
 
+function ShowPlayList({ play }) {
+  console.log("🚀 ~ file: PlayList.js ~ line 8 ~ ShowPlayList ~ play", play);
+
+  return (
+    <div className="streamingpage">
+      <hr className="stoneline"></hr>
+      <div className="stones">
+        <span className="stoneName">{play.stoneName}</span>
+        <span className="musicianName">{play.musicianName}</span>
+        <span className="deleteicon">
+          <AiFillDelete className="deleteicon" size="30" />
+        </span>
+      </div>
+    </div>
+  );
+}
 export function PlayList() {
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
@@ -14,11 +31,21 @@ export function PlayList() {
   const [playList, setPlayList] = useState([]);
 
   const getPlayList = async () => {
-    alert("getplaylist");
     await axios
       .get(`http://localhost:12367/playlist/${account}`)
       .then((res) => {
-        setPlayList(res.data);
+        const length = res.data.length;
+        console.log(length);
+        const pl = res.data.map((data) => ({
+          stoneId: data.id,
+          stoneName: data.name,
+          musicianName:
+            data.musicianInfo[0].name_korea +
+            " (" +
+            data.musicianInfo[0].name_english +
+            ") ",
+        }));
+        setPlayList(pl);
       })
       .catch((e) => alert(e));
   };
@@ -35,7 +62,7 @@ export function PlayList() {
   const handleStoneId = (e) => {
     console.log(`e.value: ${e.target.value}`);
     setStoneId(e.target.value);
-    setStoneSrc(`http://localhost:4000/streaming/{stoneId}`);
+    setStoneSrc(`http://localhost:12367/streaming/${stoneId}`);
   };
 
   const handleStreaming = (e) => {
@@ -58,23 +85,12 @@ export function PlayList() {
           <button className="tokenbtn"> Stone 검색 </button>
         </Link>
       </span>
-      {state.isConnect ? (
-        <div>
-          <div className="text">지금 연결된 계정 주소 :</div>
-          <div>
-            {state.account} {getPlayList()}
-          </div>
-        </div>
-      ) : (
-        <div className="text">
-          플레이리스트를 불러오려면 계정을 먼저 연결하세요.
-        </div>
-      )}
-      <div>
-        <hr className="line"></hr>
+      <div></div>
+      <div id="playlisttext">
+        <AiFillCustomerService className="playlisticon" size="30" />
+        PlayList
+        <AiFillCustomerService className="playlisticon" size="30" />
       </div>
-      <div id="playlisttext">PlayList</div>
-
       <div id="audio">
         <audio
           onPause={handleTime}
@@ -86,6 +102,27 @@ export function PlayList() {
           controlsList="nodownload"
           ref={audioRef}
         ></audio>
+      </div>
+      <div className="playlisttext">
+        {state.isConnect ? (
+          <div>
+            <div className="text">지금 연결된 계정 주소 :</div>
+            <div>{account}</div>
+            <button className="editbtn" onClick={getPlayList}>
+              Get My Playlist
+            </button>
+          </div>
+        ) : (
+          <div className="text">
+            플레이리스트를 불러오려면 계정을 먼저 연결하세요.
+          </div>
+        )}
+      </div>
+      <div>
+        {playList.map((play) => (
+          <ShowPlayList play={play} />
+        ))}
+        <hr className="stoneline"></hr>
       </div>
     </div>
   );

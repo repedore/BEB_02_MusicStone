@@ -9,6 +9,7 @@ function BuyToken() {
   const state = useSelector((state) => state.accountReducer);
   const [klayBalance, setKlayBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
+  const [keepToken, setKeepToken] = useState(0);
   const [swapAmount, setSwapAmount] = useState({ klay: 0.0, musictStone: 0.0 });
   const { klay, token } = swapAmount;
   // caver-js 연결
@@ -125,6 +126,11 @@ function BuyToken() {
     }
   };
 
+  const onChangeKeepToken = (e) => {
+    setKeepToken(e.target.value);
+  };
+  const keepingToken = async () => {};
+
   return (
     <div id="buytokenpage">
       <div className="pagetitle">토큰 구매</div>
@@ -165,6 +171,15 @@ function BuyToken() {
         onChange={onChangeValue}
       ></input>
       <button onClick={swapKlay2Token}>교환</button>
+      <div>
+        <input
+          className="tokeninput"
+          placeholder="예치할 토큰 개수를 입력하세요."
+          type="number"
+          onChange={onChangeKeepToken}
+        ></input>
+        <button onClick={keepingToken}>토큰 예치</button>
+      </div>
     </div>
   );
 }
