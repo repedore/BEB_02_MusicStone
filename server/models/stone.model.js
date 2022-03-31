@@ -6,7 +6,7 @@ autoIncrement.initialize(mongoose.connection);
 const StoneSchema = new Schema({
   id: { type: Number, required: true },
   musician_id: Number,
-  album_id: { Number, default: 0 },
+  album_id: Number,
   name: String,
   description: String,
   category: String,

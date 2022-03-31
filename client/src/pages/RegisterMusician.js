@@ -38,6 +38,7 @@ export function RegisterMusician() {
   // userId 추가
   const saveMusician = async () => {
     if ((KName || EName) && account && email && img && description && userId) {
+      console.log(snsList);
       const formData = new FormData();
       formData.append("KName", KName);
       formData.append("EName", EName);
@@ -45,8 +46,12 @@ export function RegisterMusician() {
       formData.append("email", email);
       formData.append("musicianfile", img);
       formData.append("description", description);
-      formData.append("snsList", snsList);
       formData.append("userId", userId);
+      // formData.append("snsList", snsList);
+      for (let i = 0; i < snsList.length; i++) {
+        formData.append(`sns${i}`, snsList[0]);
+      }
+
       await axios
         .post(`${server}/user/register`, formData, {
           headers: {

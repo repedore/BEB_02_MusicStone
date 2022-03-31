@@ -14,7 +14,7 @@ const getAlbumInfo = async (albumId, userId) => {
       { name_korea: 1, name_english: 1 }
     );
     const stoneList = await StoneModel.find(
-      { album_id: 1 },
+      { album_id: albumId },
       { _id: 0, release_date: 0, __v: 0 }
     );
     let stonesIsLikeList = [];

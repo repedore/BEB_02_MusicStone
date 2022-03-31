@@ -891,6 +891,113 @@ const service_abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "BuyToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "SellToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "artist",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "token_id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "SFTMinted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "DepositMSToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithDrawalDepositMSToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithDrawalDistributionMSToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         name: "account",
         type: "address",
