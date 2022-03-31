@@ -31,7 +31,8 @@ export default function RegisterStone() {
   const caverExt = new CaverExtKAS();
   const chainId = 1001; // 클레이튼 테스트 네트워크 접속 ID
   caverExt.initKASAPI(chainId, accessKeyId, secretAccessKey); //KAS console 초기화
-
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
   const onChangeStoneName = (e) => {
     setStoneName(e.target.value);
   };
@@ -79,7 +80,7 @@ export default function RegisterStone() {
       formData.append("category", category);
       formData.append("totalBalance", SFTAmount);
       await axios
-        .post(`http://localhost:12367/stones/register/${account}`, formData, {
+        .post(`${server}/stones/register/${account}`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -108,7 +109,7 @@ export default function RegisterStone() {
   };
   // const getAlbum = async () => {
   //   await axios
-  //     .get(`http://localhost:12367/stones/${account}`)
+  //     .get(`${server}/stones/${account}`)
   //     .then((res) => {
   //       setAlbumName(res.data.albumName);
   //       console.log("album name " + res.data.albumName);

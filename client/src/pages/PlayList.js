@@ -2,16 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { AiFillDelete, AiFillCustomerService } from "react-icons/ai";
+import {
+  AiOutlinePlayCircle,
+  AiFillDelete,
+  AiFillCustomerService,
+} from "react-icons/ai";
 
-function ShowPlayList({ play }) {
+function ShowPlayList({ play, handleStoneId }) {
   console.log("🚀 ~ file: PlayList.js ~ line 8 ~ ShowPlayList ~ play", play);
 
   return (
     <div className="streamingpage">
       <hr className="stoneline"></hr>
       <div className="stones">
-        <span className="stoneName">{play.stoneName}</span>
+        <span className="stoneName">
+          <AiOutlinePlayCircle
+            onClick={(e) => handleStoneId(e)}
+            value={play.stoneId}
+            className="playicon"
+            size="30"
+          />
+          {play.stoneName}
+        </span>
+
         <span className="musicianName">{play.musicianName}</span>
         <span className="deleteicon">
           <AiFillDelete className="deleteicon" size="30" />
@@ -29,10 +42,12 @@ export function PlayList() {
   const audioRef = useRef();
   const [isPaused, setPaused] = useState(false);
   const [playList, setPlayList] = useState([]);
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
   const getPlayList = async () => {
     await axios
-      .get(`http://localhost:12367/playlist/${account}`)
+      .get(`${server}/playlist/${account}`)
       .then((res) => {
         const length = res.data.length;
         console.log(length);
@@ -62,7 +77,7 @@ export function PlayList() {
   const handleStoneId = (e) => {
     console.log(`e.value: ${e.target.value}`);
     setStoneId(e.target.value);
-    setStoneSrc(`http://localhost:12367/streaming/${stoneId}`);
+    setStoneSrc(`${server}/playlist/streaming/${stoneId}`);
   };
 
   const handleStreaming = (e) => {
@@ -120,7 +135,7 @@ export function PlayList() {
       </div>
       <div>
         {playList.map((play) => (
-          <ShowPlayList play={play} />
+          <ShowPlayList play={play} handleStoneId={handleStoneId} />
         ))}
         <hr className="stoneline"></hr>
       </div>

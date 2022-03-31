@@ -9,6 +9,8 @@ export function RegisterAlbum() {
   const [imgsrc, setImgsrc] = useState("");
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
   const onChangeAlbumName = (e) => {
     setAlbumName(e.target.value);
   };
@@ -26,7 +28,7 @@ export function RegisterAlbum() {
       formData.append("albumfile", albumImg);
       formData.append("description", description);
       await axios
-        .post(`http://localhost:12367/album/register/${account}`, formData, {
+        .post(`${server}/album/register/${account}`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
