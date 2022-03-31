@@ -25,5 +25,6 @@ router.post(
   stones.single("stonefile"),
   controller.stones_register_post
 );
+router.post("/distribution", controller.stones_distribution_post);
 
 module.exports = router;

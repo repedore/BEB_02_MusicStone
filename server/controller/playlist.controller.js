@@ -5,7 +5,7 @@ exports.playlist_get = async (req, res, next) => {
   try {
     const account = req.params.account;
     const playlist = await PlaylistService.getPlaylist(account);
-    res.status(200).json({ stoneInfo: playlist, message: "Ok" });
+    res.status(200).json(playlist);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

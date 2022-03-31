@@ -4,6 +4,7 @@ const {
   TradeModel,
   AlbumModel,
 } = require("../models/index");
+const { MusicianModel } = require("../models/musician.model");
 
 // AlbumList({id, name})
 const getAlbumList = async (userAccount) => {
@@ -13,7 +14,7 @@ const getAlbumList = async (userAccount) => {
     ).musician_id;
     const albumList = await AlbumModel.find(
       { musician_id },
-      { id: 1, name: 1 }
+      { id: 1, name: 1, _id: 0 }
     );
     return albumList;
   } catch (e) {
@@ -39,13 +40,14 @@ const getMyStoneList = async (userId) => {
 
 // insertTradeStone
 const insertTrade = async (sellStoneInfo, userId) => {
-  const { stoneId, seller, quantity, unitPrice } = sellStoneInfo;
+  const { stoneId, seller, quantity, unitPrice, itemId } = sellStoneInfo;
   try {
     const Trade = new TradeModel({
       stone_id: stoneId,
       sell_user_id: userId,
       price: unitPrice,
       amount: quantity,
+      item_id: itemId,
     });
     return await Trade.save();
   } catch (e) {
@@ -97,6 +99,7 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
 
 // getSellStoneList (+ 검색, errorhandling)
 const getSellStone = async (userId, listInfo) => {
+  // img, musician_name, stone_name, minPrice, prePrice, myBalance
   const { startIndex, endIndex, keyword } = listInfo;
   try {
     console.log(listInfo);
@@ -128,28 +131,44 @@ const getSellStone = async (userId, listInfo) => {
 // getStoneDetail & getStoneTradeInfo
 const getStoneDetail = async (stoneId) => {
   try {
-    const stoneDetail = await StoneModel.find({ id: stoneId });
+    const stoneDetail = await StoneModel.findOne({ id: stoneId });
     const stoneTrade = await TradeModel.find(
       { stone_id: stoneId },
-      { id: 1, sell_user_id: 1, amount: 1, price: 1 }
+      {
+        id: 1,
+        sell_user_id: 1,
+        amount: 1,
+        price: 1,
+        musician_id: 1,
+        item_id: 1,
+      }
     );
-    return { stoneDetail, stoneTrade };
+    const musician = await MusicianModel.findOne(
+      {
+        id: stoneDetail.musician_id,
+      },
+      { image: 1, name_korea: 1, name_english: 1, _id: 0 }
+    );
+    const minPrice = Math.min.apply(
+      null,
+      stoneTrade
+        .filter((el) => {
+          return el.price !== undefined;
+        })
+        .map((el) => Number(el.price))
+    );
+
+    return { stoneDetail, musician, stoneTrade, minPrice };
   } catch (e) {
     throw Error(e);
   }
 };
 
-// updateBuyStoneInfo (+ contract)
+// updateBuyStoneInfo (+ contract는 client에서 수행. 수행후 어떤 정보 저장할 것인가)
 const updateBuyStoneInfo = async (tradeInfo, stoneId) => {
   try {
     const { buyer, seller, quantity, unitPrice, sellAmount, tradeId } =
       tradeInfo;
-    // contract연결 (SFT소유주이동)
-    // buyer 계좌로 qunatity만큼 SFT이동, buyer지갑에서 quantity * unitPrice만큼 seller계좌로 kalytn이동
-    // 성공하면, DB내용수정
-    // TradeModel에서 sellerId와 musicianId와 일치하는 거래정보 찾아서
-    // quantity만큼(buyer)가 구매한 만큼 차감시켜주기
-    // 나머지 정보는 현재 db가 아닌 contract에서 관리함(user가 소유한 SFT목록)
     if (quantity === 0) {
       return "구매수량은 1개 이상이어야 합니다.";
     } else if (quantity > sellAmount) {
