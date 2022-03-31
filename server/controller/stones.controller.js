@@ -1,7 +1,7 @@
 require("dotenv").config();
 const StoneService = require("../services/stones.services");
 
-// stone등록 페이지 들어올때 req(account or id(user) or id(musician))를 통해 AlnumId와 AlnumName 반환
+// stone등록 페이지 들어올때 AlnumId와 AlnumName 반환 - 완료
 exports.stones_get = async (req, res, next) => {
   const userAccount = req.params.user_account;
   try {
@@ -22,7 +22,7 @@ exports.stones_mystone_get = async (req, res, next) => {
   }
 };
 
-// userId로 user가 보유한 스톤 판매등록
+// userId로 user가 보유한 스톤 판매등록 - 완료
 exports.stones_mystone_post = async (req, res, next) => {
   const sellStoneInfo = req.body;
   const userId = req.params.user_id;
@@ -83,7 +83,7 @@ exports.stones_tradestone_get = async (req, res, next) => {
   try {
     const stoneId = req.params.musicstone_id;
     const stoneInfo = await StoneService.getStoneDetail(stoneId);
-    res.status(201).json({ data: stoneInfo });
+    res.status(201).json(stoneInfo);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
@@ -100,6 +100,16 @@ exports.stones_tradestone_post = async (req, res, next) => {
     } else {
       res.status(500).json({ message: isOk });
     }
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// 분배컨트랙트연결하기
+// function deduction(address[] memory _address, uint[] memory _deduct_token) public [주소]와 [차감할 토큰금액](스트리밍한 횟수만큼)
+// function distribution(uint[] memory _sft_token, uint[] memory _distribute_amount) [tokenId]랑 [해당토큰아이디로 분배될토큰]
+exports.stones_distribution_post = async (req, res, next) => {
+  try {
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
