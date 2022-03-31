@@ -15,11 +15,13 @@ function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.accountReducer);
   const [userId, setUserId] = useState("");
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
   const getUserId = async (account) => {
     alert(account);
     await axios
-      .get(`http://localhost:12367/user/${account}`)
+      .get(`${server}/user/${account}`)
       .then((res) => {
         dispatch({ type: "GET_USERID", userId: res.data.userId });
         console.log("userId 값 : " + res.data.userId);

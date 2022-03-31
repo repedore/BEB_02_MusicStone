@@ -15,6 +15,8 @@ export function RegisterMusician() {
   const [description, setDescription] = useState("");
   const [snsList, setSnsList] = useState([]);
   const [count, setCount] = useState(0);
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
   const onChangeKName = (e) => {
     setKName(e.target.value);
@@ -46,7 +48,7 @@ export function RegisterMusician() {
       formData.append("snsList", snsList);
       formData.append("userId", userId);
       await axios
-        .post("http://localhost:12367/user/register", formData, {
+        .post(`${server}/user/register`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -65,6 +67,8 @@ export function RegisterMusician() {
       alert("소개글을 입력해주세요.");
     } else if (!img) {
       alert("뮤지션의 사진 선택해주세요.");
+    } else if (!userId) {
+      alert("userID 가 없습니다.");
     }
   };
   const addSNS = () => {
