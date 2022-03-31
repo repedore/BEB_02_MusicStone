@@ -36,6 +36,7 @@ const getPlaylist = async (account) => {
         },
       },
     ]);
+
     const playInfo = info.filter((el) => {
       return stoneArr.includes(el.id);
     });
