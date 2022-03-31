@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import axios from 'axios';
@@ -16,6 +17,8 @@ export function TradeStone() {
     const [klayPrice, setKlayPrice] = useState(0);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTrade, setModalTrade] = useState("");
+    const account = useSelector((state) => state.accountReducer);
+
     //dummyData
     const StoneData = dummyData.tradeStone.filter((el) => el.id === parseInt(id))[0];
 
@@ -79,7 +82,7 @@ export function TradeStone() {
                     {showRules()}
                 </NotifyWrapper>
             </TradeContainer>
-            <TradeStoneModal ref={modalRef} klayPrice={klayPrice} stoneData={StoneData} modalOpen={modalOpen} modalTrade={modalTrade} setModalOpen={setModalOpen} />
+            <TradeStoneModal ref={modalRef} klayPrice={klayPrice} stoneData={StoneData} modalOpen={modalOpen} modalTrade={modalTrade} setModalOpen={setModalOpen} account={account} />
         </Body>
     );
 }
