@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const AlbumStone = ({ stone, selectNum, idx, handleStoneClick }) => {
+const AlbumStone = ({ stone, selectNum, idx, handleStoneClick, handleLikeBtn, isConnect }) => {
     const [isLike, setIsLike] = useState(false);
 
     const showlike = () => {
@@ -18,7 +18,12 @@ const AlbumStone = ({ stone, selectNum, idx, handleStoneClick }) => {
     }
 
     const handleLike = () => {
-        setIsLike(!isLike);
+        if (isConnect) {
+            setIsLike(!isLike);
+            handleLikeBtn("stone", stone.id, !isLike);
+        } else {
+            alert("지갑을 연결해주세요.");
+        }
     }
 
 

@@ -25,7 +25,7 @@ const MyStoneCard = ({ stone, handleSellBtn }) => {
 export default MyStoneCard;
 
 const CardContainer = styled.div`
-    margin: 20px;
+    margin: 10px;
     width: 200px;
     height: 300px;
     font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;

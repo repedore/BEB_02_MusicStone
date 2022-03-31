@@ -1,9 +1,14 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react"
 import styled from "styled-components";
+import Caver from "caver-js";
+import service_abi from '../../abi/Service';
 
 
-const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen }, ref) => {
+
+const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen, account }, ref) => {
     const [quantity, setQuantity] = useState(0);
+    const caver = new Caver(window.klaytn);
+
     const handleClose = () => {
         setModalOpen(false);
     }
@@ -15,8 +20,24 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
             setQuantity(e.target.value)
         }
     }
-    const handleBuy = () => {
-        console.log('구매!')
+
+    //현재 서버에서 리스트 받아오는게 아직이라 하드코딩값 구매됨
+    const handleBuy = async () => {
+        const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
+
+        if (account.isConnect) {
+            const tx = await service.methods
+                .purchaseItem(1, 1)
+                .send({
+                    from: account.account,
+                    //value = amount * unitPrice
+                    value: 10,
+                    gas: 1000000,
+                })
+                .then(console.log)
+        } else {
+            alert("지갑을 연결해주세요.");
+        }
     }
 
     useImperativeHandle(ref, () => ({
@@ -56,7 +77,7 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
                         </Total>
                     </Cart>
                     <BtnBox>
-                        <BuyBtn onClick={() => handleBuy()}>구매</BuyBtn>
+                        <BuyBtn onClick={handleBuy}>구매</BuyBtn>
                     </BtnBox>
                 </Content>
             </ModalWindow>
