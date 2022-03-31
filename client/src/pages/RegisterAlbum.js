@@ -51,7 +51,9 @@ export function RegisterAlbum() {
     <div id="registeralbumpage">
       <div>
         <div className="pagetitle">앨범 등록</div>
-        <div>{state.isConnect ? state.account : "지갑을 연결하세요."}</div>
+        <div className="account">
+          {state.isConnect ? state.account : "지갑을 연결하세요."}
+        </div>
         <div>
           {albumImg && (
             <img

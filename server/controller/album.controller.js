@@ -36,7 +36,7 @@ exports.album_register_post = async (req, res, next) => {
     const isOk = await AlbumService.insertAlbum(albumInfo, fileInfo, account);
     // musiciain id 가져와서 user에 업데이트 해주기
     // return 전 contract에 addMinter
-    contractFunction.addMinter(account);
+    // contractFunction.addMinter(account);
     isOk
       ? res.status(201).json({
           message: "앨범 등록이 완료되었습니다.",

@@ -24,7 +24,6 @@ function App() {
       .get(`${server}/user/${account}`)
       .then((res) => {
         dispatch({ type: "GET_USERID", userId: res.data.userId });
-        console.log("userId 값 : " + res.data.userId);
         setUserId(res.data.userId);
       })
       .catch((e) => alert(e));
@@ -44,7 +43,6 @@ function App() {
   const connectWallet = () => {
     if (typeof window.klaytn !== "undefined") {
       const provider = window["klaytn"];
-      console.log("connectwallet 실행");
       kaikasLogin();
     } else {
       console.log("connectwallet else");

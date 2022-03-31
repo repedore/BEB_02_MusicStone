@@ -21,7 +21,9 @@ body {
   margin: 2rem;
   color: white;
 }
-
+#audio {
+  margin-bottom: 1rem;
+}
 #nav {
   background-color: black;
   text-decoration: none;
@@ -44,6 +46,15 @@ body {
   cursor: pointer;
 }
 .editbtn {
+  margin: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+  margin-bottom: 10rem;
+}
+.btn {
   margin: 1rem;
   padding: 0.5rem 2rem;
   border: 0;
@@ -92,7 +103,7 @@ body {
 #mainpage {
   text-align: center;
   color: white;
-  margin-top: 3rem;
+  margin: 2rem 6rem 0rem 6rem;
 }
 #playlistpage {
   text-align: center;
@@ -127,6 +138,12 @@ body {
   list-style: none;
   display: flex;
   flex-direction: column;
+}
+.playlisttokentext {
+  margin: 1.5rem;
+}
+.account {
+  margin-bottom: 1rem;
 }
 .deleteicon {
   /* vertical-align: middle;
@@ -163,7 +180,7 @@ body {
   margin-top: -0.3rem;
 }
 .playlisttext {
-  margin: 3rem;
+  margin: 3rem 1rem;
   color: white;
 }
 .albumbtn {
@@ -189,7 +206,7 @@ body {
   text-align: center;
   margin: 0.2rem;
   font-size: 1rem;
-  padding: 0.3rem 5.6rem;
+  padding: 0.3rem 5.9rem;
 }
 .Aselectbox {
   text-align: center;
@@ -274,11 +291,15 @@ body {
   padding: 0.5rem 3rem;
   margin: 1rem;
 }
+.checkicon {
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
 .stonenameinput {
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
   width: 20rem;
-  padding: 0.5rem 3rem;
+  padding: 0.4rem 3rem;
   margin: 1rem;
 }
 .tokeninput {
