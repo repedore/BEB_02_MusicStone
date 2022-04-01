@@ -23,6 +23,15 @@ const PreviewStream = ({ stone }) => {
         setSecond(curTime % 60);
         setMinute(Math.floor(curTime / 60));
     }
+    function showTimer() {
+        const tempTotalSec = (musicLength % 60).toFixed()
+
+        const calSec = second >= 10 ? second : `0${second}`
+        const calTotalMin = Math.floor(musicLength / 60);
+        const calTotalSec = tempTotalSec >= 10 ? tempTotalSec : `0${tempTotalSec}`;
+
+        return <Timer>{minute}:{calSec} / {calTotalMin}:{calTotalSec}</Timer>
+    }
 
     //interval 관련
 
@@ -54,8 +63,9 @@ const PreviewStream = ({ stone }) => {
                     <StreamingBtn onClick={() => handlePlayBtn()}>{isPlay ? <PauseIcon /> : <PlayArrowIcon />}</StreamingBtn>
                 </BtnWrapper>
             </Play>
-            <Timer>{minute}:{second >= 10 ? second : `0${second}`} / {Math.floor(musicLength / 60)}:{(musicLength % 60).toFixed()}</Timer>
-            <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" onLoadedData={updateDuration} ref={audioRef}></audio>
+            {showTimer()}
+            {/* 현재 음원 정해진게 없어서 하나 하드코딩해놓음 */}
+            <audio src="http://3.91.196.38:12367/playlist/streaming/20" onLoadedData={updateDuration} ref={audioRef} type="audio/mpeg"></audio>
         </StreamingWrapper >
     );
 }

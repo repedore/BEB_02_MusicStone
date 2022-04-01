@@ -16,9 +16,7 @@ export const Album = () => {
     const [isLike, setIsLike] = useState(false);
     const [selectNum, setSelectNum] = useState(0);
     const [albumData, setAlbumData] = useState(initialState);
-    const albumInfo = albumData.albumInfo;
-    //    const stoneList = albumData.stones.map((stone) => Object.assign(stone, { image: `${albumInfo.image}` }));
-    const stoneList = albumData.stones.map((stone) => Object.assign(stone, { image: `${albumInfo.image}` }));
+    const stoneList = albumData.stoneList.map((stone) => Object.assign(stone, { image: `${albumData.albumInfo.image}` }));
 
 
     const handleLikeBtn = (type, likeId, isLike) => {
@@ -42,60 +40,73 @@ export const Album = () => {
         }
     }
     const handleStoneClick = (idx) => {
+        //현재 db가 계속 바뀌어서 고정값 보냄
         setSelectNum(idx);
+    }
+
+    const showMusicinName = () => {
+        const korName = albumData.musicianInfo.name_korea;
+        const engName = albumData.musicianInfo.name_english;
+
+        if (korName && engName) {
+            return `${korName} (${engName})`;
+        } else if (korName) {
+            return korName;
+        } else {
+            return engName;
+        }
+
     }
 
     const showlike = () => {
         return (isLike
             ? <div>
-                <FavoriteIcon /><span>좋아요  {albumInfo.like.length}</span>
+                <FavoriteIcon /><span>좋아요  {albumData.albumInfo.like.length}</span>
             </div>
 
             : <div>
-                <FavoriteBorderIcon /><span>좋아요 {albumInfo.like.length}</span>
+                <FavoriteBorderIcon /><span>좋아요 {albumData.albumInfo.like.length}</span>
             </div>)
     }
     const showReleaseDate = () => {
-        const tempSplit = albumInfo.release_date.split('-');
+        const tempSplit = albumData.albumInfo.release_date.split('-');
         return `${tempSplit[0]}년 ${tempSplit[1]}월 ${tempSplit[2].substr(0, 2)}일`
     }
     const showStones = () => {
         return (stoneList.map((stone, idx) => {
-            return <AlbumStone key={idx} stone={stone} selectNum={selectNum} idx={idx} handleStoneClick={handleStoneClick} handleLikeBtn={handleLikeBtn} isConnect={account.isConnect} />
+            return <AlbumStone key={idx} stone={stone} selectNum={selectNum} idx={idx} handleStoneClick={handleStoneClick} handleLikeBtn={handleLikeBtn} isConnect={account.isConnect} liked={albumData.stonesIsLikeList[idx]} />
         }))
     }
-    const loadData = () => {
+    const loadData = async () => {
         const req = `${server}/album/${id}?userId=${account.userId}`;
-        axios.get(req)
+        await axios.get(req)
             .then((res) => { setAlbumData(res.data) })
     }
 
     useEffect(loadData, [account, isLike])
 
     useEffect(() => {
-        console.log(albumData)
         setIsLike(albumData.isLike);
     }, [albumData])
 
     return (
-        albumInfo
+        albumData.albumInfo
             ? (
-                <Body Body >
+                <Body>
                     <AlbumContainer>
                         <ImgWrapper>
-                            <Img src={albumInfo.image} alt={albumInfo.musician_id} />
+                            <Img src={albumData.albumInfo.image} alt={albumData.albumInfo.name} />
                         </ImgWrapper>
                         <InfoWrapper>
-                            <Title>{albumInfo.name}</Title>
+                            <Title>{albumData.albumInfo.name}</Title>
                             <InfoBox>
                                 <Info>
                                     <Like onClick={() => handleLikeBtn("album", id, !isLike)}>
                                         {showlike()}
                                     </Like>
-                                    {/* 현재 서버에서 id값만 받아올 수 있어서 임시로 이름대신 */}
-                                    <Musician>뮤지션 : {albumInfo.musician_id}</Musician>
+                                    <Musician>뮤지션 : {albumData.musicianInfo ? showMusicinName() : null}</Musician>
                                     <ReleaseDate>발매일 : {showReleaseDate()}</ReleaseDate>
-                                    <Desc>소개 : {albumInfo.description}</Desc>
+                                    <Desc>소개 : {albumData.albumInfo.description}</Desc>
                                 </Info>
                                 <StoneList>
                                     {showStones()}
@@ -103,21 +114,31 @@ export const Album = () => {
                             </InfoBox>
                         </InfoWrapper>
                     </AlbumContainer>
-                    <StoneContainer>
-                        <PreviewStream stone={stoneList[selectNum]} />
-                        <StoneWrapper>
-                            <StoneTitle>
-                                <h2>{/*stoneList[selectNum].name*/}</h2>
-                            </StoneTitle>
-                            <StoneInfo>
-                                {/* 현재 서버에서 장르값만 받아올 수 있어서 임시로 */}
-                                <div>작사 : Dummy</div>
-                                <div>작곡 : Dummy</div>
-                                <div>장르 : {/*stoneList[selectNum].category*/}</div>
-                                <div>가사 : Dummy </div>
-                            </StoneInfo>
-                        </StoneWrapper>
-                    </StoneContainer>
+                    {stoneList.length !== 0
+                        ?
+                        <StoneContainer>
+
+                            <PreviewStream stone={stoneList[selectNum]} />
+                            <StoneWrapper>
+                                <StoneTitle>
+                                    <h2>{stoneList[selectNum].name}</h2>
+                                </StoneTitle>
+                                <StoneInfo>
+                                    <div>작사 : Dummy</div>
+                                    <div>작곡 : Dummy</div>
+                                    <div>장르 : {stoneList[selectNum].category}</div>
+                                    <div>가사 : Dummy </div>
+
+                                </StoneInfo>
+                            </StoneWrapper>
+                        </StoneContainer>
+
+                        : <StoneContainer>
+                            <Notice>
+                                등록된 스톤이 없습니다.
+                            </Notice>
+                        </StoneContainer>
+                    }
                 </Body >)
             : null
     )
@@ -125,7 +146,9 @@ export const Album = () => {
 //초기 state
 const initialState = {
     "albumInfo": undefined,
-    "stones": [],
+    "musicianInfo": undefined,
+    "stoneList": [],
+    "stonesIsLikeList": [],
     "isLike": false
 };
 
@@ -150,6 +173,7 @@ width : 1100px;
 height: 400px;
 margin: 0 auto;
 display flex;
+align-items: center;
 `;
 
 const ImgWrapper = styled.div`
@@ -167,7 +191,6 @@ display: flex;
 flex-direction: column;
 overflow: scroll;
 `;
-
 
 const Img = styled.img`
 width: 100%;
@@ -249,4 +272,10 @@ height: 100%;
 margin: 20px 50px;
 overflow: scroll;
 
+`;
+
+const Notice = styled.div`
+width: 100%;
+text-align: center;
+font-size: 18px;
 `;
