@@ -221,7 +221,17 @@ const InfoWrapper = styled.div`
   margin: 25px;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: #0f0f0f;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ff0000;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #333333;
+  }
 `;
 
 const Img = styled.img`
@@ -275,7 +285,17 @@ const StoneList = styled.li`
   height: 100%;
   margin: 10px;
   list-style: none;
-  overflow: scroll;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: #0f0f0f;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ff0000;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #333333;
+  }
   li {
     margin: 5px 0;
   }
@@ -314,7 +334,17 @@ const StoneInfo = styled.div`
   width: 100%;
   height: 100%;
   margin: 20px 50px;
-  overflow: scroll;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: #0f0f0f;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ff0000;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #333333;
+  }
 `;
 
 const Notice = styled.div`
