@@ -85,7 +85,6 @@ function BuyToken() {
       alert("지갑을 먼저 연결해주세요.");
     }
   };
-
   //뮤직스톤 토큰 잔액 조회
   var GetTokenBalance = async () => {
     if (state.isConnect) {
@@ -98,7 +97,6 @@ function BuyToken() {
       alert("지갑을 먼저 연결해주세요.");
     }
   };
-
   const swapKlay2Token = async () => {
     if (
       !state.isConnect ||
@@ -126,7 +124,6 @@ function BuyToken() {
         console.log(err);
       });
   };
-
   //지갑 잔액 확인
   const GetBalance = () => {
     console.log("state.isConnect:" + state.isConnect);
@@ -167,8 +164,20 @@ function BuyToken() {
   };
   const saveDeposit = async () => {
     await axios.post(`${server}/user/deposit/${state.account}`).then((res) => {
-      console.log(res.data);
-      alert(res.data.message);
+      if (res.data.message == "Ok") {
+        alert("예치가 완료되었습니다.");
+      } else {
+        alert("오류, 저장에 실패했습니다.");
+      }
+    });
+  };
+  const saveGetDeposit = async () => {
+    await axios.post(`${server}/user/deposit/${state.account}`).then((res) => {
+      if (res.data.message == "Ok") {
+        alert("출금이 완료되었습니다.");
+      } else {
+        alert("오류, 저장에 실패했습니다.");
+      }
     });
   };
   const keepingToken = async () => {
@@ -211,7 +220,6 @@ function BuyToken() {
       saveDeposit();
     }
   };
-
   const getRewardToken = async () => {
     var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
     let isSend = true;
@@ -233,7 +241,7 @@ function BuyToken() {
     if (isSend == false) {
       alert("오류로 인해 전송이 실패했습니다.");
     } else {
-      //reward token 서버에 저장
+      alert("전송 성공, 잔액을 확인해주세요.");
     }
   };
   const getDepositToken = async () => {
@@ -257,7 +265,7 @@ function BuyToken() {
     if (isSend == false) {
       alert("오류로 인해 전송이 실패했습니다.");
     } else {
-      //deposit token 서버에 저장
+      saveGetDeposit();
     }
   };
   return (
@@ -307,7 +315,9 @@ function BuyToken() {
         value={token}
         onChange={onChangeValue}
       ></input>
-      <button onClick={swapKlay2Token}>교환</button>
+      <button className="buytokenbtn" onClick={swapKlay2Token}>
+        교환
+      </button>
       <div>
         <input
           className="tokeninput"
@@ -315,7 +325,9 @@ function BuyToken() {
           type="number"
           onChange={onChangeKeepToken}
         ></input>
-        <button onClick={keepingToken}>토큰 예치</button>
+        <button className="buytokenbtn" onClick={keepingToken}>
+          토큰 예치
+        </button>
       </div>
       <div>
         <input
@@ -324,7 +336,9 @@ function BuyToken() {
           type="number"
           onChange={onChangeRewardToken}
         ></input>
-        <button onClick={getRewardToken}>보상 토큰 인출</button>
+        <button className="buytokenbtn" onClick={getRewardToken}>
+          보상 토큰 인출
+        </button>
       </div>
       <div>
         <input
@@ -333,7 +347,9 @@ function BuyToken() {
           type="number"
           onChange={onChangeDepositToken}
         ></input>
-        <button onClick={getDepositToken}>예치 토큰 인출</button>
+        <button className="buytokenbtn" onClick={getDepositToken}>
+          예치 토큰 인출
+        </button>
       </div>
     </div>
   );

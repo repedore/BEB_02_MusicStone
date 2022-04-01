@@ -29,9 +29,10 @@ export function PlayList() {
 
   const getPlayList = async () => {
     await axios
-      .get(`${server}/playlist/${account}`)
+      .get(`${server}/playlist/${userId}`)
       .then((res) => {
-        const pl = res.data.map((data) => ({
+        console.log(res.data);
+        const pl = res.data.playlist.map((data) => ({
           stoneId: data.id,
           stoneName: data.name,
           musicianName:

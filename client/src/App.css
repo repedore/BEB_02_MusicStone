@@ -150,6 +150,10 @@ a:active {
   background-color: white;
   color: black;
 }
+.buytokenbtn {
+  width: 7rem;
+  height: 2rem;
+}
 .categorytext {
   margin: 1rem;
 }
