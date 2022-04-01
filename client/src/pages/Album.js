@@ -114,21 +114,31 @@ export const Album = () => {
                             </InfoBox>
                         </InfoWrapper>
                     </AlbumContainer>
-                    <StoneContainer>
-                        <PreviewStream stone={stoneList[selectNum]} />
-                        <StoneWrapper>
-                            <StoneTitle>
-                                <h2>{stoneList[selectNum].name}</h2>
-                            </StoneTitle>
-                            <StoneInfo>
-                                <div>작사 : Dummy</div>
-                                <div>작곡 : Dummy</div>
-                                <div>장르 : {stoneList[selectNum].category}</div>
-                                <div>가사 : Dummy </div>
+                    {stoneList.length !== 0
+                        ?
+                        <StoneContainer>
 
-                            </StoneInfo>
-                        </StoneWrapper>
-                    </StoneContainer>
+                            <PreviewStream stone={stoneList[selectNum]} />
+                            <StoneWrapper>
+                                <StoneTitle>
+                                    <h2>{stoneList[selectNum].name}</h2>
+                                </StoneTitle>
+                                <StoneInfo>
+                                    <div>작사 : Dummy</div>
+                                    <div>작곡 : Dummy</div>
+                                    <div>장르 : {stoneList[selectNum].category}</div>
+                                    <div>가사 : Dummy </div>
+
+                                </StoneInfo>
+                            </StoneWrapper>
+                        </StoneContainer>
+
+                        : <StoneContainer>
+                            <Notice>
+                                등록된 스톤이 없습니다.
+                            </Notice>
+                        </StoneContainer>
+                    }
                 </Body >)
             : null
     )
@@ -163,6 +173,7 @@ width : 1100px;
 height: 400px;
 margin: 0 auto;
 display flex;
+align-items: center;
 `;
 
 const ImgWrapper = styled.div`
@@ -180,7 +191,6 @@ display: flex;
 flex-direction: column;
 overflow: scroll;
 `;
-
 
 const Img = styled.img`
 width: 100%;
@@ -262,4 +272,10 @@ height: 100%;
 margin: 20px 50px;
 overflow: scroll;
 
+`;
+
+const Notice = styled.div`
+width: 100%;
+text-align: center;
+font-size: 18px;
 `;
