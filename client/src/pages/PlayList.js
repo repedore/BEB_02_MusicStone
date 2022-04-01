@@ -83,9 +83,10 @@ export function PlayList() {
   };
 
   const handleStreaming = async (e) => {
+    console.log(audioRef.current.currentTime);
     if (
       audioRef.current.currentTime > 59.9 &&
-      60.4 > audioRef.current.currentTime
+      60.3 > audioRef.current.currentTime
     ) {
       await axios
         .post(`${server}/playlist/streaming/${stoneId}`, { userId: userId })
