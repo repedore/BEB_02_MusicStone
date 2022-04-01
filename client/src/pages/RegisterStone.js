@@ -24,33 +24,21 @@ export default function RegisterStone() {
   var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+  let albumlist;
 
   useEffect(() => {
     async function req() {
       await axios
         .get(`${server}/stones/${account}`)
         .then((res) => {
-          const albums = res.data.albumList.map((data) => ({
-            albumName: data.name,
-          }));
-          setAlbumList(albumList.concat(albums));
+          albumlist = res.data.data.albumList;
+          console.log(albumlist);
+          setAlbumList(albumlist);
         })
         .catch((e) => console.log(e));
     }
     req();
   }, []);
-  // const getAlbum = async () => {
-  //   await axios
-  //     .get(`${server}/stones/${account}`)
-  //     .then((res) => {
-  //       const albums = res.data.map((data) => ({
-  //         albumName: data.name,
-  //       }));
-  //       setAlbumList(albums);
-  //     })
-  //     .catch((e) => console.log(e));
-  // };
-
   const onChangeStoneName = (e) => {
     setStoneName(e.target.value);
   };
@@ -89,11 +77,10 @@ export default function RegisterStone() {
       .catch((err) => {
         console.log(err);
       });
-    saveStone();
   };
   const saveStone = async () => {
     if (
-      // album &&
+      album &&
       stoneName &&
       account &&
       description &&
@@ -103,6 +90,7 @@ export default function RegisterStone() {
       lyrics &&
       SFTAmount
     ) {
+      mintSFT();
       const formData = new FormData();
       formData.append("album", album);
       formData.append("stoneName", stoneName);
@@ -123,8 +111,8 @@ export default function RegisterStone() {
           console.log(res.data);
           alert(res.data.message);
         });
-      // } else if (!album) {
-      //   alert("앨범을 선택해주세요. 원하는 앨범이 없다면 앨범을 등록해주세요.");
+    } else if (album == "") {
+      alert("앨범을 선택해주세요. 원하는 앨범이 없다면 앨범을 등록해주세요.");
     } else if (!stoneName) {
       alert("이름을 입력해주세요.");
     } else if (!account) {
@@ -172,8 +160,12 @@ export default function RegisterStone() {
             }}
           >
             <option value="">앨범을 선택해주세요.</option>
-            {albumList.map((albumname) => {
-              return <option value={albumname}>{albumname}</option>;
+            {albumList.map((e) => {
+              return (
+                <option e={e} value={e.id}>
+                  {e.name}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -279,7 +271,7 @@ export default function RegisterStone() {
             onChange={onChangeSFTAmount}
           ></input>
           <div>
-            <button className="editbtn" onClick={mintSFT}>
+            <button className="editbtn" onClick={saveStone}>
               등록
             </button>
           </div>
