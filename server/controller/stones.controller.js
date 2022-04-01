@@ -17,6 +17,7 @@ exports.stones_mystone_get = async (req, res, next) => {
   const userId = req.params.user_id;
   try {
     const stoneList = await StoneService.getMyStoneList(userId);
+    res.status(200).json(stoneList);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
@@ -43,7 +44,6 @@ exports.stones_register_post = async (req, res, next) => {
   const account = req.params.account;
   try {
     const isOk = await StoneService.insertStone(stoneInfo, fileInfo, account);
-    console.log(isOk);
     isOk
       ? res.status(201).json({ message: "Ok", success: true })
       : res.status(500).json({ message: "Fail", success: false });
@@ -57,12 +57,9 @@ exports.stones_buystone_get = async (req, res, next) => {
   try {
     const userId = req.params.user_id;
     const listInfo = req.query;
-    console.log(listInfo);
     const sellStones = await StoneService.getSellStone(userId, listInfo);
-    console.log(sellStones);
     res.status(201).json({ data: sellStones });
   } catch (e) {
-    console.log(e);
     res.status(500).json({ message: e.message });
   }
 };
