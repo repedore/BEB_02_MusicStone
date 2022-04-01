@@ -57,8 +57,8 @@ exports.user_deposit_post = async (req, res, next) => {
     const account = req.params.account;
     const isOk = await UserService.updateDeposit(account);
     isOk
-      ? res.status(201).json({ message: "예치완료 되었습니다." })
-      : res.status(500).json({ message: "예치가 실패되었습니다." });
+      ? res.status(201).json({ message: "Ok" })
+      : res.status(500).json({ message: "Fail" });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
