@@ -159,7 +159,6 @@ export const Album = () => {
               <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
             </StoneTitle>
             <StoneInfo>
-              {console.log(stoneList[selectNum])}
               <div>작사 : Dummy</div>
               <div>작곡 : Dummy</div>
               <div>장르 : {stoneList[selectNum].category}</div>

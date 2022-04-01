@@ -52,8 +52,6 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                             })
                             .then(console.log)
                     } else {
-                        console.log(`approved : ${approved}`);
-
                         //item 등록 현재는 서버에서 mystone 받아오는게 없어서 하드코딩된거 판매등록함
                         //1번 토큰이 제(찬영) 계정으로 민팅한거라 판매등록 테스트하려면 바꿔줘야
 
@@ -120,7 +118,6 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
     }
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
-            {console.log(modalStone)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>
