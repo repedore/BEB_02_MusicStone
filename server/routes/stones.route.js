@@ -12,7 +12,6 @@ const storage = multer.diskStorage({
 const stones = multer({ storage });
 const controller = require("../controller/stones.controller");
 
-// stone등록 페이지 들어올때 req(account or id(user) or id(musician))를 통해 AlbumId랑 name 보내주기.
 router.get("/:user_account", controller.stones_get);
 router.get("/mystone/:user_id", controller.stones_mystone_get);
 router.post("/mystone/:user_id", controller.stones_mystone_post);
