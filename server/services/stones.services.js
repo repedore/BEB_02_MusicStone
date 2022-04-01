@@ -5,6 +5,7 @@ const {
   AlbumModel,
 } = require("../models/index");
 const { MusicianModel } = require("../models/musician.model");
+const ServiceContract = require("../contracts/ServiceContract");
 
 // AlbumList({id, name})
 const getAlbumList = async (userAccount) => {
@@ -26,10 +27,18 @@ const getAlbumList = async (userAccount) => {
 const getMyStoneList = async (userId) => {
   try {
     // userId로 userAccount가져와서 가진 stone조회
-    const user = await UserModel.findOne({ id: userId }, { account: 1 });
+    const user = await UserModel.findOne(
+      { id: userId },
+      { account: 1, _id: 0 }
+    );
     if (user) {
       const userAccount = user.account;
       // Contract에서 userAccount가 가진 SFTList 가져오기
+      const myStoneList = await ServiceContract.getMySFTs(userAccount);
+      const list = myStoneList.map((el) => {
+        return el[0], el[1];
+      });
+      return myStoneList;
     } else {
       return "";
     }
@@ -69,7 +78,6 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
       totalBalance,
     } = stoneInfo;
     const { filename, originalname, path } = fileInfo;
-    //console.log(fileInfo);
     // account로 UserModel에서 musician_id찾기
     const musicianId = await UserModel.findOne(
       { account: account },
@@ -90,7 +98,6 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
       path,
       totalBalance,
     });
-    console.log(await Stone.save());
     return await Stone.save();
   } catch (e) {
     throw Error(e);
@@ -102,7 +109,6 @@ const getSellStone = async (userId, listInfo) => {
   // img, musician_name, stone_name, minPrice, prePrice, myBalance
   const { startIndex, endIndex, keyword } = listInfo;
   try {
-    console.log(listInfo);
     let sellList = [];
     if (keyword === undefined || keyword === "") {
       sellList = await TradeModel.find()
@@ -117,8 +123,6 @@ const getSellStone = async (userId, listInfo) => {
       const stoneIdList = (await StoneModel.find(query, { id: 1 })).map(
         (el) => el.id
       );
-      console.log(stoneIdList);
-
       // 검색어로 검색한 stone_id가 여러개가 나오는 경우 TradeStone에서 가져오기
       // 이 때, 하나의 stone_id에서도 여러가지의 TradeStone정보가 나올 수 있다.
     }

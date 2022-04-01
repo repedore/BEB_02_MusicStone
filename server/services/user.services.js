@@ -1,5 +1,6 @@
 const { UserModel, MusicianModel } = require("../models/index");
-const serviceContract = require("../contracts/serviceContract");
+const ServiceContract = require("../contracts/ServiceContract");
+
 // getUserInfo
 const getUserInfo = async (id) => {
   try {
@@ -29,7 +30,7 @@ const insertMusician = async (musicianInfo, fileInfo) => {
       await UserModel.findOne({ account }, { musician_id: 1, _id: 0 })
     ).musician_id;
     if (isMusician === 0) {
-      const isMint = await serviceContract.addMinter(account);
+      const isMint = await ServiceContract.addMinter(account);
       if (isMint) {
         const Musician = new MusicianModel({
           name_korea: KName,
@@ -57,7 +58,7 @@ const insertMusician = async (musicianInfo, fileInfo) => {
 
 const updateDeposit = async (account) => {
   try {
-    const deposit = await serviceContract.getUserDeposit(account);
+    const deposit = await ServiceContract.getUserDeposit(account);
     if (deposit) {
       const isIn = await UserModel.updateOne(
         { account },
