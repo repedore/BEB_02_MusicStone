@@ -13,11 +13,14 @@ import dummyData from "../../dummyData/dummyData";
 
 export function TradeStone() {
   const modalRef = useRef();
+
   const { id } = useParams();
   const [klayPrice, setKlayPrice] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTrade, setModalTrade] = useState("");
   const account = useSelector((state) => state.accountReducer);
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
   //dummyData
   const StoneData = dummyData.tradeStone.filter(
@@ -55,6 +58,27 @@ export function TradeStone() {
       </PriceDif>
     );
   };
+
+  const addPlayList = () => {
+    if (account.isConnect) {
+      const req = `${server}/playlist/${account.userId}`;
+      axios
+        .post(req, {
+          stoneId: StoneData.id,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            alert("플레이리스트에 추가되었습니다.");
+          } else if (res.status === 200) {
+            alert("이미 추가된 곡입니다.");
+          } else {
+            alert("네트워크 통신 오류");
+          }
+        });
+    } else {
+      alert("지갑을 연결해주세요.");
+    }
+  };
   const handleBuyBtn = (trade) => {
     modalRef.current.resetQuantity();
     setModalTrade(trade);
@@ -67,7 +91,10 @@ export function TradeStone() {
         <PreviewStream stone={StoneData} />
         <StoneWrapper>
           <Title>
-            {StoneData.name} - {StoneData.musician_name}
+            <span>
+              {StoneData.name} - {StoneData.musician_name}
+            </span>
+            <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
           </Title>
           <Info>
             <Price>
@@ -76,7 +103,10 @@ export function TradeStone() {
             </Price>
             <Lyricist>작사가 : {StoneData.lyricist}</Lyricist>
             <Composer>작곡가 : {StoneData.composer}</Composer>
-            <Desc>{StoneData.desc}</Desc>
+            <Desc>
+              {StoneData.desc}
+              테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+            </Desc>
           </Info>
         </StoneWrapper>
       </StoneContainer>
@@ -170,19 +200,25 @@ const StoneWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
 `;
 const Title = styled.h2`
   margin: 10px auto;
+  display: flex;
+  align-items: center;
+  span {
+    margin-right: 10px;
+  }
+`;
+const AddPlaylistBtn = styled.button`
+  height: 25px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 0;
+  background-color: #666666;
+  color: white;
+  &:hover {
+    color: black;
+  }
 `;
 const Info = styled.div``;
 const Price = styled.div`
@@ -220,16 +256,6 @@ const SellList = styled.li`
   margin: 10px;
   list-style: none;
   overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
   li {
     margin: 5px 20px;
   }

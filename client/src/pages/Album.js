@@ -100,6 +100,27 @@ export const Album = () => {
     });
   };
 
+  const addPlayList = () => {
+    if (account.isConnect) {
+      const req = `${server}/playlist/${account.userId}`;
+      axios
+        .post(req, {
+          stoneId: stoneList[selectNum].id,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            alert("플레이리스트에 추가되었습니다.");
+          } else if (res.status === 200) {
+            alert("이미 추가된 곡입니다.");
+          } else {
+            alert("네트워크 통신 오류");
+          }
+        });
+    } else {
+      alert("지갑을 연결해주세요.");
+    }
+  };
+
   useEffect(loadData, [account, isLike]);
 
   useEffect(() => {
@@ -135,8 +156,10 @@ export const Album = () => {
           <StoneWrapper>
             <StoneTitle>
               <h2>{stoneList[selectNum].name}</h2>
+              <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
             </StoneTitle>
             <StoneInfo>
+              {console.log(stoneList[selectNum])}
               <div>작사 : Dummy</div>
               <div>작곡 : Dummy</div>
               <div>장르 : {stoneList[selectNum].category}</div>
@@ -198,17 +221,7 @@ const InfoWrapper = styled.div`
   margin: 25px;
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
+  overflow: scroll;
 `;
 
 const Img = styled.img`
@@ -262,17 +275,7 @@ const StoneList = styled.li`
   height: 100%;
   margin: 10px;
   list-style: none;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
+  overflow: scroll;
   li {
     margin: 5px 0;
   }
@@ -281,33 +284,37 @@ const StoneWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: start;
 `;
 
 const StoneTitle = styled.div`
   width: 100%;
   height: 40px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   h2 {
     font-size: 1.5rem;
-    text-align: center;
+    margin-right: 10px;
   }
 `;
-
+const AddPlaylistBtn = styled.button`
+  height: 25px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 0;
+  background-color: #666666;
+  color: white;
+  &:hover {
+    color: black;
+  }
+`;
 const StoneInfo = styled.div`
   width: 100%;
   height: 100%;
   margin: 20px 50px;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
+  overflow: scroll;
 `;
 
 const Notice = styled.div`
