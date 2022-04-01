@@ -150,6 +150,10 @@ a:active {
   background-color: white;
   color: black;
 }
+.buytokenbtn {
+  width: 7rem;
+  height: 2rem;
+}
 .categorytext {
   margin: 1rem;
 }
@@ -345,7 +349,7 @@ a:active {
 }
 .tokeninput {
   text-align: center;
-  width: 12rem;
+  width: 13rem;
   padding: 0.5rem 1rem;
   margin: 1rem;
 }

@@ -4,18 +4,17 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import {
   AiOutlineCheckSquare,
-  AiOutlineCheck,
   AiOutlinePlayCircle,
   AiFillDelete,
   AiFillCustomerService,
 } from "react-icons/ai";
-import { BsCoin } from "react-icons/bs";
 import service_abi from "../abi/Service";
 import Caver from "caver-js";
 
 export function PlayList() {
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
+  const userId = state.userId;
   const [stoneSrc, setStoneSrc] = useState("");
   const [currentTime, setCurrentTime] = useState(0);
   const [stoneId, setStoneId] = useState(0);
@@ -30,9 +29,10 @@ export function PlayList() {
 
   const getPlayList = async () => {
     await axios
-      .get(`${server}/playlist/${account}`)
+      .get(`${server}/playlist/${userId}`)
       .then((res) => {
-        const pl = res.data.map((data) => ({
+        console.log(res.data);
+        const pl = res.data.playlist.map((data) => ({
           stoneId: data.id,
           stoneName: data.name,
           musicianName:
@@ -45,14 +45,16 @@ export function PlayList() {
       })
       .catch((e) => alert(e));
   };
-
-  const handleAudio = () => {
-    console.log(audioRef);
-    console.log(audioRef.current.currentTime);
+  const deleteStone = async (stoneId, e) => {
+    await axios
+      .post(`${server}/playlist/delete/${userId}`, { stoneId: stoneId })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => alert(e));
   };
-
   const handleTime = () => {
-    console.log(audioRef.current.currentTime);
+    console.log("55 :   " + audioRef.current.currentTime);
   };
 
   const GetKeepingTokenBal = async () => {
@@ -67,11 +69,10 @@ export function PlayList() {
       .catch((err) => {
         console.log(err);
       });
-
-    onclick = true;
   };
 
   const handleStoneId = async (stoneId, e) => {
+    setStoneId(stoneId);
     setStoneSrc(`${server}/playlist/streaming/${stoneId}`);
     await axios
       .get(stoneSrc)
@@ -81,11 +82,16 @@ export function PlayList() {
       .catch((e) => alert(e));
   };
 
-  const handleStreaming = (e) => {
-    console.log(audioRef.current.currentTime);
-    if (audioRef.current.currentTime > 60) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+  const handleStreaming = async (e) => {
+    if (
+      audioRef.current.currentTime > 59.9 &&
+      60.4 > audioRef.current.currentTime
+    ) {
+      await axios
+        .post(`${server}/playlist/streaming/${stoneId}`, { userId: userId })
+        .then((res) => {
+          console.log(res.data);
+        });
     }
   };
   return (
@@ -162,7 +168,11 @@ export function PlayList() {
 
               <span className="musicianName">{play.musicianName}</span>
               <span className="deleteicon">
-                <AiFillDelete className="deleteicon" size="30" />
+                <AiFillDelete
+                  onClick={(e) => deleteStone(play.stoneId, e)}
+                  className="deleteicon"
+                  size="30"
+                />
               </span>
             </div>
           </div>

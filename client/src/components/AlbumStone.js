@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const AlbumStone = ({ stone, selectNum, idx, handleStoneClick, handleLikeBtn, isConnect }) => {
-    const [isLike, setIsLike] = useState(false);
+const AlbumStone = ({ stone, selectNum, idx, handleStoneClick, handleLikeBtn, isConnect, liked }) => {
 
     const showlike = () => {
-        return (isLike
+        return (liked
             ? <div>
                 <FavoriteIcon fontSize='small' /><span>{stone.like.length}</span>
             </div>
@@ -19,13 +18,11 @@ const AlbumStone = ({ stone, selectNum, idx, handleStoneClick, handleLikeBtn, is
 
     const handleLike = () => {
         if (isConnect) {
-            setIsLike(!isLike);
-            handleLikeBtn("stone", stone.id, !isLike);
+            handleLikeBtn("stone", stone.id, !liked);
         } else {
             alert("지갑을 연결해주세요.");
         }
     }
-
 
     return (
         <Stone color={idx === selectNum ? "#333333" : ""}>
