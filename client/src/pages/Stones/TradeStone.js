@@ -86,7 +86,6 @@ export function TradeStone() {
   };
   return (
     <Body>
-      {console.log(StoneData)}
       <StoneContainer>
         <PreviewStream stone={StoneData} />
         <StoneWrapper>

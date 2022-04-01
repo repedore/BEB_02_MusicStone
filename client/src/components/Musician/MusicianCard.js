@@ -19,10 +19,9 @@ const MusicianCard = ({ musician }) => {
 
   return (
     <Link to={`/musician/${musician.id}`} style={{ textDecoration: "none" }}>
-      {console.log(musician)}
       <CardContainer>
         <ImgBox>
-          <MusicianImg src={musician.image} alt={musician.name} />
+          <MusicianImg src={`http://3.91.196.38:12367/${musician.originalname}`} alt={musician.name} />
         </ImgBox>
         <MusicianName>{showName()}</MusicianName>
       </CardContainer>
