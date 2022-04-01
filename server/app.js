@@ -17,6 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/musicians", express.static("musicians"));
+app.use("/stones", express.static("stones"));
+app.use("albums", express.static("albums"));
 
 app.use("/", routes);
 
