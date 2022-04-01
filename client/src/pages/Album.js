@@ -83,6 +83,26 @@ export const Album = () => {
             .then((res) => { setAlbumData(res.data) })
     }
 
+    const addPlayList = () => {
+        if (account.isConnect) {
+            const req = `${server}/playlist/${account.userId}`
+            axios.post((req), {
+                stoneId: stoneList[selectNum].id
+            })
+                .then((res) => {
+                    if (res.status === 201) {
+                        alert('플레이리스트에 추가되었습니다.')
+                    } else if (res.status === 200) {
+                        alert('이미 추가된 곡입니다.')
+                    } else {
+                        alert('네트워크 통신 오류')
+                    }
+                })
+        } else {
+            alert("지갑을 연결해주세요.");
+        }
+    }
+
     useEffect(loadData, [account, isLike])
 
     useEffect(() => {
@@ -121,9 +141,10 @@ export const Album = () => {
                             <PreviewStream stone={stoneList[selectNum]} />
                             <StoneWrapper>
                                 <StoneTitle>
-                                    <h2>{stoneList[selectNum].name}</h2>
+                                    <h2>{stoneList[selectNum].name}</h2><AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
                                 </StoneTitle>
                                 <StoneInfo>
+                                    {console.log(stoneList[selectNum])}
                                     <div>작사 : Dummy</div>
                                     <div>작곡 : Dummy</div>
                                     <div>장르 : {stoneList[selectNum].category}</div>
@@ -132,7 +153,6 @@ export const Album = () => {
                                 </StoneInfo>
                             </StoneWrapper>
                         </StoneContainer>
-
                         : <StoneContainer>
                             <Notice>
                                 등록된 스톤이 없습니다.
@@ -254,24 +274,38 @@ const StoneWrapper = styled.div`
 width: 100%;
 display:flex;
 flex-direction: column;
+justify-content: start;
 `;
 
 const StoneTitle = styled.div`
 width: 100%;
 height: 40px;
 margin: 0 auto;
+display:flex;
+align-items:center;
+justify-content: center;
 h2{
     font-size: 1.5rem;
-    text-align: center;
+    margin-right: 10px;
+    
 }
 `;
-
+const AddPlaylistBtn = styled.button`
+height: 25px;
+cursor: pointer;
+border-radius: 6px;
+border: 0;
+background-color : #666666;
+    color:white;
+&:hover{  
+    color:black;
+  }
+`;
 const StoneInfo = styled.div`
 width: 100%;
 height: 100%;
 margin: 20px 50px;
 overflow: scroll;
-
 `;
 
 const Notice = styled.div`

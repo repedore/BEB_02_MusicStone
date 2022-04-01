@@ -5,9 +5,8 @@ export function Main() {
   return (
     <div id="mainpage">
       <div>
-        <img className="mainimg" src={musicstonelogo} alt="profile" />
+        <img className="mainimg" src="/img/MusicStone.png" alt="profile" />
       </div>
-      <div className="pagetitle">MUSIC STONE</div>
       <div id="maintext">
         <div className="text">
           기존의 중앙화된 음악 생태계에서는 노래에 대한 권리나 수익들이
