@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import select from "react-select";
@@ -17,22 +17,40 @@ export default function RegisterStone() {
   const [lyrics, setLyrics] = useState("");
   const [category, setCategory] = useState("default");
   const [album, setAlbum] = useState("");
-  const [albumName, setAlbumName] = useState([]);
+  const [albumList, setAlbumList] = useState([]);
   const [SFTAmount, setSFTAmount] = useState(0);
+  const [txHash, setTxHash] = useState("");
   const caver = new Caver(window.klaytn);
-  var tokenAddress = process.env.REACT_APP_TOKEN_ADDRESS;
-  var SFTAddress = process.env.REACT_APP_SFT_CONTRACT_ADDRESS;
   var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
-  var accessKeyId = process.env.REACT_APP_ACCESS_KEY_ID; //KAS 콘솔 - Security - Credential에서 발급받은 accessKeyId 인증아이디
-  var secretAccessKey = process.env.REACT_APP_SECRET_ACCESS_KEY; //KAS 콘솔 - Security - Credential에서 발급받은 secretAccessKey 인증비밀번호
-  var walletAddress = process.env.REACT_APP_WALLETADDRESS;
-  var walletPrivateKey = process.env.REACT_APP_WALLETPRIVATEKEY;
-  const CaverExtKAS = require("caver-js-ext-kas");
-  const caverExt = new CaverExtKAS();
-  const chainId = 1001; // 클레이튼 테스트 네트워크 접속 ID
-  caverExt.initKASAPI(chainId, accessKeyId, secretAccessKey); //KAS console 초기화
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+
+  useEffect(() => {
+    async function req() {
+      await axios
+        .get(`${server}/stones/${account}`)
+        .then((res) => {
+          const albums = res.data.albumList.map((data) => ({
+            albumName: data.name,
+          }));
+          setAlbumList(albumList.concat(albums));
+        })
+        .catch((e) => console.log(e));
+    }
+    req();
+  }, []);
+  // const getAlbum = async () => {
+  //   await axios
+  //     .get(`${server}/stones/${account}`)
+  //     .then((res) => {
+  //       const albums = res.data.map((data) => ({
+  //         albumName: data.name,
+  //       }));
+  //       setAlbumList(albums);
+  //     })
+  //     .catch((e) => console.log(e));
+  // };
+
   const onChangeStoneName = (e) => {
     setStoneName(e.target.value);
   };
@@ -55,7 +73,22 @@ export default function RegisterStone() {
     setSFTAmount(Number(e.target.value));
   };
   const mintSFT = async () => {
-    const kip37 = new caverExt.kct.kip37(SFTAddress);
+    var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
+    await service_contract.methods
+      .mintSFT(SFTAmount)
+      .send({
+        type: "SMART_CONTRACT_EXECUTION",
+        from: state.account,
+        gas: 1000000,
+      })
+      .then((data) => {
+        setTxHash(data.transactionHash);
+        console.log(data);
+        console.log(data.transactionHash);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     saveStone();
   };
   const saveStone = async () => {
@@ -67,7 +100,8 @@ export default function RegisterStone() {
       stonefile &&
       lyricist &&
       composer &&
-      lyrics
+      lyrics &&
+      SFTAmount
     ) {
       const formData = new FormData();
       formData.append("album", album);
@@ -98,24 +132,18 @@ export default function RegisterStone() {
     } else if (!description) {
       alert("소개글을 입력해주세요.");
     } else if (!stonefile) {
-      alert("음원파일을 선택해주세요");
+      alert("음원파일을 선택해주세요.");
     } else if (!lyricist) {
-      alert("작사가를 입력해주세요");
+      alert("작사가를 입력해주세요.");
     } else if (!composer) {
-      alert("작곡가를 입력해주세요");
+      alert("작곡가를 입력해주세요.");
     } else if (!lyrics) {
-      alert("가사를 입력해주세요");
+      alert("가사를 입력해주세요.");
+    } else if (!SFTAmount) {
+      alert("민팅할 SFT 개수를 입력해주세요.");
     }
   };
-  // const getAlbum = async () => {
-  //   await axios
-  //     .get(`${server}/stones/${account}`)
-  //     .then((res) => {
-  //       setAlbumName(res.data.albumName);
-  //       console.log("album name " + res.data.albumName);
-  //     })
-  //     .catch((e) => alert(e));
-  // };
+
   return (
     <div>
       <div id="stoneregisterpage">
@@ -136,7 +164,6 @@ export default function RegisterStone() {
           <div className="text">계정을 먼저 연결하세요.</div>
         )}
         <div>
-          {/* <button onclick={getAlbum()}>getAlbum</button> */}
           <select
             className="Aselectbox"
             onChange={(e) => {
@@ -145,7 +172,7 @@ export default function RegisterStone() {
             }}
           >
             <option value="">앨범을 선택해주세요.</option>
-            {albumName.map((albumname) => {
+            {albumList.map((albumname) => {
               return <option value={albumname}>{albumname}</option>;
             })}
           </select>
@@ -245,9 +272,10 @@ export default function RegisterStone() {
               </select>
             </div>
           </div>
+          <div className="registertext">SFT Minting</div>
           <input
             className="stonenameinput"
-            placeholder="등록할 SFT 개수를 입력해주세요."
+            placeholder="민팅할 SFT 개수를 입력해주세요."
             onChange={onChangeSFTAmount}
           ></input>
           <div>

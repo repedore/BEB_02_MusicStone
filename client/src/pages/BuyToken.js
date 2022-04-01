@@ -3,14 +3,19 @@ import Caver from "caver-js";
 import React, { useState } from "react";
 import axios from "axios";
 import service_abi from "../abi/Service";
+import token_abi from "../abi/Token";
 
 function BuyToken() {
   const swapRatio = 500.0; // 클레이 : 뮤직스톤 토큰 교환비율
   const state = useSelector((state) => state.accountReducer);
   const [klayBalance, setKlayBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
+  const [keepingTokenBal, setKeepingTokenBal] = useState(0);
+  const [rewardTokenBal, setRewardTokenBal] = useState(0);
   const [keepToken, setKeepToken] = useState(0);
   const [swapAmount, setSwapAmount] = useState({ klay: 0.0, musictStone: 0.0 });
+  const server =
+    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
   const { klay, token } = swapAmount;
   // caver-js 연결
   const caver = new Caver(window.klaytn);
@@ -18,8 +23,6 @@ function BuyToken() {
   var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
   var accessKeyId = process.env.REACT_APP_ACCESS_KEY_ID; //KAS 콘솔 - Security - Credential에서 발급받은 accessKeyId 인증아이디
   var secretAccessKey = process.env.REACT_APP_SECRET_ACCESS_KEY; //KAS 콘솔 - Security - Credential에서 발급받은 secretAccessKey 인증비밀번호
-  var walletAddress = process.env.REACT_APP_WALLETADDRESS;
-  var walletPrivateKey = process.env.REACT_APP_WALLETPRIVATEKEY;
   const CaverExtKAS = require("caver-js-ext-kas");
   const caverExt = new CaverExtKAS();
   const chainId = 1001; // 클레이튼 테스트 네트워크 접속 ID
@@ -38,7 +41,6 @@ function BuyToken() {
   // 토큰 교환을 위한 토큰 수량 입력 이벤트(Klay & Token)
   const onChangeValue = (e) => {
     const { value, name } = e.target;
-    //console.log("e.target.value:"+value+"   e.target.name:"+name);
     //klay로 입력되면 Token 입력창에 토큰 교환비율에 따라 값을 계산해서 넣어준다.
     if (name === "klay") {
       setSwapAmount(() => ({
@@ -63,7 +65,6 @@ function BuyToken() {
   };
   const GetKlayBalance = async () => {
     if (state.isConnect) {
-      console.log("account : " + state.account);
       // caver 함수 중 현재 공개키의 klay양을 리턴하는 함수
       let bal = await caverExt.klay.getBalance(state.account);
       bal = caverExt.utils.fromPeb(bal, "KLAY");
@@ -121,15 +122,88 @@ function BuyToken() {
     if (state.isConnect) {
       GetKlayBalance();
       GetTokenBalance();
+      GetKeepingTokenBal();
+      GetRewardTokenBal();
     } else {
       alert("지갑을 먼저 연결해주세요.");
     }
   };
-
+  const GetKeepingTokenBal = async () => {
+    var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
+    await service_contract.methods
+      .getUserDeposit(state.account)
+      .call()
+      .then((data) => {
+        console.log(caver.utils.fromPeb(data));
+        setKeepingTokenBal(caver.utils.fromPeb(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const GetRewardTokenBal = async () => {
+    var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
+    await service_contract.methods
+      .getUserDistribution(state.account)
+      .call()
+      .then((data) => {
+        console.log(data);
+        setRewardTokenBal(caver.utils.fromPeb(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const onChangeKeepToken = (e) => {
     setKeepToken(e.target.value);
   };
-  const keepingToken = async () => {};
+  const saveDeposit = async () => {
+    await axios.post(`${server}/user/deposit/${state.account}`).then((res) => {
+      console.log(res.data);
+      alert(res.data.message);
+    });
+  };
+
+  const keepingToken = async () => {
+    var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
+    var token_contract = new caver.klay.Contract(token_abi, tokenAddress);
+    let isSend;
+
+    await token_contract.methods
+      .approve(serviceAddress, caver.utils.toPeb(keepToken))
+      .send({
+        type: "SMART_CONTRACT_EXECUTION",
+        from: state.account,
+        gas: 1000000,
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    await service_contract.methods
+      .depositMSToken(caver.utils.toPeb(keepToken))
+      .send({
+        type: "SMART_CONTRACT_EXECUTION",
+        from: state.account,
+        gas: 1000000,
+      })
+      .then((data) => {
+        console.log(data);
+        isSend = data.status;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (!isSend) {
+      alert("오류로 인해 전송이 실패했습니다.");
+    } else {
+      saveDeposit();
+    }
+  };
 
   return (
     <div id="buytokenpage">
@@ -151,6 +225,14 @@ function BuyToken() {
       <div className="tokentext">
         <span className="text">클레이 잔액 : {klayBalance} klays</span>
         <span className="text">뮤직스톤 토큰 잔액 : {tokenBalance} tokens</span>
+      </div>
+      <div className="tokentext">
+        <span className="text">
+          예치된 토큰 잔액 : {keepingTokenBal} tokens
+        </span>
+        <span className="text">
+          보상으로 받을 수 있는 토큰 잔액 : {rewardTokenBal} tokens
+        </span>
       </div>
       <input
         id="klayInput"

@@ -2,31 +2,41 @@ body {
   background-color: #0f0f0f;
   color: white;
 }
-#title {
+a:link {
+  color: rgb(255, 255, 255);
+}
+a:visited {
+  color: rgb(255, 255, 255);
+}
+a:hover {
+  color: rgb(255, 255, 255);
+}
+a:active {
+  color: rgb(255, 255, 255);
+}
+#audio {
+  margin-bottom: 1rem;
+}
+#buytokenpage {
+  text-align: center;
+  margin-top: 5rem;
   color: white;
 }
-#navmenu {
-  float: right;
-  margin-top: -0.6rem;
+#connect {
+  color: white;
+  padding-left: 0.5rem;
+}
+#Edit {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#isPlay {
+  margin: 1rem;
 }
 #musician {
   margin: 2rem;
   color: white;
-}
-#stones {
-  margin: 2rem;
-  color: white;
-}
-#playlist {
-  margin: 2rem;
-  color: white;
-}
-
-#nav {
-  background-color: black;
-  text-decoration: none;
-  padding: 2rem;
-  border-bottom: 1px solid #333333;
 }
 #mypage {
   text-align: center;
@@ -34,6 +44,20 @@ body {
 }
 #mypageaccount {
   color: white;
+}
+#maintext {
+  text-align: left;
+  padding: 1rem 17rem;
+  @keyframes rotate_image {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+#mainpage {
+  text-align: center;
+  color: white;
+  margin: 2rem 6rem 0rem 6rem;
 }
 #nav-stones-btn {
   background-color: black;
@@ -43,36 +67,39 @@ body {
   border: none;
   cursor: pointer;
 }
-.editbtn {
-  margin: 1rem;
-  padding: 0.5rem 2rem;
-  border: 0;
-  outline: 0;
-  background-color: white;
-  color: black;
+#nav {
+  background-color: black;
+  text-decoration: none;
+  padding: 2rem;
+  border-bottom: 1px solid #333333;
 }
-.tokenbtn {
-  padding: 0.5rem 2rem;
-  border: 0;
-  outline: 0;
-  background-color: white;
-  color: black;
+#navmenu {
+  float: right;
+  margin-top: -0.6rem;
 }
-#connect {
+#observer {
+  white-space: pre;
+}
+#playlisttext {
+  font-size: 2rem;
+  margin: 2rem;
+}
+#playlist {
+  margin: 2rem;
   color: white;
-  padding-left: 0.5rem;
 }
-.icon {
-  color: white;
-  vertical-align: middle;
-}
-#Edit {
+#playlistpage {
   text-align: center;
-  margin-top: 5rem;
   color: white;
+  margin-top: 5rem;
+  margin-bottom: 10rem;
 }
 #register {
   color: white;
+}
+#registeralbumpage {
+  text-align: center;
+  margin-top: 3rem;
 }
 #registerpage {
   text-align: center;
@@ -84,87 +111,20 @@ body {
   margin-top: 5rem;
   color: white;
 }
-#buytokenpage {
-  text-align: center;
-  margin-top: 5rem;
-  color: white;
-}
-#mainpage {
-  text-align: center;
-  color: white;
-  margin-top: 3rem;
-}
-#playlistpage {
-  text-align: center;
-  color: white;
-  margin-top: 5rem;
-  margin-bottom: 10rem;
-}
-#isPlay {
-  margin: 1rem;
-}
-#maintext {
-  text-align: left;
-  padding: 1rem 17rem;
-  @keyframes rotate_image {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-}
-#observer {
-  white-space: pre;
-}
-#playlisttext {
-  font-size: 2rem;
+#stones {
   margin: 2rem;
-}
-#registeralbumpage {
-  text-align: center;
-  margin-top: 3rem;
+  color: white;
 }
 #snsList {
   list-style: none;
   display: flex;
   flex-direction: column;
 }
-.deleteicon {
-  /* vertical-align: middle;
-  margin-left: auto; */
-  display: inline-block;
-  margin-right: 13rem;
-}
-.stoneName {
-  /* margin: 0.3rem auto 0rem auto;
-  text-align: center; */
-  float: left;
-  margin-right: auto;
-  margin-left: 27rem;
-}
-.stones {
-  font-size: 1rem;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.streamingpage {
-}
-
-.stoneline {
-  margin: 1.5rem auto;
-  width: 50rem;
-  text-align: center;
-}
-.playlisticon {
-  vertical-align: middle;
-  margin-right: 0.5rem;
-  margin-left: 0.5rem;
-  margin-top: -0.3rem;
-}
-.playlisttext {
-  margin: 3rem;
+#title {
   color: white;
+}
+.account {
+  margin-bottom: 1rem;
 }
 .albumbtn {
   font-size: 1rem;
@@ -176,58 +136,50 @@ body {
   color: black;
   vertical-align: middle;
 }
-.line {
-  margin-top: 5rem;
-  width: 45rem;
-}
-.playicon {
-  text-align: center;
-  vertical-align: middle;
-  margin-right: 0.5rem;
-}
-.selectbox {
-  text-align: center;
-  margin: 0.2rem;
-  font-size: 1rem;
-  padding: 0.3rem 5.6rem;
-}
 .Aselectbox {
   text-align: center;
   margin: 0.2rem;
   font-size: 1rem;
   padding: 0.3rem 8.2rem;
 }
-.logo {
-  width: 30px;
-  margin-right: 0.5rem;
-  vertical-align: middle;
-  position: relative;
-  color: white;
+.btn {
+  margin: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
 }
 .categorytext {
   margin: 1rem;
+}
+.checkicon {
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+.deleteicon {
+  /* vertical-align: middle;
+  margin-left: auto; */
+  display: inline-block;
+  margin-right: 13rem;
+}
+.editbtn {
+  margin: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+  margin-bottom: 10rem;
 }
 .fileinput {
   text-align: center;
   margin: 1rem;
   margin-left: 6rem;
 }
-.lyricsinput {
-  font-size: 1rem;
-  text-align: left;
-  width: 20rem;
-  padding: 1rem 5rem 15rem 1rem;
-  margin: 1rem;
-}
-.text {
-  margin: 0.5rem;
-}
-.tokentext {
-  margin: 1rem;
-}
-.pagetitle {
-  font-size: 2rem;
-  margin: 1rem;
+.icon {
+  color: white;
+  vertical-align: middle;
 }
 .nav-dropdown {
   position: relative;
@@ -253,61 +205,6 @@ body {
 .nav-dropdown-content div:hover {
   background-color: #ddd;
 }
-.musicianinfoinput {
-  font-size: 1rem;
-  text-align: left;
-  width: 20rem;
-  padding: 2rem 3rem;
-  margin: 1rem;
-}
-.stoneinfoinput {
-  font-size: 1rem;
-  text-align: left;
-  width: 20rem;
-  padding: 1rem 5rem 4rem 1rem;
-  margin: 1rem;
-}
-.musicianinput {
-  font-size: 1rem;
-  text-align: center;
-  width: 20rem;
-  padding: 0.5rem 3rem;
-  margin: 1rem;
-}
-.stonenameinput {
-  font-size: 1rem;
-  text-align: center;
-  width: 20rem;
-  padding: 0.5rem 3rem;
-  margin: 1rem;
-}
-.tokeninput {
-  text-align: center;
-  width: 12rem;
-  padding: 0.5rem 1rem;
-  margin: 1rem;
-}
-.tokenbtn {
-  padding: 0.5rem 2rem;
-  border: 0;
-  outline: 0;
-  background-color: white;
-  color: black;
-}
-.registertext {
-  text-align: center;
-}
-.snsAddBtn {
-  cursor: pointer;
-  background: #e9edf1;
-  border-radius: 25%;
-  margin-left: 10px;
-}
-.profileimg {
-  width: 10rem;
-  margin-top: 5rem;
-  margin-bottom: 1.5rem;
-}
 .memberimg {
   width: 10rem;
   margin: 2rem;
@@ -323,17 +220,141 @@ body {
   font-size: 2rem;
   vertical-align: middle;
 }
-a:link {
-  color: rgb(255, 255, 255);
+.musicianinfoinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 2rem 3rem;
+  margin: 1rem;
 }
-a:visited {
-  color: rgb(255, 255, 255);
+.musicianinput {
+  font-size: 1rem;
+  text-align: center;
+  width: 20rem;
+  padding: 0.5rem 3rem;
+  margin: 1rem;
 }
-a:hover {
-  color: rgb(255, 255, 255);
+.line {
+  margin-top: 5rem;
+  width: 45rem;
 }
-a:active {
-  color: rgb(255, 255, 255);
+.logo {
+  width: 30px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  position: relative;
+  color: white;
+}
+.lyricsinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 1rem 5rem 15rem 1rem;
+  margin: 1rem;
+}
+.playlisttokentext {
+  margin-bottom: 1.5rem;
+  margin-top: -1.5rem;
+}
+.playlisticon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  margin-top: -0.3rem;
+}
+.playlisttext {
+  margin: 3rem 1rem;
+  color: white;
+}
+.playicon {
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+.pagetitle {
+  font-size: 2rem;
+  margin: 1rem;
+}
+.profileimg {
+  width: 10rem;
+  margin-top: 5rem;
+  margin-bottom: 1.5rem;
+}
+.registertext {
+  text-align: center;
+}
+.stoneName {
+  /* margin: 0.3rem auto 0rem auto;
+  text-align: center; */
+  float: left;
+  margin-right: auto;
+  margin-left: 27rem;
+}
+.stones {
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.streamingpage {
+}
+.selectbox {
+  text-align: center;
+  margin: 0.2rem;
+  font-size: 1rem;
+  padding: 0.3rem 5.9rem;
+}
+.stoneinfoinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 1rem 5rem 4rem 1rem;
+  margin: 1rem;
+}
+.snsAddBtn {
+  cursor: pointer;
+  background: #e9edf1;
+  border-radius: 25%;
+  margin-left: 10px;
+}
+.stonenameinput {
+  font-size: 0.9rem;
+  text-align: center;
+  width: 20rem;
+  padding: 0.4rem 3rem;
+  margin: 1rem;
+}
+.stoneline {
+  margin: 1.5rem auto;
+  width: 50rem;
+  text-align: center;
+}
+.tokenbtn {
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+}
+.text {
+  margin: 0.5rem;
+}
+.tokentext {
+  margin: 1rem;
+}
+.tokeninput {
+  text-align: center;
+  width: 12rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+}
+.tokenbtn {
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
 }
 @keyframes rotate_image {
   100% {

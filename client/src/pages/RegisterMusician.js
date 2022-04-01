@@ -59,7 +59,7 @@ export function RegisterMusician() {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
           alert(res.data.message);
         });
     } else if (!KName && !EName) {
