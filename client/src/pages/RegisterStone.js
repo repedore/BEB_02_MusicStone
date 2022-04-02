@@ -94,7 +94,7 @@ export default function RegisterStone() {
     ) {
       mintSFT();
       const formData = new FormData();
-      formData.append("album", album);
+      formData.append("albumId", album);
       formData.append("stoneName", stoneName);
       formData.append("description", description);
       formData.append("stonefile", stonefile);
