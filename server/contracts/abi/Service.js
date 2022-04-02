@@ -95,6 +95,29 @@ const service_abi = [
   },
   {
     constant: true,
+    inputs: [
+      {
+        name: "_account",
+        type: "address",
+      },
+      {
+        name: "_token_id",
+        type: "uint256",
+      },
+    ],
+    name: "getUserSFTs",
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
     inputs: [],
     name: "mstoken",
     outputs: [
