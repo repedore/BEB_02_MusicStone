@@ -103,8 +103,7 @@ const showPriceDif = () => {
       .get(apiUrl)
       .then((price) => setKlayPrice(price.data.data.closing_price));
 
-    //현재 buyStone 페이지 데이터가 덜와서 연결중이라 id값 5로 고정
-    const req = `${server}/stones/tradestone/5`
+    const req = `${server}/stones/tradestone/${id}`
     axios.get(req)
       .then((res) => setStoneData(res.data))
   }, []);
