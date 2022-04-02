@@ -9,6 +9,7 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
     const [price, setPrice] = useState(0);
     const caver = new Caver(window.klaytn);
 
+    //한영이름 보여주는 함수
     const showName = () => {
         if (modalStone.musicianInfo) {
             const kName = modalStone.musicianInfo[0].name_korea;
@@ -24,20 +25,22 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
         }
     }
 
-
+    //닫기 버튼
     const handleClose = () => {
         setQuantity(0);
         setPrice(0);
         setModalOpen(false);
     }
+
+    //수량 변경 보유 수량 이상 판매 불가
     const handleQuantityInput = (e) => {
         switch (e.target.id) {
             case "price":
                 setPrice(e.target.value);
                 break;
             case "quantity":
-                if (Number(e.target.value) > modalStone.balance) {
-                    alert(`현재 보유한 수량은 ${modalStone.balance}개 입니다.`);
+                if (Number(e.target.value) > modalStone.userBalance) {
+                    alert(`현재 보유한 수량은 ${modalStone.userBalance}개 입니다.`);
                 } else {
                     setQuantity(e.target.value)
                 }
@@ -47,7 +50,7 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
         }
     }
 
-    //현재 서버에서 리스트 받아오는게 아직이라 하드코딩값 판매등록됨
+    //판매 요청 보내는 함수
     const handleSell = async () => {
         const sft = new caver.klay.Contract(sft_abi, process.env.REACT_APP_SFT_ADDRESS);
         const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
@@ -68,13 +71,10 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                             })
                             .then(console.log)
                     } else {
-                        //item 등록 현재는 서버에서 mystone 받아오는게 없어서 하드코딩된거 판매등록함
-                        //1번 토큰이 제(찬영) 계정으로 민팅한거라 판매등록 테스트하려면 바꿔줘야
-
                         try {
                             service.methods
                                 //(tokenId, unitPrice, amount)
-                                .addItemToMarket(1, 10, 10)
+                                .addItemToMarket(modalStone.token_id, quantity, price)
                                 .send({
                                     from: account.account,
                                     gas: 1000000,
@@ -83,49 +83,6 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                         } catch (e) {
                             console.log(e)
                         }
-
-                        // try {
-                        //     service.methods
-                        //         //(itemId), amount)
-                        //         .purchaseItem(0, 3)
-                        //         .send({
-                        //             from: account.account,
-                        //  value = amount * unitPrice
-                        //             value: 30,
-                        //             gas: 1000000,
-                        //         })
-                        //         .then(console.log)
-                        // } catch (e) {
-                        //     console.log(e)
-                        // }
-
-                        //등록된 itemId 확인용
-                        // service.methods
-                        //     .getMarketItemById(0)
-                        //     .call()
-                        //     .then(console.log)
-
-                        //계정이 등록한 item 확인용
-                        // service.methods
-                        //     .getItemsBySeller(account.account)
-                        //     .call()
-                        //     .then(console.log)
-
-                        //balance 확인용
-                        // sft.methods
-                        //     .balanceOf(account.account, 0)
-                        //     .call()
-                        //     .then(console.log)
-
-                        //mintTest용
-                        // service.methods
-                        //     .mintSFT(1000)
-                        //     .send({
-                        //         from: account.account,
-                        //         gas: 1000000,
-                        //     })
-                        //     .then(console.log)
-
                     }
                 })
         } else {

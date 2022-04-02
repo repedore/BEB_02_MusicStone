@@ -20,7 +20,6 @@ const MusicianCard = ({ musician }) => {
 
   return (
     <Link to={`/musician/${musician.id}`} style={{ textDecoration: "none" }}>
-      {console.log(musician)}
       <CardContainer>
         <ImgBox>
           <MusicianImg src={`${server}/${musician.originalname}`} alt={musician.name} />
