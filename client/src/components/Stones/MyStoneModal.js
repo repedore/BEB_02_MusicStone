@@ -9,6 +9,22 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
     const [price, setPrice] = useState(0);
     const caver = new Caver(window.klaytn);
 
+    const showName = () => {
+        if (modalStone.musicianInfo) {
+            const kName = modalStone.musicianInfo[0].name_korea;
+            const eName = modalStone.musicianInfo[0].name_english;
+
+            if (kName && eName) {
+                return `${kName}(${eName})`;
+            } else if (kName) {
+                return kName;
+            } else {
+                return eName;
+            }
+        }
+    }
+
+
     const handleClose = () => {
         setQuantity(0);
         setPrice(0);
@@ -132,7 +148,7 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                     </Nav>
                     <Cart>
                         <Receipt>
-                            <Item>{modalStone.name} - {modalStone.musician_name}</Item>
+                            <Item>{modalStone.name} - {showName()}</Item>
                             <InputWrapper>
                                 <QuantityInput id="quantity" type="number" min="0" value={quantity} onChange={(e) => handleQuantityInput(e)} />
                             </InputWrapper>

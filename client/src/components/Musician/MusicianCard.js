@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import React from "react";
 
-const server = process.env.REACT_APP_SERVER_ADDRESS;
+const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 const MusicianCard = ({ musician }) => {
 
   const showName = () => {
@@ -20,6 +20,7 @@ const MusicianCard = ({ musician }) => {
 
   return (
     <Link to={`/musician/${musician.id}`} style={{ textDecoration: "none" }}>
+      {console.log(musician)}
       <CardContainer>
         <ImgBox>
           <MusicianImg src={`${server}/${musician.originalname}`} alt={musician.name} />

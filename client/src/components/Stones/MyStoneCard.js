@@ -5,19 +5,32 @@ import styled from "styled-components";
 
 const MyStoneCard = ({ stone, handleSellBtn }) => {
 
+    const showName = () => {
+        const kName = stone.musicianInfo[0].name_korea;
+        const eName = stone.musicianInfo[0].name_english;
+
+        if (kName && eName) {
+            return `${kName}(${eName})`;
+        } else if (kName) {
+            return kName;
+        } else {
+            return eName;
+        }
+    }
+
     return (
         <CardContainer>
-            <Balance>보유 : {stone.balance}</Balance>
-
+            <Balance>보유 : {stone.userBalance}</Balance>
             <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }} cursor="pointer">
+                {/*현재 넘어오는 앨범이미지가 없어서 추가되면 수정 필요 */}
                 <Img src={stone.img} />
                 <Name>{stone.name}</Name>
-                <Musician>{stone.musician_name}</Musician>
+                <Musician>{showName()}</Musician>
             </Link>
             <TradeBox>
                 <TradeBtn onClick={() => handleSellBtn(stone)}>판매</TradeBtn>
             </TradeBox>
-        </CardContainer>
+        </CardContainer >
 
     );
 }
