@@ -2,16 +2,17 @@ import styled from "styled-components";
 import React from "react"
 const SellStone = ({ trade, klayPrice, handleBuyBtn }) => {
 
-    const calPrice = () => (trade.unitPrice * klayPrice).toFixed(0);
+    const calPrice = () => (trade.price * klayPrice).toFixed(0);
+
+    //현재 user에 대한 정보가 id값만 넘어와서 그거 보여줌
     const showUser = () => {
-        //user명이 있는 경우 보여주기
-        return trade.seller;
+        return trade.sell_user_id;
     }
     return (
         <Trade>
-            <span>{trade.unitPrice}</span>
+            <span>{trade.price}</span>
             <span>₩ {calPrice()}</span>
-            <span>{trade.quantity}</span>
+            <span>{trade.amount}</span>
             <span>{showUser()}</span>
             <ButtonBox>
                 <button onClick={() => handleBuyBtn(trade)}>구매</button>

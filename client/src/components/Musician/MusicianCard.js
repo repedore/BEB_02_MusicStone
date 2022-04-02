@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import React from "react";
 
-const server = process.env.REACT_APP_SERVER_ADDRESS;
+const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 const MusicianCard = ({ musician }) => {
 
   const showName = () => {

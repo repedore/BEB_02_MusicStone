@@ -8,34 +8,41 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SellStone from "../../components/Stones/SellStone";
 import TradeStoneModal from "../../components/Stones/TradeStoneModal";
 import PreviewStream from "../../components/PreviewStream";
-//아직 서버데이터 없어서 임의로 만든 dummyData
-import dummyData from "../../dummyData/dummyData";
 
 export function TradeStone() {
   const modalRef = useRef();
 
   const { id } = useParams();
   const [klayPrice, setKlayPrice] = useState(0);
+  const [stoneData, setStoneData] = useState({
+    stoneDetail: null,
+    musician: null,
+    sellList: [],
+    minPrice: null
+  });
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTrade, setModalTrade] = useState("");
   const account = useSelector((state) => state.accountReducer);
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
-  //dummyData
-  const StoneData = dummyData.tradeStone.filter(
-    (el) => el.id === parseInt(id)
-  )[0];
+  const showName = () => {
+    const kName = stoneData.musician.name_korea;
+    const eName = stoneData.musician.name_english;
 
-  useEffect(() => {
-    const apiUrl = `https://api.bithumb.com/public/ticker/KLAY_KRW`;
-    axios
-      .get(apiUrl)
-      .then((price) => setKlayPrice(price.data.data.closing_price));
-  }, []);
+    if (kName && eName) {
+      return `${kName}(${eName})`;
+    } else if (kName) {
+      return kName;
+    } else {
+      return eName;
+    }
+  }
+
 
   const showSellList = () => {
-    return StoneData.sellList.map((trade) => {
+
+    return stoneData.sellList.map((trade) => {
       return (
         <SellStone
           trade={trade}
@@ -45,26 +52,28 @@ export function TradeStone() {
       );
     });
   };
-  const showPriceDif = () => {
-    const priceDif = (StoneData.minPrice - StoneData.prevPrice).toFixed(2);
-    const difPercent = (
-      (StoneData.minPrice / StoneData.prevPrice - 1) *
-      100
-    ).toFixed(2);
-    return (
-      <PriceDif color={priceDif > 0 ? "#e81a46" : "#00a1ff"}>
-        {priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-        {`${priceDif} (${difPercent}%)`}
-      </PriceDif>
-    );
-  };
+  /* 가격 변동은 추후에 하기로 함
+const showPriceDif = () => {
+  const priceDif = (StoneData.minPrice - StoneData.prevPrice).toFixed(2);
+  const difPercent = (
+    (StoneData.minPrice / StoneData.prevPrice - 1) *
+    100
+  ).toFixed(2);
+  return (
+    <PriceDif color={priceDif > 0 ? "#e81a46" : "#00a1ff"}>
+      {priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+      {`${priceDif} (${difPercent}%)`}
+    </PriceDif>
+  );
+};*/
+
 
   const addPlayList = () => {
     if (account.isConnect) {
       const req = `${server}/playlist/${account.userId}`;
       axios
         .post(req, {
-          stoneId: StoneData.id,
+          stoneId: stoneData.stoneDetail.id,
         })
         .then((res) => {
           if (res.status === 201) {
@@ -79,61 +88,81 @@ export function TradeStone() {
       alert("지갑을 연결해주세요.");
     }
   };
+
   const handleBuyBtn = (trade) => {
     modalRef.current.resetQuantity();
     setModalTrade(trade);
     setModalOpen(true);
   };
+
+
+  useEffect(() => {
+    //KLAY 가격 로드
+    const apiUrl = `https://api.bithumb.com/public/ticker/KLAY_KRW`;
+    axios
+      .get(apiUrl)
+      .then((price) => setKlayPrice(price.data.data.closing_price));
+
+    //현재 buyStone 페이지 데이터가 덜와서 연결중이라 id값 5로 고정
+    const req = `${server}/stones/tradestone/5`
+    axios.get(req)
+      .then((res) => setStoneData(res.data))
+  }, []);
+
   return (
-    <Body>
-      <StoneContainer>
-        <PreviewStream stone={StoneData} />
-        <StoneWrapper>
-          <Title>
-            <span>
-              {StoneData.name} - {StoneData.musician_name}
-            </span>
-            <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
-          </Title>
-          <Info>
-            <Price>
-              <div>최저가 : {StoneData.sellList[0].unitPrice} KLAY</div>
-              <div>전일비 : {showPriceDif()}</div>
-            </Price>
-            <Lyricist>작사가 : {StoneData.lyricist}</Lyricist>
-            <Composer>작곡가 : {StoneData.composer}</Composer>
-            <Desc>
-              {StoneData.desc}
-              테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-            </Desc>
-          </Info>
-        </StoneWrapper>
-      </StoneContainer>
-      <TradeContainer>
-        <SellListWrapper>
-          <SellNav>
-            <span>가격(Klay)</span>
-            <span>가격(원)</span>
-            <span>수량</span>
-            <span>판매자</span>
-            <span>구매</span>
-          </SellNav>
-          <SellList>{showSellList()}</SellList>
-        </SellListWrapper>
-        <NotifyWrapper>{showRules()}</NotifyWrapper>
-      </TradeContainer>
-      <TradeStoneModal
-        ref={modalRef}
-        klayPrice={klayPrice}
-        stoneData={StoneData}
-        modalOpen={modalOpen}
-        modalTrade={modalTrade}
-        setModalOpen={setModalOpen}
-        account={account}
-      />
-    </Body>
+    stoneData.stoneDetail
+      ?
+      <Body>
+        <StoneContainer>
+          <PreviewStream stone={stoneData} />
+          <StoneWrapper>
+            <Title>
+              <span>
+                {stoneData.stoneDetail.name} - {stoneData.musician ? showName() : 'unknown'}
+              </span>
+              <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
+            </Title>
+            <Info>
+              <Price>
+                <div>최저가 : {stoneData.minPrice} KLAY</div>
+                {/*<div>전일비 : {showPriceDif()}</div>*/}
+              </Price>
+              <Lyricist>작사가 : {stoneData.stoneDetail.lyricist}</Lyricist>
+              <Composer>작곡가 : {stoneData.stoneDetail.composer}</Composer>
+              <Desc>
+                {stoneData.stoneDetail.description}
+              </Desc>
+            </Info>
+          </StoneWrapper>
+        </StoneContainer>
+        <TradeContainer>
+          <SellListWrapper>
+            <SellNav>
+              <span>가격(Klay)</span>
+              <span>가격(원)</span>
+              <span>수량</span>
+              <span>판매자</span>
+              <span>구매</span>
+            </SellNav>
+            <SellList>{showSellList()}</SellList>
+          </SellListWrapper>
+          <NotifyWrapper>{showRules()}</NotifyWrapper>
+        </TradeContainer>
+        <TradeStoneModal
+          ref={modalRef}
+          klayPrice={klayPrice}
+          stoneData={stoneData}
+          modalOpen={modalOpen}
+          modalTrade={modalTrade}
+          setModalOpen={setModalOpen}
+          account={account}
+          showName={showName}
+        />
+      </Body>
+      : null
   );
 }
+
 const showRules = () => {
   return (
     <RulesWrapper>

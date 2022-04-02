@@ -5,7 +5,7 @@ import service_abi from '../../abi/Service';
 
 
 
-const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen, account }, ref) => {
+const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen, account, showName }, ref) => {
     const [quantity, setQuantity] = useState(0);
     const caver = new Caver(window.klaytn);
 
@@ -14,8 +14,8 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
     }
     const handleInput = (e) => {
 
-        if (Number(e.target.value) > modalTrade.quantity) {
-            alert(`현재 남은 판매수량은 ${modalTrade.quantity}개 입니다.`);
+        if (Number(e.target.value) > modalTrade.amount) {
+            alert(`현재 남은 판매수량은 ${modalTrade.amount}개 입니다.`);
         } else {
             setQuantity(e.target.value)
         }
@@ -27,11 +27,11 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
         if (account.isConnect) {
             const tx = await service.methods
-                .purchaseItem(1, 1)
+                .purchaseItem(modalTrade.id, quantity)
                 .send({
                     from: account.account,
                     //value = amount * unitPrice
-                    value: 10,
+                    value: quantity * modalTrade.price,
                     gas: 1000000,
                 })
                 .then(console.log)
@@ -48,6 +48,7 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
+            {console.log(modalTrade)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>
@@ -62,17 +63,17 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
                     </Nav>
                     <Cart>
                         <Receipt>
-                            <Item>{stoneData.name} - {stoneData.musician_name}</Item>
+                            <Item>{stoneData.stoneDetail.name} - {stoneData.musician ? showName() : ''}</Item>
                             <InputWrapper>
                                 <ReceiptInput type="number" min="0" value={quantity} onChange={(e) => handleInput(e)} />
                             </InputWrapper>
-                            <PriceQuantity>{modalTrade.unitPrice} KLAY</PriceQuantity>
+                            <PriceQuantity>{modalTrade.price} KLAY</PriceQuantity>
                         </Receipt>
                         <Total>
                             <div><h3>Total</h3></div>
                             <TotalPrice>
-                                <div>{(modalTrade.unitPrice * quantity).toFixed(3)} KLAY</div>
-                                <div>{(klayPrice * modalTrade.unitPrice * quantity).toFixed(0)} 원</div>
+                                <div>{(modalTrade.price * quantity).toFixed(3)} KLAY</div>
+                                <div>{(klayPrice * modalTrade.price * quantity).toFixed(0)} 원</div>
                             </TotalPrice>
                         </Total>
                     </Cart>
