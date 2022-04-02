@@ -1,7 +1,7 @@
 require("dotenv").config();
 const StoneService = require("../services/stones.services");
 
-// stone등록 페이지 들어올때 AlnumId와 AlbumName 반환 - 완료
+// stone등록 페이지 들어올때 AlnumId와 AlbumName반환
 exports.stones_get = async (req, res, next) => {
   const userAccount = req.params.user_account;
   try {
@@ -23,7 +23,7 @@ exports.stones_mystone_get = async (req, res, next) => {
   }
 };
 
-// userId로 user가 보유한 스톤 판매등록 - 완료
+// userId로 user가 보유한 스톤 판매등록
 exports.stones_mystone_post = async (req, res, next) => {
   const sellStoneInfo = req.body;
   const userId = req.params.user_id;
@@ -58,7 +58,7 @@ exports.stones_buystone_get = async (req, res, next) => {
     const userId = req.params.user_id;
     const listInfo = req.query;
     const sellStones = await StoneService.getSellStone(userId, listInfo);
-    res.status(201).json({ data: sellStones });
+    res.status(201).json(sellStones);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
@@ -92,21 +92,21 @@ exports.stones_tradestone_post = async (req, res, next) => {
     const tradeInfo = req.body;
     const musicStoneId = req.params.musicstone_id;
     const isOk = await StoneService.updateBuyStoneInfo(tradeInfo, musicStoneId);
-    if (isOk === true) {
-      res.status(200).json({ message: "Ok" });
-    } else {
-      res.status(500).json({ message: isOk });
-    }
+    isOk === 1
+      ? res.status(200).json({ message: "Ok" })
+      : res.status(500).json({ message: "update Fail" });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
 };
 
 // 분배컨트랙트연결하기
-// function deduction(address[] memory _address, uint[] memory _deduct_token) public [주소]와 [차감할 토큰금액](스트리밍한 횟수만큼)
-// function distribution(uint[] memory _sft_token, uint[] memory _distribute_amount) [tokenId]랑 [해당토큰아이디로 분배될토큰]
 exports.stones_distribution_post = async (req, res, next) => {
   try {
+    const dedution = await StoneService.Updatedistribution();
+    dedution === "Ok"
+      ? res.status(200).json({ message: "Ok" })
+      : res.status(500).json({ message: "contract Fail" });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
