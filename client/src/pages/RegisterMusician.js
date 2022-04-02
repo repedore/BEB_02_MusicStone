@@ -48,9 +48,11 @@ export function RegisterMusician() {
       formData.append("description", description);
       formData.append("userId", userId);
       // formData.append("snsList", snsList);
+      var sns = [];
       for (let i = 0; i < snsList.length; i++) {
-        formData.append(`sns${i}`, snsList[0]);
+        sns.push(JSON.stringify(snsList[i]));
       }
+      formData.append(`sns`, sns);
 
       await axios
         .post(`${server}/user/register`, formData, {

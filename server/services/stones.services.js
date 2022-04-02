@@ -23,7 +23,7 @@ const getAlbumList = async (userAccount) => {
   }
 };
 
-// getUserStone (+ contract연결)
+// getUserStone
 const getMyStoneList = async (userId) => {
   try {
     // userId로 userAccount가져와서 가진 stone조회
@@ -31,53 +31,74 @@ const getMyStoneList = async (userId) => {
       { id: userId },
       { account: 1, musician_id: 1, _id: 0 }
     );
-
+    // user의 musician여부 반환
     const isMusician = user.musician_id === 0 ? false : true;
+
     if (user) {
       const userAccount = user.account;
       // Contract에서 userAccount가 가진 SFTList 가져오기
       const myStoneList = await ServiceContract.getMySFTs(userAccount);
-      const myStoneInfo = myStoneList.map((el) => {
-        return { token_id: el[0], userBalance: el[1] };
-      });
-      let stoneIdList = [];
-      for (let stone of myStoneInfo) {
-        stoneIdList.push(
-          (
-            await StoneModel.findOne(
-              { token_id: stone.token_id },
-              { id: 1, _id: 0 }
-            )
-          ).id
-        );
-      }
-      const info = await StoneModel.aggregate([
-        {
-          $lookup: {
-            from: "musicians",
-            let: {
-              musician_id: "$musician_id",
-              name_korea: "$name_k",
-              name_english: "$name_e",
-              originalname: "$originalname",
-            },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $and: [{ $eq: ["$id", "$$musician_id"] }],
+      if (myStoneList !== []) {
+        const myStoneInfo = myStoneList.map((el) => {
+          return { token_id: el[0], userBalance: el[1] };
+        });
+
+        // stoneIdList
+        let stoneIdList = [];
+        for (let stone of myStoneInfo) {
+          stoneIdList.push(
+            (
+              await StoneModel.findOne(
+                { token_id: stone.token_id },
+                { id: 1, _id: 0 }
+              )
+            ).id
+          );
+        }
+        // albumImg
+        let albumIdList = [];
+        for (let id of stoneIdList) {
+          albumIdList.push(
+            (await StoneModel.findOne({ id }, { album_id: 1, _id: 0 })).album_id
+          );
+        }
+        let albumInfo = [];
+        for (let id of albumIdList) {
+          albumInfo.push(
+            (await AlbumModel.findOne({ id: 1 }, { originalname: 1, _id: 0 }))
+              .originalname
+          );
+        }
+
+        // stone & musician join
+        const info = await StoneModel.aggregate([
+          {
+            $lookup: {
+              from: "musicians",
+              let: {
+                musician_id: "$musician_id",
+                name_korea: "$name_k",
+                name_english: "$name_e",
+                originalname: "$originalname",
+              },
+              pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $and: [{ $eq: ["$id", "$$musician_id"] }],
+                    },
                   },
                 },
-              },
-            ],
-            as: "musicianInfo",
+              ],
+              as: "musicianInfo",
+            },
           },
-        },
-      ]);
-      const stoneInfo = info.filter((el) => {
-        return stoneIdList.includes(el.id);
-      });
-      return { stoneInfo, myStoneInfo, isMusician };
+        ]);
+        const stoneInfo = info.filter((el) => {
+          return stoneIdList.includes(el.id);
+        });
+        return { stoneInfo, myStoneInfo, albumInfo, isMusician };
+      }
     } else {
       return "";
     }
@@ -86,18 +107,17 @@ const getMyStoneList = async (userId) => {
   }
 };
 
-// insertTradeStone
+// insertTradeStone - 0402완료
 const insertTrade = async (sellStoneInfo, userId) => {
-  const { stoneId, seller, quantity, unitPrice, itemId, tradeId } =
-    sellStoneInfo;
+  const { stoneId, seller, quantity, unitPrice, itemId } = sellStoneInfo;
+  // sell_user_id -> sell_user_account로 수정
   try {
     const Trade = new TradeModel({
       stone_id: stoneId,
-      sell_user_id: userId,
+      sell_user_account: seller,
       price: unitPrice,
       amount: quantity,
       item_id: itemId,
-      trade_id: tradeId,
     });
     return await Trade.save();
   } catch (e) {
@@ -109,7 +129,7 @@ const insertTrade = async (sellStoneInfo, userId) => {
 const insertStone = async (stoneInfo, fileInfo, account) => {
   try {
     const {
-      album,
+      albumId,
       stoneName,
       description,
       lyricist,
@@ -129,17 +149,17 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
     const Stone = new StoneModel({
       musician_id: musicianId.musician_id,
       name: stoneName,
-      album_id: album,
+      album_id: albumId,
       description,
       lyricist,
       composer,
       lyrics,
       category,
+      totalBalance,
+      tokenId,
       filename,
       originalname,
       path,
-      totalBalance,
-      tokenId,
     });
     return await Stone.save();
   } catch (e) {
@@ -147,17 +167,83 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
   }
 };
 
-// getSellStoneList (+ 검색, errorhandling)
+// getSellStoneList (+ 검색)
 const getSellStone = async (userId, listInfo) => {
-  // img, musician_name, stone_name, minPrice, prePrice, myBalance
   const { startIndex, endIndex, keyword } = listInfo;
   try {
-    let sellList = [];
+    const account = await UserModel.findOne(
+      { id: userId },
+      { account: 1, _id: 0 }
+    ).account;
     if (keyword === undefined || keyword === "") {
-      sellList = await TradeModel.find()
+      const sellList = await TradeModel.find(
+        { closed: 0 },
+        { id: 1, stone_id: 1, price: 1, item_id: 1, amount: 1, _id: 0 }
+      )
         .skip(startIndex - 1)
         .limit(endIndex - startIndex + 1);
+
+      if (sellList !== []) {
+        let stoneIdList = [];
+        for (el of sellList) {
+          stoneIdList.push(el.stone_id);
+        }
+
+        const stoneInfo = [];
+        for (id of stoneIdList) {
+          stoneInfo.push(
+            await StoneModel.findOne(
+              { id },
+              {
+                id: 1,
+                name: 1,
+                musician_id: 1,
+                album_id: 1,
+                token_id: 1,
+                _id: 0,
+              }
+            )
+          );
+        }
+
+        let musicianInfo = [];
+        for (el of stoneInfo) {
+          musicianInfo.push(
+            await MusicianModel.findOne(
+              { id: el.musician_id },
+              { name_korea: 1, name_english: 1, _id: 0 }
+            )
+          );
+        }
+
+        let albumImgList = [];
+        for (el of stoneInfo) {
+          albumImgList.push(
+            await MusicianModel.findOne(
+              { id: el.album_id },
+              { originalname: 1, _id: 0 }
+            )
+          );
+        }
+
+        let userBalanceList = [];
+        for (el of stoneInfo) {
+          userBalanceList.push(
+            await ServiceContract.getUserSFTs(account, el.token_id)
+          );
+        }
+        return {
+          sellList,
+          stoneInfo,
+          musicianInfo,
+          albumImgList,
+          userBalanceList,
+        };
+      } else {
+        return {};
+      }
     } else {
+      // 검색있는경우;
       const regex = (pattern) => new RegExp(`.*${pattern}.*`);
       const keywordRegex = regex(keyword);
       const query = {
@@ -166,10 +252,80 @@ const getSellStone = async (userId, listInfo) => {
       const stoneIdList = (await StoneModel.find(query, { id: 1 })).map(
         (el) => el.id
       );
-      // 검색어로 검색한 stone_id가 여러개가 나오는 경우 TradeStone에서 가져오기
-      // 이 때, 하나의 stone_id에서도 여러가지의 TradeStone정보가 나올 수 있다.
+
+      const AllList = await TradeModel.find(
+        { closed: 0 },
+        { id: 1, stone_id: 1, price: 1, item_id: 1, amount: 1, _id: 0 }
+      )
+        .skip(startIndex - 1)
+        .limit(endIndex - startIndex + 1);
+
+      const sellList = AllList.filter((el) => {
+        return stoneIdList.includes(el.id);
+      });
+
+      // 중복코드
+      if (sellList !== []) {
+        let stoneIdList = [];
+        for (el of sellList) {
+          stoneIdList.push(el.stone_id);
+        }
+
+        const stoneInfo = [];
+        for (id of stoneIdList) {
+          stoneInfo.push(
+            await StoneModel.findOne(
+              { id },
+              {
+                id: 1,
+                name: 1,
+                musician_id: 1,
+                album_id: 1,
+                token_id: 1,
+                _id: 0,
+              }
+            )
+          );
+        }
+
+        let musicianInfo = [];
+        for (el of stoneInfo) {
+          musicianInfo.push(
+            await MusicianModel.findOne(
+              { id: el.musician_id },
+              { name_korea: 1, name_english: 1, _id: 0 }
+            )
+          );
+        }
+
+        let albumImgList = [];
+        for (el of stoneInfo) {
+          albumImgList.push(
+            await MusicianModel.findOne(
+              { id: el.album_id },
+              { originalname: 1, _id: 0 }
+            )
+          );
+        }
+
+        let userBalanceList = [];
+        for (el of stoneInfo) {
+          userBalanceList.push(
+            await ServiceContract.getUserSFTs(account, el.token_id)
+          );
+        }
+        return {
+          sellList,
+          stoneInfo,
+          musicianInfo,
+          albumImgList,
+          userBalanceList,
+        };
+      } else {
+        return {};
+      }
+      return { sellList };
     }
-    return sellList;
   } catch (e) {
     throw Error(e);
   }
@@ -183,12 +339,11 @@ const getStoneDetail = async (stoneId) => {
       { stone_id: stoneId },
       {
         id: 1,
-        sell_user_id: 1,
+        sell_user_account: 1,
         amount: 1,
         price: 1,
         musician_id: 1,
         item_id: 1,
-        trade_id: 1,
         _id: 0,
       }
     );
@@ -198,6 +353,14 @@ const getStoneDetail = async (stoneId) => {
       },
       { image: 1, name_korea: 1, name_english: 1, _id: 0 }
     );
+
+    const albumImg = (
+      await AlbumModel.findOne(
+        { id: stoneDetail.album_id },
+        { originalname: 1, _id: 0 }
+      )
+    ).originalname;
+
     const minPrice = Math.min.apply(
       null,
       sellList
@@ -207,7 +370,7 @@ const getStoneDetail = async (stoneId) => {
         .map((el) => Number(el.price))
     );
 
-    return { stoneDetail, musician, sellList, minPrice };
+    return { stoneDetail, musician, albumImg, sellList, minPrice };
   } catch (e) {
     throw Error(e);
   }
@@ -216,19 +379,69 @@ const getStoneDetail = async (stoneId) => {
 // updateBuyStoneInfo (+ contract는 client에서 수행. 수행후 어떤 정보 저장할 것인가)
 const updateBuyStoneInfo = async (tradeInfo, stoneId) => {
   try {
-    const { buyer, seller, quantity, unitPrice, sellAmount, tradeId } =
-      tradeInfo;
-    // if (quantity === 0) {
-    //   return "구매수량은 1개 이상이어야 합니다.";
-    // } else if (quantity > sellAmount) {
-    //   return "판매수량보다 더 많은 수량은 구매하실 수 없습니다.";
-    // } else {
-    //   const isOk = await TradeModel.updateOne(
-    //     { id: tradeId },
-    //     { $set: { amount: sellAmount - quantity } }
-    //   );
-    //   return isOk.acknowledged;
-    // }
+    const { buyer, seller, quantity, unitPrice, tradeId } = tradeInfo;
+    const TradeInfo = await TradeModel.findOne(
+      { id: tradeId },
+      { amount: 1, _id: 0 }
+    );
+    const remainAmount = TradeInfo.amount - quantity;
+    let isOk = "";
+    if (remainAmount === 0) {
+      // 해당거래 closed
+      isOk = await TradeModel.updateOne(
+        { id: tradeId },
+        { $set: { closed: 1 } }
+      );
+    } else {
+      // 해당거래 amountUpdate
+      isOk = await TradeModel.updateOne(
+        { id: tradeId },
+        { $set: { amount: remainAmount } }
+      );
+    }
+    return isOk.modifiedCount;
+  } catch (e) {
+    throw Error(e);
+  }
+};
+
+const Updatedistribution = async () => {
+  try {
+    // function deduction([address], [deduct_token]) public [주소]와 [차감할 토큰금액](스트리밍한 횟수만큼)
+    const user = await UserModel.find(
+      {
+        deduction: { $gt: 0 },
+      },
+      { account: 1, deduction: 1, _id: 0 }
+    );
+    const userAccoutList = user.map((el) => {
+      return el.account;
+    });
+    const deductionList = user.map((el) => {
+      return el.deduction;
+    });
+    const isOk = ServiceContract.deduction(userAccoutList, deductionList);
+
+    // function distribution([_sft_token], [distribute_amount]) [tokenId]랑 [해당토큰아이디로 분배될토큰]
+    const stone = await StoneModel.find(
+      {
+        streaming_count: { $gt: 0 },
+      },
+      { token_id: 1, streaming_count: 1, _id: 0 }
+    );
+    const tokenList = stone.map((el) => {
+      return el.token_id;
+    });
+    // 조건: 1곡당 1토큰 가정
+    const distributionTokenList = stone.map((el) => {
+      return el.streaming_count;
+    });
+    const isGood = ServiceContract.distribution(
+      tokenList,
+      distributionTokenList
+    );
+
+    return isOk && isGood ? "Ok" : "Fail";
   } catch (e) {
     throw Error(e);
   }
@@ -242,4 +455,5 @@ module.exports = {
   getStoneDetail,
   getAlbumList,
   updateBuyStoneInfo,
+  Updatedistribution,
 };
