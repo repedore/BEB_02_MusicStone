@@ -20,8 +20,8 @@ export default function RegisterStone() {
   const [albumList, setAlbumList] = useState([]);
   const [SFTAmount, setSFTAmount] = useState(0);
   const [txHash, setTxHash] = useState("");
-  const [tokenId, setTokenId] = useState("");
   const caver = new Caver(window.klaytn);
+  const [tokenId, setTokenId] = useState("");
   var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
@@ -62,23 +62,19 @@ export default function RegisterStone() {
     setSFTAmount(Number(e.target.value));
   };
   const mintSFT = async () => {
-    var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
-    await service_contract.methods
-      .mintSFT(SFTAmount)
+    const service = new caver.klay.Contract(
+      service_abi,
+      process.env.REACT_APP_SERVICE_ADDRESS
+    );
+    const tx = await service.methods
+      .mintSFT(1000)
       .send({
-        type: "SMART_CONTRACT_EXECUTION",
         from: state.account,
         gas: 1000000,
       })
-      .then((data) => {
-        setTxHash(data.transactionHash);
-        console.log(data);
-        console.log(data.events.SFTMinted[0].returnValues.token_id);
-        setTokenId(data.events.SFTMinted[0].returnValues.token_id);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((data) =>
+        setTokenId(data.events.SFTMinted[0].returnValues.token_id)
+      );
   };
   const saveStone = async () => {
     if (
@@ -92,7 +88,6 @@ export default function RegisterStone() {
       lyrics &&
       SFTAmount
     ) {
-      mintSFT();
       const formData = new FormData();
       formData.append("albumId", album);
       formData.append("stoneName", stoneName);
@@ -133,7 +128,11 @@ export default function RegisterStone() {
       alert("민팅할 SFT 개수를 입력해주세요.");
     }
   };
-
+  useEffect(() => {
+    if (tokenId) {
+      saveStone();
+    }
+  }, [tokenId]);
   return (
     <div>
       <div id="stoneregisterpage">
@@ -273,7 +272,7 @@ export default function RegisterStone() {
             onChange={onChangeSFTAmount}
           ></input>
           <div>
-            <button className="editbtn" onClick={saveStone}>
+            <button className="editbtn" onClick={mintSFT}>
               등록
             </button>
           </div>
