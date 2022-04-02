@@ -65,7 +65,7 @@ const getMyStoneList = async (userId) => {
         let albumInfo = [];
         for (let id of albumIdList) {
           albumInfo.push(
-            (await AlbumModel.findOne({ id: 1 }, { originalname: 1, _id: 0 }))
+            (await AlbumModel.findOne({ id }, { originalname: 1, _id: 0 }))
               .originalname
           );
         }
@@ -155,8 +155,8 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
       composer,
       lyrics,
       category,
-      totalBalance,
-      tokenId,
+      total_balance: totalBalance,
+      token_id: Number(tokenId),
       filename,
       originalname,
       path,

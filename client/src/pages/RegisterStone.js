@@ -20,6 +20,7 @@ export default function RegisterStone() {
   const [albumList, setAlbumList] = useState([]);
   const [SFTAmount, setSFTAmount] = useState(0);
   const [txHash, setTxHash] = useState("");
+  const [tokenId, setTokenId] = useState("");
   const caver = new Caver(window.klaytn);
   var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
   const server =
@@ -72,7 +73,8 @@ export default function RegisterStone() {
       .then((data) => {
         setTxHash(data.transactionHash);
         console.log(data);
-        console.log(data.transactionHash);
+        console.log(data.events.SFTMinted[0].returnValues.token_id);
+        setTokenId(data.events.SFTMinted[0].returnValues.token_id);
       })
       .catch((err) => {
         console.log(err);
@@ -92,7 +94,7 @@ export default function RegisterStone() {
     ) {
       mintSFT();
       const formData = new FormData();
-      formData.append("album", album);
+      formData.append("albumId", album);
       formData.append("stoneName", stoneName);
       formData.append("description", description);
       formData.append("stonefile", stonefile);
@@ -101,6 +103,7 @@ export default function RegisterStone() {
       formData.append("lyrics", lyrics);
       formData.append("category", category);
       formData.append("totalBalance", SFTAmount);
+      formData.append("tokenId", tokenId);
       await axios
         .post(`${server}/stones/register/${account}`, formData, {
           headers: {
@@ -108,8 +111,7 @@ export default function RegisterStone() {
           },
         })
         .then((res) => {
-          console.log(res.data);
-          alert(res.data.message);
+          console.log(res.data.message);
         });
     } else if (album == "") {
       alert("앨범을 선택해주세요. 원하는 앨범이 없다면 앨범을 등록해주세요.");
