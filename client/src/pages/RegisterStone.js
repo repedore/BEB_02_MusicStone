@@ -26,7 +26,6 @@ export default function RegisterStone() {
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
   let albumlist;
-  // let tokenId;
 
   useEffect(() => {
     async function req() {
@@ -108,7 +107,6 @@ export default function RegisterStone() {
         })
         .then((res) => {
           console.log(res.data.message);
-          alert(tokenId);
         });
     } else if (album == "") {
       alert("앨범을 선택해주세요. 원하는 앨범이 없다면 앨범을 등록해주세요.");
@@ -131,7 +129,9 @@ export default function RegisterStone() {
     }
   };
   useEffect(() => {
-    saveStone();
+    if (tokenId) {
+      saveStone();
+    }
   }, [tokenId]);
   return (
     <div>
