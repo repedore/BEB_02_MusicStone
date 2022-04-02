@@ -3,13 +3,15 @@ import styled from "styled-components";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
-const PreviewStream = ({ stone }) => {
+const PreviewStream = ({ stone, img }) => {
     const audioRef = useRef(null);
     const imgRef = useRef(null);
     const [isPlay, setIsPlay] = useState(false);
     const [minute, setMinute] = useState(0);
     const [second, setSecond] = useState(0);
     const [musicLength, setMusicLength] = useState(0);
+    const server =
+        process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
     const handlePlayBtn = () => {
         isPlay ? audioRef.current.pause() : audioRef.current.play();
@@ -57,7 +59,7 @@ const PreviewStream = ({ stone }) => {
         <StreamingWrapper>
             <Play>
                 <ImgBox>
-                    <Img src={stone.image} alt={stone.name} ref={imgRef} />
+                    <Img src={`${server}/${img}`} alt={stone.name} ref={imgRef} />
                 </ImgBox>
                 <BtnWrapper>
                     <StreamingBtn onClick={() => handlePlayBtn()}>{isPlay ? <PauseIcon /> : <PlayArrowIcon />}</StreamingBtn>

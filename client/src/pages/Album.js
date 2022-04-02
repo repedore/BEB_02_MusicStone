@@ -152,7 +152,7 @@ export const Album = () => {
       </AlbumContainer>
       {stoneList.length !== 0 ? (
         <StoneContainer>
-          <PreviewStream stone={stoneList[selectNum]} />
+          <PreviewStream stone={stoneList[selectNum]} img={albumData.albumInfo.originalname} soundTrack={""} />
           <StoneWrapper>
             <StoneTitle>
               <h2>{stoneList[selectNum].name}</h2>
