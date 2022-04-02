@@ -3,6 +3,7 @@ import Caver from "caver-js";
 import styled from "styled-components";
 import sft_abi from '../../abi/SFT';
 import service_abi from '../../abi/Service';
+import axios from 'axios';
 
 const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account }) => {
     const [quantity, setQuantity] = useState(0);
@@ -79,7 +80,19 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                                     from: account.account,
                                     gas: 1000000,
                                 })
-                                .then(console.log)
+                                .then((res) => {
+                                    const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+                                    const req = `${server}/stones/mystone/${account.userId}`
+
+                                    axios.post(req, {
+                                        seller: account.account,
+                                        quantity,
+                                        unitPrice: price,
+                                        stoneId: modalStone.id,
+                                        itemId: res.events.MarketItemCreated.returnValues.itemId
+                                    })
+                                        .then(alert('등록이 완료되었습니다.'))
+                                })
                         } catch (e) {
                             console.log(e)
                         }
