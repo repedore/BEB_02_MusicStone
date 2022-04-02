@@ -1,7 +1,7 @@
 require("dotenv").config();
 const StoneService = require("../services/stones.services");
 
-// stone등록 페이지 들어올때 AlnumId와 AlnumName 반환 - 완료
+// stone등록 페이지 들어올때 AlnumId와 AlbumName 반환 - 완료
 exports.stones_get = async (req, res, next) => {
   const userAccount = req.params.user_account;
   try {
@@ -75,7 +75,7 @@ exports.stones_info_get = async (req, res, next) => {
   }
 };
 
-// 거래중인 스톤의 상세내용 DB저장
+// 거래중인 스톤의 상세내용
 exports.stones_tradestone_get = async (req, res, next) => {
   try {
     const stoneId = req.params.musicstone_id;

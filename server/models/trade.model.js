@@ -12,6 +12,7 @@ const TradeSchema = new Schema({
   open_date: { type: Date, required: true, default: Date.now },
   closed: { type: Number, required: true, default: 0 }, // 0: Opened, 1:Sold out, 2:Cancel
   item_id: Number,
+  trade_id: Number,
 });
 TradeSchema.plugin(autoIncrement.plugin, {
   model: "Trade",
