@@ -12,8 +12,7 @@ import AlbumCard from "../../components/Musician/AlbumCard";
 
 export function MusicianInfo() {
   const { id } = useParams();
-  const server =
-    process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+  const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
   const [isLike, setIsLike] = useState(false);
   const [musicianData, setMusicianData] = useState(initialState);
@@ -91,7 +90,7 @@ export function MusicianInfo() {
     <Body>
       <InfoContainer>
         <ImgWrapper>
-          <Img src={musicianInfo.image} alt={showMusicianName()} />
+          <Img src={`${server}/${musicianInfo.originalname}`} alt={showMusicianName()} />
         </ImgWrapper>
         <InfoWrapper>
           <Name>{showMusicianName()}</Name>
