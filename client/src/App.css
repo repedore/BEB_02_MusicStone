@@ -1,38 +1,367 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body {
+  background-color: #0f0f0f;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+a:link {
+  color: rgb(255, 255, 255);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+a:visited {
+  color: rgb(255, 255, 255);
+}
+a:hover {
+  color: rgb(255, 255, 255);
+}
+a:active {
+  color: rgb(255, 255, 255);
+}
+#audio {
+  margin-bottom: 1rem;
+}
+#buytokenpage {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#connect {
+  color: white;
+  padding-left: 0.5rem;
+}
+#Edit {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#isPlay {
+  margin: 1rem;
+}
+#musician {
+  margin: 2rem;
+  color: white;
+}
+#mypage {
+  text-align: center;
+  color: white;
+}
+#mypageaccount {
+  color: white;
+}
+#maintext {
+  text-align: left;
+  padding: 1rem 17rem;
+  @keyframes rotate_image {
+    100% {
+      transform: rotate(360deg);
+    }
   }
-  to {
+}
+#mainpage {
+  text-align: center;
+  color: white;
+  margin: 2rem 6rem 0rem 6rem;
+}
+#nav-stones-btn {
+  background-color: black;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+#nav {
+  background-color: black;
+  text-decoration: none;
+  padding: 2rem;
+  border-bottom: 1px solid #333333;
+}
+#navmenu {
+  float: right;
+  margin-top: -0.6rem;
+}
+#observer {
+  white-space: pre;
+}
+#playlisttext {
+  font-size: 2rem;
+  margin: 2rem;
+}
+#playlist {
+  margin: 2rem;
+  color: white;
+}
+#playlistpage {
+  text-align: center;
+  color: white;
+  margin-top: 5rem;
+  margin-bottom: 10rem;
+}
+#register {
+  color: white;
+}
+#registeralbumpage {
+  text-align: center;
+  margin-top: 3rem;
+}
+#registerpage {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#stoneregisterpage {
+  text-align: center;
+  margin-top: 5rem;
+  color: white;
+}
+#stones {
+  margin: 2rem;
+  color: white;
+}
+#snsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+#title {
+  color: white;
+}
+.account {
+  margin-bottom: 1rem;
+}
+.albumbtn {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+  vertical-align: middle;
+}
+.Aselectbox {
+  text-align: center;
+  margin: 0.2rem;
+  font-size: 1rem;
+  padding: 0.3rem 8.2rem;
+}
+.btn {
+  margin: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+}
+.buytokenbtn {
+  width: 7rem;
+  height: 2rem;
+}
+.categorytext {
+  margin: 1rem;
+}
+.checkicon {
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+.deleteicon {
+  /* vertical-align: middle;
+  margin-left: auto; */
+  display: inline-block;
+  margin-right: 13rem;
+}
+.editbtn {
+  margin: 1rem;
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+  margin-bottom: 10rem;
+}
+.fileinput {
+  text-align: center;
+  margin: 1rem;
+  margin-left: 6rem;
+}
+.icon {
+  color: white;
+  vertical-align: middle;
+}
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.nav-dropdown:hover .nav-dropdown-content {
+  display: block;
+}
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.nav-dropdown-content div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.nav-dropdown-content div:hover {
+  background-color: #ddd;
+}
+.memberimg {
+  width: 10rem;
+  margin: 2rem;
+  vertical-align: middle;
+}
+.mainimg {
+  text-align: center;
+  vertical-align: middle;
+  width: 20rem;
+}
+.membername {
+  font-weight: bolder;
+  font-size: 2rem;
+  vertical-align: middle;
+}
+.musicianinfoinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 2rem 3rem;
+  margin: 1rem;
+}
+.musicianinput {
+  font-size: 1rem;
+  text-align: center;
+  width: 20rem;
+  padding: 0.5rem 3rem;
+  margin: 1rem;
+}
+.line {
+  margin-top: 5rem;
+  width: 45rem;
+}
+.logo {
+  width: 30px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  position: relative;
+  color: white;
+}
+.lyricsinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 1rem 5rem 15rem 1rem;
+  margin: 1rem;
+}
+.playlisttokentext {
+  margin-bottom: 1.5rem;
+  margin-top: -1.5rem;
+}
+.playlisticon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  margin-top: -0.3rem;
+}
+.playlisttext {
+  margin: 3rem 1rem;
+  color: white;
+}
+.playicon {
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+.pagetitle {
+  font-size: 2rem;
+  margin: 1rem;
+}
+.profileimg {
+  width: 10rem;
+  margin-top: 5rem;
+  margin-bottom: 1.5rem;
+}
+.registertext {
+  text-align: center;
+}
+.stoneName {
+  /* margin: 0.3rem auto 0rem auto;
+  text-align: center; */
+  float: left;
+  margin-right: auto;
+  margin-left: 27rem;
+}
+.stones {
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.streamingpage {
+}
+.selectbox {
+  text-align: center;
+  margin: 0.2rem;
+  font-size: 1rem;
+  padding: 0.3rem 5.9rem;
+}
+.stoneinfoinput {
+  font-size: 1rem;
+  text-align: left;
+  width: 20rem;
+  padding: 1rem 5rem 4rem 1rem;
+  margin: 1rem;
+}
+.snsAddBtn {
+  cursor: pointer;
+  background: #e9edf1;
+  border-radius: 25%;
+  margin-left: 10px;
+}
+.stonenameinput {
+  font-size: 0.9rem;
+  text-align: center;
+  width: 20rem;
+  padding: 0.4rem 3rem;
+  margin: 1rem;
+}
+.stoneline {
+  margin: 1.5rem auto;
+  width: 50rem;
+  text-align: center;
+}
+.tokenbtn {
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+}
+.text {
+  margin: 0.5rem;
+}
+.tokentext {
+  margin: 1rem;
+}
+.tokeninput {
+  text-align: center;
+  width: 13rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+}
+.tokenbtn {
+  padding: 0.5rem 2rem;
+  border: 0;
+  outline: 0;
+  background-color: white;
+  color: black;
+}
+@keyframes rotate_image {
+  100% {
     transform: rotate(360deg);
   }
 }
