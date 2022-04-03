@@ -6,7 +6,6 @@ const {
   MusicianModel,
 } = require("../models/index");
 const ServiceContract = require("../contracts/ServiceContract");
-const { AccountKeyPublic } = require("caver-js");
 
 // AlbumList({id, name})
 const getAlbumList = async (userAccount) => {
@@ -429,7 +428,7 @@ const Updatedistribution = async () => {
       return el.account;
     });
     const deductionList = user.map((el) => {
-      return el.deduction;
+      return ServiceContract.toPeb(el.deduction);
     });
     const isOk = await ServiceContract.deduction(userAccoutList, deductionList);
 
@@ -445,7 +444,7 @@ const Updatedistribution = async () => {
     });
     // 조건: 1곡당 1토큰 가정
     const distributionTokenList = stone.map((el) => {
-      return el.streaming_count;
+      return ServiceContract.toPeb(el.streaming_count);
     });
     const isGood = await ServiceContract.distribution(
       tokenList,
