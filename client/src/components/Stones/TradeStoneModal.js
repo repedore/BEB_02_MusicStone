@@ -2,12 +2,14 @@ import React, { forwardRef, useImperativeHandle, useState } from "react"
 import styled from "styled-components";
 import Caver from "caver-js";
 import service_abi from '../../abi/Service';
+import axios from 'axios';
 
 
 
-const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen, account, showName }, ref) => {
+const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrade, setModalOpen, account, showName, id }, ref) => {
     const [quantity, setQuantity] = useState(0);
     const caver = new Caver(window.klaytn);
+    const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
     const handleClose = () => {
         setModalOpen(false);
@@ -27,6 +29,7 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
         if (account.isConnect) {
             const tx = await service.methods
+                //여기 요청보낼때 서버에서 온 item_id랑 id중에 어떤걸로 보내야하는지 헷갈림
                 .purchaseItem(modalTrade.item_id, quantity)
                 .send({
                     from: account.account,
@@ -34,7 +37,14 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
                     value: quantity * modalTrade.price,
                     gas: 1000000,
                 })
-                .then(console.log)
+                .then(() => {
+                    const req = `${server}/stones/tradestone/${id}`
+                    axios.post(req, {
+                        quantity,
+                        tradeId: modalTrade.id
+                    })
+                        .then(console.log)
+                })
         } else {
             alert("지갑을 연결해주세요.");
         }
@@ -48,7 +58,6 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
-            {console.log(modalTrade)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>
