@@ -105,7 +105,6 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
     }
     return (
         <ModalOverlay ModalOverlay display={modalOpen ? "flex" : "none"} >
-            {console.log(modalStone)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>
