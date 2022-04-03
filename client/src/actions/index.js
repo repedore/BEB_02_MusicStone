@@ -17,10 +17,10 @@ export const resetMusicianList = () => {
         type: RESET_MUSICIAN_LIST
     }
 }
-export const loadStoneList = (stones) => {
+export const loadStoneList = (data) => {
     return {
         type: LOAD_STONE_LIST,
-        payload: stones
+        payload: data
 
     }
 }

@@ -6,19 +6,19 @@ import styled from "styled-components";
 
 
 const BuyStoneCard = ({ stone }) => {
+    const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
 
     return (
-        <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }}>
+        <Link to={`/stones/tradeStone/${stone.stoneId}`} style={{ textDecoration: "none" }}>
             <CardContainer>
-
-                <Img src={stone.img} />
+                <Img src={`${server}/${stone.img}`} />
                 <Name>{stone.name}</Name>
                 <Musician>{stone.musician_name}</Musician>
                 <TradeBox>
                     <Balance>
                         {stone.myBalance ? `보유 : ${stone.myBalance}` : " "}
                     </Balance>
-                    <Price>{stone.minPrice} KLAY</Price>
+                    <Price>{stone.price} KLAY</Price>
                     {/*가격변동폭 시간상 보류
                     <PriceDif color={stone.priceDif > 0 ? "#e81a46" : "#00a1ff"}>
                         {stone.priceDif > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
