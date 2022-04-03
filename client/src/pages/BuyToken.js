@@ -166,7 +166,7 @@ function BuyToken() {
   const saveDeposit = async () => {
     await axios.post(`${server}/user/deposit/${state.account}`).then((res) => {
       if (res.data.message == "Ok") {
-        alert("출금이 완료되었습니다.");
+        alert("예치가 완료되었습니다.");
       } else {
         alert("오류, 저장에 실패했습니다.");
       }
