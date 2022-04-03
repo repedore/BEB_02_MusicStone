@@ -32,10 +32,9 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
                 //여기 요청보낼때 서버에서 온 item_id랑 id중에 어떤걸로 보내야하는지 헷갈림
                 .purchaseItem(modalTrade.item_id, quantity)
                 .send({
-                    type: "SMART_CONTRACT_EXECUTION",
                     from: account.account,
                     //value = amount * unitPrice
-                    value: caver.utils.toPeb(quantity * modalTrade.price),
+                    value: quantity * modalTrade.price,
                     gas: 1000000,
                 })
                 .then(() => {

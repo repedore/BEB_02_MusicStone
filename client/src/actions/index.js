@@ -33,7 +33,6 @@ export const resetStoneList = () => {
 export const loadMyData = (data) => {
     return {
         type: LOAD_MY_DATA,
-        payload: data
-
+        payload: data.data
     }
 }

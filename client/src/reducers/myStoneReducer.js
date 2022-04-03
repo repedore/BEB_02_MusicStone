@@ -1,16 +1,28 @@
+import service_abi from '../abi/Service';
+import Caver from "caver-js";
 import { LOAD_MY_DATA } from "../actions";
 
 const initialState = {
     isMusician: false,
     stoneList: [],
 };
+const caver = new Caver(window.klaytn);
 
 const myStoneReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_MY_DATA:
             const tempArr = [];
             for (let i = 0; i < action.payload.myStoneInfo.length; i++) {
-                tempArr.push(Object.assign(action.payload.myStoneInfo[i], action.payload.stoneInfo[i], { img: action.payload.albumInfo[i] }))
+                //                const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
+
+                const tempObj = {
+                    myStoneInfo: action.payload.myStoneInfo[i],
+                    stoneInfo: action.payload.stoneInfo[i],
+                    img: action.payload.albumInfo[i],
+                }
+                tempArr.push(tempObj);
+                //(Object.assign(action.payload.myStoneInfo[i], action.payload.stoneInfo[i], { , test: res }))
+
             }
             const newState = {
                 isMusician: action.payload.isMusician,
