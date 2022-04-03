@@ -48,14 +48,14 @@ const getPlaylist = async (user_id) => {
   }
 };
 
-const getRemainToke = async (user_id) => {
+const getRemainToken = async (user_id) => {
   try {
     const user = await UserModel.findOne(
       { id: user_id },
       { account: 1, deduction: 1, _id: 0 }
     );
     const deposit = await ServiceContract.getUserDeposit(user.account);
-    return Number(deposit) - Number(10);
+    return Number(deposit) - Number(user.deduction);
   } catch (e) {
     throw Error(e);
   }
@@ -141,6 +141,6 @@ module.exports = {
   getStonePath,
   deletePlayList,
   updateDeduction,
-  getRemainToke,
+  getRemainToken,
   updateDeduction,
 };
