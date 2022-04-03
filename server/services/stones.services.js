@@ -41,7 +41,7 @@ const getMyStoneList = async (userId) => {
       // Contract에서 userAccount가 가진 SFTList 가져오기
       const myStoneList = await ServiceContract.getMySFTs(userAccount);
       // await ServiceContract.getMySFTs(userAccount).then(() => {
-      //   console.timeEnd("label");
+      // console.timeEnd("label");
       // });
       console.timeEnd("label");
       if (myStoneList !== []) {

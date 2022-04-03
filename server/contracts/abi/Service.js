@@ -97,6 +97,29 @@ const service_abi = [
     constant: true,
     inputs: [
       {
+        name: "_address",
+        type: "address",
+      },
+      {
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "getUserMarketOpenedBalances",
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
+      {
         name: "_account",
         type: "address",
       },
@@ -677,6 +700,29 @@ const service_abi = [
     outputs: [],
     payable: true,
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "_address",
+        type: "address",
+      },
+      {
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "getUserCanSellBalances",
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
     type: "function",
   },
   {
