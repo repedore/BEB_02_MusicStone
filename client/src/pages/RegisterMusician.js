@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import SNSList from "../components/SNSList";
+import { useNavigate } from "react-router-dom";
 
 export function RegisterMusician() {
   const [KName, setKName] = useState("");
@@ -9,6 +10,7 @@ export function RegisterMusician() {
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
   const userId = state.userId;
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [img, setImg] = useState(null);
   const [imgsrc, setImgsrc] = useState(null);
@@ -63,6 +65,7 @@ export function RegisterMusician() {
         .then((res) => {
           console.log(res);
           alert(res.data.message);
+          navigate("/musician");
         });
     } else if (!KName && !EName) {
       alert("이름을 입력해주세요.");

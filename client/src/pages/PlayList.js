@@ -50,6 +50,7 @@ export function PlayList() {
       .post(`${server}/playlist/delete/${userId}`, { stoneId: stoneId })
       .then((res) => {
         console.log(res.data);
+        getPlayList();
       })
       .catch((e) => alert(e));
   };
@@ -83,7 +84,6 @@ export function PlayList() {
   };
 
   const handleStreaming = async (e) => {
-    console.log(audioRef.current.currentTime);
     if (
       audioRef.current.currentTime > 59.9 &&
       60.3 > audioRef.current.currentTime
