@@ -32,7 +32,6 @@ export function PlayList() {
     await axios
       .get(`${server}/playlist/${userId}`)
       .then((res) => {
-        console.log(res.data);
         const pl = res.data.playlist.map((data) => ({
           stoneId: data.id,
           stoneName: data.name,
@@ -46,7 +45,7 @@ export function PlayList() {
         setRemainToken(res.data.remainToken);
         setIsGetPL(true);
       })
-      .catch((e) => alert(e));
+      .catch((e) => alert("플레이리스트 내에 곡이 하나도 없습니다."));
   };
   const deleteStone = async (stoneId, e) => {
     await axios
@@ -78,12 +77,16 @@ export function PlayList() {
       audioRef.current.currentTime > 59.9 &&
       60.3 > audioRef.current.currentTime
     ) {
-      await axios
-        .post(`${server}/playlist/streaming/${stoneId}`, { userId: userId })
-        .then((res) => {
-          console.log(res.data);
-          getPlayList();
-        });
+      if (remainToken < 1) {
+        audioRef.current.currentTime = 0;
+      } else {
+        await axios
+          .post(`${server}/playlist/streaming/${stoneId}`, { userId: userId })
+          .then((res) => {
+            console.log(res.data);
+            getPlayList();
+          });
+      }
     }
   };
   return (
