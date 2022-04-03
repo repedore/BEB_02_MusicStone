@@ -69,7 +69,7 @@ export function PlayList() {
       .then((res) => {
         console.log(res);
       })
-      .catch((e) => alert(e));
+      .catch((e) => console.log(e));
   };
 
   const handleStreaming = async (e) => {
