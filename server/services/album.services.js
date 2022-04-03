@@ -11,7 +11,7 @@ const getAlbumInfo = async (albumId, userId) => {
     const albumInfo = await AlbumModel.findOne({ id: albumId });
     const musicianInfo = await MusicianModel.findOne(
       { id: albumInfo.musician_id },
-      { name_korea: 1, name_english: 1 }
+      { name_korea: 1, name_english: 1, originalname: 1, _id: 0 }
     );
     const stoneList = await StoneModel.find(
       { album_id: albumId },
