@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Caver from "caver-js";
+import service_abi from '../../abi/Service';
 
 
-const MyStoneCard = ({ stone, handleSellBtn }) => {
+const MyStoneCard = ({ stone, handleSellBtn, account }) => {
     const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+    const caver = new Caver(window.klaytn);
+    const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
+    const [balance, setBalance] = useState(0);
+    const [canSellBalance, setCanSellBalance] = useState(0);
 
+    const getContractInfo = () => {
+        const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
+        return service.methods
+            .getUserSFTs("0x1313b3E8a7375245C2fD93047026Ca761fD547d0", stone.stoneInfo.id)
+            .call()
+            .then((res) => {
+                //console.log(res);
+                //let balance = JSON.parse(res);
+                return res
+            })
+    }
 
     const showName = () => {
         const kName = stone.stoneInfo.musicianInfo[0].name_korea;
@@ -20,10 +37,33 @@ const MyStoneCard = ({ stone, handleSellBtn }) => {
         }
     }
 
+    useEffect(() => {
+        if (balance) {
+            const tx = service.methods
+                .getUserCanSellBalances(account.account, stone.stoneInfo.id)
+                .call()
+                .then((res) => {
+                    setCanSellBalance(res)
+                })
+        }
+    }, [balance])
+
+    useEffect(() => {
+        const tx = service.methods
+            .getUserSFTs(account.account, stone.stoneInfo.id)
+            .call()
+            .then((res) => {
+                setBalance(res)
+            })
+    }, [])
+
     return (
         <CardContainer>
-            <Balance>보유 : {stone.myStoneInfo.userBalance}</Balance>
-            <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }} cursor="pointer">
+            <Balance>
+                <span>{`보유 : ${balance}`}</span>
+                <span>{`판매 가능:${canSellBalance}`}</span>
+            </Balance>
+            <Link to={`/stones/tradeStone/${stone.stoneInfo.id}`} style={{ textDecoration: "none" }} cursor="pointer">
                 <Img src={`${server}/${stone.img}`} />
                 <Name>{stone.stoneInfo.name}</Name>
                 <Musician>{showName()}</Musician>
@@ -77,6 +117,8 @@ flex-direction: column;
 `;
 const Balance = styled.span`
 font-size: 0.7rem;
+display:flex;
+justify-content: space-between;
 `;
 const TradeBtn = styled.button`
 width: 100px;

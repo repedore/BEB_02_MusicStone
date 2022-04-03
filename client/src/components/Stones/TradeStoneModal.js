@@ -43,7 +43,10 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
                         quantity,
                         tradeId: modalTrade.id
                     })
-                        .then(console.log)
+                        .then((res) => {
+                            alert('구매가 완료되었습니다.')
+                            console.log(res)
+                        })
                 })
         } else {
             alert("지갑을 연결해주세요.");
