@@ -172,11 +172,12 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
 // getSellStoneList (+ 검색)
 const getSellStone = async (userId, listInfo) => {
   const { startIndex, endIndex, keyword } = listInfo;
+  let account = "";
+  if (userId != 0) {
+    account = (await UserModel.findOne({ id: userId }, { account: 1, _id: 0 }))
+      .account;
+  }
   try {
-    const account = (
-      await UserModel.findOne({ id: userId }, { account: 1, _id: 0 })
-    ).account;
-
     if (keyword === undefined || keyword === "") {
       const sellList = await TradeModel.find(
         { closed: 0 },
@@ -227,12 +228,13 @@ const getSellStone = async (userId, listInfo) => {
             )
           );
         }
-
         let userBalanceList = [];
-        for (el of stoneInfo) {
-          userBalanceList.push(
-            await ServiceContract.getUserSFTs(account, el.token_id)
-          );
+        if (account !== "") {
+          for (el of stoneInfo) {
+            userBalanceList.push(
+              await ServiceContract.getUserSFTs(account, el.token_id)
+            );
+          }
         }
         return {
           sellList,
@@ -311,10 +313,12 @@ const getSellStone = async (userId, listInfo) => {
         }
 
         let userBalanceList = [];
-        for (el of stoneInfo) {
-          userBalanceList.push(
-            await ServiceContract.getUserSFTs(account, el.token_id)
-          );
+        if (account !== "") {
+          for (el of stoneInfo) {
+            userBalanceList.push(
+              await ServiceContract.getUserSFTs(account, el.token_id)
+            );
+          }
         }
         return {
           sellList,
@@ -379,7 +383,7 @@ const getStoneDetail = async (stoneId) => {
 // updateBuyStoneInfo (+ contract는 client에서 수행. 수행후 어떤 정보 저장할 것인가)
 const updateBuyStoneInfo = async (tradeInfo, stoneId) => {
   try {
-    const { buyer, seller, quantity, unitPrice, tradeId } = tradeInfo;
+    const { quantity, tradeId } = tradeInfo;
     const TradeInfo = await TradeModel.findOne(
       { id: tradeId },
       { amount: 1, _id: 0 }
@@ -421,7 +425,7 @@ const Updatedistribution = async () => {
     const deductionList = user.map((el) => {
       return el.deduction;
     });
-    const isOk = ServiceContract.deduction(userAccoutList, deductionList);
+    const isOk = await ServiceContract.deduction(userAccoutList, deductionList);
 
     // function distribution([_sft_token], [distribute_amount]) [tokenId]랑 [해당토큰아이디로 분배될토큰]
     const stone = await StoneModel.find(
@@ -437,12 +441,27 @@ const Updatedistribution = async () => {
     const distributionTokenList = stone.map((el) => {
       return el.streaming_count;
     });
-    const isGood = ServiceContract.distribution(
+    const isGood = await ServiceContract.distribution(
       tokenList,
       distributionTokenList
     );
 
-    return isOk && isGood ? "Ok" : "Fail";
+    // 분배뒤에 userdb의 deduction & stonedb streaming_account 0으로 업데이트해주기
+    if (isOk && isGood) {
+      const userUp = await UserModel.update(
+        {},
+        { $set: { deduction: 0 } },
+        { multi: true }
+      );
+      const stoneUp = await StoneModel.update(
+        {},
+        { $set: { streaming_count: 0 } },
+        { multi: true }
+      );
+      return userUp && stoneUp ? "Ok" : "Fail";
+    } else {
+      return "Fail";
+    }
   } catch (e) {
     throw Error(e);
   }
