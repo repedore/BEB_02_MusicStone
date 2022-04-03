@@ -178,6 +178,7 @@ const getSellStone = async (userId, listInfo) => {
       { account: 1, _id: 0 }
     ).account;
     if (keyword === undefined || keyword === "") {
+      console.log("와 안와");
       const sellList = await TradeModel.find(
         { closed: 0 },
         { id: 1, stone_id: 1, price: 1, item_id: 1, amount: 1, _id: 0 }
@@ -185,6 +186,9 @@ const getSellStone = async (userId, listInfo) => {
         .skip(startIndex - 1)
         .limit(endIndex - startIndex + 1);
 
+      console.log(`>>>>>>>SellList`);
+      console.log(sellList);
+      console.log(`>>>>>>>SellList`);
       if (sellList !== []) {
         let stoneIdList = [];
         for (el of sellList) {
@@ -228,18 +232,18 @@ const getSellStone = async (userId, listInfo) => {
           );
         }
 
-        let userBalanceList = [];
-        for (el of stoneInfo) {
-          userBalanceList.push(
-            await ServiceContract.getUserSFTs(account, el.token_id)
-          );
-        }
+        // let userBalanceList = [];
+        // for (el of stoneInfo) {
+        //   userBalanceList.push(
+        //     await ServiceContract.getUserSFTs(account, el.token_id)
+        //   );
+        // }
         return {
           sellList,
           stoneInfo,
           musicianInfo,
           albumImgList,
-          userBalanceList,
+          //userBalanceList,
         };
       } else {
         return {};
@@ -263,7 +267,7 @@ const getSellStone = async (userId, listInfo) => {
         .limit(endIndex - startIndex + 1);
 
       const sellList = AllList.filter((el) => {
-        return stoneIdList.includes(el.id);
+        return stoneIdList.includes(el.stone_id);
       });
 
       // 중복코드
@@ -310,18 +314,18 @@ const getSellStone = async (userId, listInfo) => {
           );
         }
 
-        let userBalanceList = [];
-        for (el of stoneInfo) {
-          userBalanceList.push(
-            await ServiceContract.getUserSFTs(account, el.token_id)
-          );
-        }
+        // let userBalanceList = [];
+        // for (el of stoneInfo) {
+        //   userBalanceList.push(
+        //     await ServiceContract.getUserSFTs(account, el.token_id)
+        //   );
+        // }
         return {
           sellList,
           stoneInfo,
           musicianInfo,
           albumImgList,
-          userBalanceList,
+          //userBalanceList,
         };
       } else {
         return {};
@@ -407,6 +411,7 @@ const updateBuyStoneInfo = async (tradeInfo, stoneId) => {
   }
 };
 
+// db내용 업댓 추가하기
 const Updatedistribution = async () => {
   try {
     // function deduction([address], [deduct_token]) public [주소]와 [차감할 토큰금액](스트리밍한 횟수만큼)
