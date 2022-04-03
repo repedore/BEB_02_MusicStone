@@ -41,7 +41,7 @@ export function MyStone() {
   //내 stone들 페이지에 따라 8개씩 보여주는 함수
   const showMyStones = () => {
     return (myData.stoneList.filter((stone, idx) => (idx >= (curPage - 1) * 8) && idx < (curPage - 1) * 8 + 8)
-      .map((stone, idx) => <MyStoneCard key={((curPage - 1) * 8) + idx} stone={stone} handleSellBtn={handleSellBtn} />))
+      .map((stone, idx) => <MyStoneCard key={((curPage - 1) * 8) + idx} stone={stone} handleSellBtn={handleSellBtn} account={account} />))
   }
 
   //이전 페이지로 이동
