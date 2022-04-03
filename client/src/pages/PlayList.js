@@ -22,11 +22,12 @@ export function PlayList() {
   const [isPaused, setPaused] = useState(false);
   const [playList, setPlayList] = useState([]);
   const [keepingTokenBal, setKeepingTokenBal] = useState(0);
+  const [remainToken, setRemainToken] = useState(0);
   const caver = new Caver(window.klaytn);
   var serviceAddress = process.env.REACT_APP_SERVICE_ADDRESS;
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
-
+  const [isGetPl, setIsGetPL] = useState(false);
   const getPlayList = async () => {
     await axios
       .get(`${server}/playlist/${userId}`)
@@ -42,6 +43,8 @@ export function PlayList() {
             ") ",
         }));
         setPlayList(pl);
+        setRemainToken(res.data.remainToken);
+        setIsGetPL(true);
       })
       .catch((e) => alert(e));
   };
@@ -58,20 +61,6 @@ export function PlayList() {
     console.log("55 :   " + audioRef.current.currentTime);
   };
 
-  const GetKeepingTokenBal = async () => {
-    var service_contract = new caver.klay.Contract(service_abi, serviceAddress);
-    await service_contract.methods
-      .getUserDeposit(state.account)
-      .call()
-      .then((data) => {
-        console.log(caver.utils.fromPeb(data));
-        setKeepingTokenBal(caver.utils.fromPeb(data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleStoneId = async (stoneId, e) => {
     setStoneId(stoneId);
     setStoneSrc(`${server}/playlist/streaming/${stoneId}`);
@@ -84,6 +73,7 @@ export function PlayList() {
   };
 
   const handleStreaming = async (e) => {
+    console.log(audioRef.current.currentTime);
     if (
       audioRef.current.currentTime > 59.9 &&
       60.3 > audioRef.current.currentTime
@@ -92,6 +82,7 @@ export function PlayList() {
         .post(`${server}/playlist/streaming/${stoneId}`, { userId: userId })
         .then((res) => {
           console.log(res.data);
+          getPlayList();
         });
     }
   };
@@ -107,17 +98,14 @@ export function PlayList() {
           <div className="pagetitle">계정을 먼저 연결하세요.</div>
         )}
       </div>
-      {state.isConnect ? (
+      {isGetPl ? (
         <div className="playlisttokentext">
-          <span>사용가능한 토큰의 수량 : {keepingTokenBal}</span>
-          <AiOutlineCheckSquare
-            className="checkicon"
-            size="30"
-            onClick={GetKeepingTokenBal}
-          />
+          <span>사용가능한 토큰의 수량 : {remainToken}</span>
         </div>
       ) : (
-        ""
+        <div className="playlisttokentext">
+          <span>사용가능한 토큰의 수량 : 플레이리스트를 먼저 불러오세요.</span>
+        </div>
       )}
       <div className="text">당신이 듣고싶은 스톤을 찾아보세요.</div>
       <span>
