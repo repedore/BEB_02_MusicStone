@@ -66,6 +66,10 @@ const distribution = async (tokenIdList, streamingCountList) => {
     .send({ from: process.env.SERVER_ADDRESS, gas: 2000000 });
 };
 
+const toPeb = (el) => {
+  return caverExt.utils.toPeb(el);
+};
+
 module.exports = {
   addMinter,
   isMinter,
@@ -74,4 +78,5 @@ module.exports = {
   getUserSFTs,
   deduction,
   distribution,
+  toPeb,
 };
