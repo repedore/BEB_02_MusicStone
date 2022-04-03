@@ -93,16 +93,23 @@ export const Album = () => {
       );
     });
   };
+  const showDesc = () => {
+    const desc = albumData.albumInfo.description.split('\n');
+    return (<Desc>
+      {desc.map((line) => {
+        line = line === '\r' ? ' ' : line;
+        return <div>{line}</div>
+      })}
+    </Desc>)
+  }
   const showLyrics = () => {
     const lyrics = stoneList[selectNum].lyrics.split('\n');
-    console.log(lyrics)
     return (<Lyrics>
       {lyrics.map((line) => {
         line = line === '\r' ? ' ' : line;
         return <div>{line}</div>
       })}
     </Lyrics>)
-
   }
 
   const loadData = async () => {
@@ -141,7 +148,6 @@ export const Album = () => {
 
   return albumData.albumInfo ? (
     <Body>
-      {console.log(stoneList[selectNum])}
       <AlbumContainer>
         <ImgWrapper>
           <Img src={`${server}/${albumData.albumInfo.originalname}`} alt={albumData.albumInfo.name} />
@@ -157,7 +163,7 @@ export const Album = () => {
                 뮤지션 : {albumData.musicianInfo ? showMusicinName() : null}
               </Musician>
               <ReleaseDate>발매일 : {showReleaseDate()}</ReleaseDate>
-              <Desc>소개 : {albumData.albumInfo.description}</Desc>
+              {showDesc()}
             </Info>
             <StoneList>{showStones()}</StoneList>
           </InfoBox>
@@ -256,7 +262,7 @@ const InfoBox = styled.div`
 `;
 
 const Info = styled.div`
-  max-width: 250px;
+  max-width: 270px;
   width: 100%;
   height: 100%;
   margin: 30px 0 0;
@@ -289,7 +295,12 @@ const Musician = styled.div`
 `;
 
 const ReleaseDate = styled.div``;
-const Desc = styled.div``;
+const Desc = styled.div`
+margin-top: 10px;
+div{
+  white-space: pre-wrap;
+}
+`;
 
 const StoneList = styled.li`
   width: 100%;
