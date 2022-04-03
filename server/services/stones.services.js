@@ -37,8 +37,13 @@ const getMyStoneList = async (userId) => {
 
     if (user) {
       const userAccount = user.account;
+      console.time("label");
       // Contract에서 userAccount가 가진 SFTList 가져오기
       const myStoneList = await ServiceContract.getMySFTs(userAccount);
+      // await ServiceContract.getMySFTs(userAccount).then(() => {
+      // console.timeEnd("label");
+      // });
+      console.timeEnd("label");
       if (myStoneList !== []) {
         const myStoneInfo = myStoneList.map((el) => {
           return { token_id: el[0], userBalance: el[1] };
@@ -222,7 +227,7 @@ const getSellStone = async (userId, listInfo) => {
         let albumImgList = [];
         for (el of stoneInfo) {
           albumImgList.push(
-            await MusicianModel.findOne(
+            await AlbumModel.findOne(
               { id: el.album_id },
               { originalname: 1, _id: 0 }
             )
@@ -305,7 +310,7 @@ const getSellStone = async (userId, listInfo) => {
         let albumImgList = [];
         for (el of stoneInfo) {
           albumImgList.push(
-            await MusicianModel.findOne(
+            await AlbumModel.findOne(
               { id: el.album_id },
               { originalname: 1, _id: 0 }
             )

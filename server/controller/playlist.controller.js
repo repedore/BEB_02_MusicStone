@@ -5,7 +5,7 @@ exports.playlist_get = async (req, res, next) => {
   try {
     const user_id = req.params.user_id;
     const playlist = await PlaylistService.getPlaylist(user_id);
-    const remainToken = await PlaylistService.getRemainToke(user_id);
+    const remainToken = await PlaylistService.getRemainToken(user_id);
     playlist !== ""
       ? res.status(200).json({ remainToken, playlist })
       : res.status(200).send("playlist not exist!");

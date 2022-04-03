@@ -1,1062 +1,1109 @@
 const service_abi = [
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_amount",
-        "type": "uint256"
-      }
+        name: "_amount",
+        type: "uint256",
+      },
     ],
-    "name": "withdrawalDeposit",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "withdrawalDeposit",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_account",
-        "type": "address"
-      }
+        name: "_account",
+        type: "address",
+      },
     ],
-    "name": "getArtistSfts",
-    "outputs": [
+    name: "getArtistSfts",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256[]"
-      }
+        name: "",
+        type: "uint256[]",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "interfaceId",
-        "type": "bytes4"
-      }
+        name: "interfaceId",
+        type: "bytes4",
+      },
     ],
-    "name": "supportsInterface",
-    "outputs": [
+    name: "supportsInterface",
+    outputs: [
       {
-        "name": "",
-        "type": "bool"
-      }
+        name: "",
+        type: "bool",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_token",
-        "type": "address"
-      }
+        name: "_token",
+        type: "address",
+      },
     ],
-    "name": "setToken",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setToken",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_amount",
-        "type": "uint256"
-      }
+        name: "_amount",
+        type: "uint256",
+      },
     ],
-    "name": "withdrawalDistribution",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "withdrawalDistribution",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_amount",
-        "type": "uint256"
-      }
+        name: "_amount",
+        type: "uint256",
+      },
     ],
-    "name": "sellToken",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
+    name: "sellToken",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_account",
-        "type": "address"
+        name: "_address",
+        type: "address",
       },
       {
-        "name": "_token_id",
-        "type": "uint256"
-      }
+        name: "_tokenId",
+        type: "uint256",
+      },
     ],
-    "name": "getUserSFTs",
-    "outputs": [
+    name: "getUserMarketOpenedBalances",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256"
-      }
+        name: "",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "mstoken",
-    "outputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "",
-        "type": "address"
-      }
+        name: "_account",
+        type: "address",
+      },
+      {
+        name: "_token_id",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    name: "getUserSFTs",
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
+    constant: true,
+    inputs: [],
+    name: "mstoken",
+    outputs: [
+      {
+        name: "",
+        type: "address",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "depositMSToken",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    constant: false,
+    inputs: [],
+    name: "withdraw",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_seller",
-        "type": "address"
-      }
+        name: "_amount",
+        type: "uint256",
+      },
     ],
-    "name": "getItemsBySeller",
-    "outputs": [
+    name: "depositMSToken",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
       {
-        "components": [
+        name: "_seller",
+        type: "address",
+      },
+    ],
+    name: "getItemsBySeller",
+    outputs: [
+      {
+        components: [
           {
-            "name": "itemId",
-            "type": "uint256"
+            name: "itemId",
+            type: "uint256",
           },
           {
-            "name": "tokenId",
-            "type": "uint256"
+            name: "tokenId",
+            type: "uint256",
           },
           {
-            "name": "seller",
-            "type": "address"
+            name: "seller",
+            type: "address",
           },
           {
-            "name": "unit_price",
-            "type": "uint256"
+            name: "unit_price",
+            type: "uint256",
           },
           {
-            "name": "total_amount",
-            "type": "uint256"
+            name: "total_amount",
+            type: "uint256",
           },
           {
-            "name": "remaining_amount",
-            "type": "uint256"
+            name: "remaining_amount",
+            type: "uint256",
           },
           {
-            "name": "isOpened",
-            "type": "bool"
-          }
+            name: "isOpened",
+            type: "bool",
+          },
         ],
-        "name": "",
-        "type": "tuple[]"
-      }
+        name: "",
+        type: "tuple[]",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "mssft",
-    "outputs": [
+    constant: true,
+    inputs: [],
+    name: "mssft",
+    outputs: [
       {
-        "name": "",
-        "type": "address"
-      }
+        name: "",
+        type: "address",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "itemId",
-        "type": "uint256"
-      }
+        name: "itemId",
+        type: "uint256",
+      },
     ],
-    "name": "cancelItem",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "cancelItem",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "marketItemId",
-        "type": "uint256"
-      }
+        name: "marketItemId",
+        type: "uint256",
+      },
     ],
-    "name": "getMarketItemById",
-    "outputs": [
+    name: "getMarketItemById",
+    outputs: [
       {
-        "components": [
+        components: [
           {
-            "name": "itemId",
-            "type": "uint256"
+            name: "itemId",
+            type: "uint256",
           },
           {
-            "name": "tokenId",
-            "type": "uint256"
+            name: "tokenId",
+            type: "uint256",
           },
           {
-            "name": "seller",
-            "type": "address"
+            name: "seller",
+            type: "address",
           },
           {
-            "name": "unit_price",
-            "type": "uint256"
+            name: "unit_price",
+            type: "uint256",
           },
           {
-            "name": "total_amount",
-            "type": "uint256"
+            name: "total_amount",
+            type: "uint256",
           },
           {
-            "name": "remaining_amount",
-            "type": "uint256"
+            name: "remaining_amount",
+            type: "uint256",
           },
           {
-            "name": "isOpened",
-            "type": "bool"
-          }
+            name: "isOpened",
+            type: "bool",
+          },
         ],
-        "name": "",
-        "type": "tuple"
-      }
+        name: "",
+        type: "tuple",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_account",
-        "type": "address[]"
-      }
+        name: "_account",
+        type: "address[]",
+      },
     ],
-    "name": "getUsersAllSFTs",
-    "outputs": [
+    name: "getUsersAllSFTs",
+    outputs: [
       {
-        "components": [
+        components: [
           {
-            "name": "id",
-            "type": "uint256"
+            name: "id",
+            type: "uint256",
           },
           {
-            "name": "balance",
-            "type": "uint256"
+            name: "balance",
+            type: "uint256",
           },
           {
-            "name": "totalSupply",
-            "type": "uint256"
-          }
+            name: "totalSupply",
+            type: "uint256",
+          },
         ],
-        "name": "",
-        "type": "tuple[][]"
-      }
+        name: "",
+        type: "tuple[][]",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    constant: false,
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+    constant: true,
+    inputs: [],
+    name: "owner",
+    outputs: [
       {
-        "name": "",
-        "type": "address"
-      }
+        name: "",
+        type: "address",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "isOwner",
-    "outputs": [
+    constant: true,
+    inputs: [],
+    name: "isOwner",
+    outputs: [
       {
-        "name": "",
-        "type": "bool"
-      }
+        name: "",
+        type: "bool",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_id",
-        "type": "uint256"
-      }
+        name: "_id",
+        type: "uint256",
+      },
     ],
-    "name": "totalSFTSupply",
-    "outputs": [
+    name: "totalSFTSupply",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256"
-      }
+        name: "",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "getAllowance",
-    "outputs": [
+    constant: true,
+    inputs: [],
+    name: "getAllowance",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256"
-      }
+        name: "",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "account",
-        "type": "address"
-      }
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "addMinter",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "addMinter",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "renounceMinter",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    constant: false,
+    inputs: [],
+    name: "renounceMinter",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "",
-        "type": "address"
+        name: "",
+        type: "address",
       },
       {
-        "name": "",
-        "type": "address"
+        name: "",
+        type: "address",
       },
       {
-        "name": "",
-        "type": "uint256[]"
+        name: "",
+        type: "uint256[]",
       },
       {
-        "name": "",
-        "type": "uint256[]"
+        name: "",
+        type: "uint256[]",
       },
       {
-        "name": "",
-        "type": "bytes"
-      }
+        name: "",
+        type: "bytes",
+      },
     ],
-    "name": "onKIP37BatchReceived",
-    "outputs": [
+    name: "onKIP37BatchReceived",
+    outputs: [
       {
-        "name": "",
-        "type": "bytes4"
-      }
+        name: "",
+        type: "bytes4",
+      },
     ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "getUnsoldItems",
-    "outputs": [
+    constant: true,
+    inputs: [],
+    name: "getUnsoldItems",
+    outputs: [
       {
-        "components": [
+        components: [
           {
-            "name": "itemId",
-            "type": "uint256"
+            name: "itemId",
+            type: "uint256",
           },
           {
-            "name": "tokenId",
-            "type": "uint256"
+            name: "tokenId",
+            type: "uint256",
           },
           {
-            "name": "seller",
-            "type": "address"
+            name: "seller",
+            type: "address",
           },
           {
-            "name": "unit_price",
-            "type": "uint256"
+            name: "unit_price",
+            type: "uint256",
           },
           {
-            "name": "total_amount",
-            "type": "uint256"
+            name: "total_amount",
+            type: "uint256",
           },
           {
-            "name": "remaining_amount",
-            "type": "uint256"
+            name: "remaining_amount",
+            type: "uint256",
           },
           {
-            "name": "isOpened",
-            "type": "bool"
-          }
+            name: "isOpened",
+            type: "bool",
+          },
         ],
-        "name": "",
-        "type": "tuple[]"
-      }
+        name: "",
+        type: "tuple[]",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "buyToken",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
+    constant: false,
+    inputs: [],
+    name: "buyToken",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_address",
-        "type": "address"
-      }
+        name: "_address",
+        type: "address",
+      },
     ],
-    "name": "getUserDistribution",
-    "outputs": [
+    name: "getUserDistribution",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256"
-      }
+        name: "",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "account",
-        "type": "address"
-      }
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "isMinter",
-    "outputs": [
+    name: "isMinter",
+    outputs: [
       {
-        "name": "",
-        "type": "bool"
-      }
+        name: "",
+        type: "bool",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_amount",
-        "type": "uint256"
-      }
+        name: "_amount",
+        type: "uint256",
+      },
     ],
-    "name": "mintSFT",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "mintSFT",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_address",
-        "type": "address[]"
+        name: "_address",
+        type: "address[]",
       },
       {
-        "name": "_deduct_token",
-        "type": "uint256[]"
-      }
+        name: "_deduct_token",
+        type: "uint256[]",
+      },
     ],
-    "name": "deduction",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "deduction",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_sft_token",
-        "type": "uint256[]"
+        name: "_sft_token",
+        type: "uint256[]",
       },
       {
-        "name": "_distribute_amount",
-        "type": "uint256[]"
-      }
+        name: "_distribute_amount",
+        type: "uint256[]",
+      },
     ],
-    "name": "distribution",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "distribution",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_address",
-        "type": "address"
-      }
+        name: "_address",
+        type: "address",
+      },
     ],
-    "name": "getUserDeposit",
-    "outputs": [
+    name: "getUserDeposit",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256"
-      }
+        name: "",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_account",
-        "type": "address"
-      }
+        name: "_account",
+        type: "address",
+      },
     ],
-    "name": "getUserAllSFTs",
-    "outputs": [
+    name: "getUserAllSFTs",
+    outputs: [
       {
-        "components": [
+        components: [
           {
-            "name": "id",
-            "type": "uint256"
+            name: "id",
+            type: "uint256",
           },
           {
-            "name": "balance",
-            "type": "uint256"
+            name: "balance",
+            type: "uint256",
           },
           {
-            "name": "totalSupply",
-            "type": "uint256"
-          }
+            name: "totalSupply",
+            type: "uint256",
+          },
         ],
-        "name": "",
-        "type": "tuple[]"
-      }
+        name: "",
+        type: "tuple[]",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_token",
-        "type": "address"
-      }
+        name: "_token",
+        type: "address",
+      },
     ],
-    "name": "setSFT",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setSFT",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "getTokenRatio",
-    "outputs": [
+    constant: true,
+    inputs: [],
+    name: "getTokenRatio",
+    outputs: [
       {
-        "name": "",
-        "type": "uint256"
-      }
+        name: "",
+        type: "uint256",
+      },
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "itemId",
-        "type": "uint256"
+        name: "itemId",
+        type: "uint256",
       },
       {
-        "name": "buy_amount",
-        "type": "uint256"
-      }
+        name: "buy_amount",
+        type: "uint256",
+      },
     ],
-    "name": "purchaseItem",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
+    name: "purchaseItem",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "_newTokenRatio",
-        "type": "uint256"
-      }
+        name: "_address",
+        type: "address",
+      },
+      {
+        name: "_tokenId",
+        type: "uint256",
+      },
     ],
-    "name": "setTokenRatio",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "getUserCanSellBalances",
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": true,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "_id",
-        "type": "uint256"
-      }
+        name: "_newTokenRatio",
+        type: "uint256",
+      },
     ],
-    "name": "getSftCreator",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    name: "setTokenRatio",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: true,
+    inputs: [
       {
-        "name": "",
-        "type": "address"
+        name: "_id",
+        type: "uint256",
       },
-      {
-        "name": "",
-        "type": "address"
-      },
-      {
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "bytes"
-      }
     ],
-    "name": "onKIP37Received",
-    "outputs": [
+    name: "getSftCreator",
+    outputs: [
       {
-        "name": "",
-        "type": "bytes4"
-      }
+        name: "",
+        type: "address",
+      },
     ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "newOwner",
-        "type": "address"
-      }
+        name: "",
+        type: "address",
+      },
+      {
+        name: "",
+        type: "address",
+      },
+      {
+        name: "",
+        type: "uint256",
+      },
+      {
+        name: "",
+        type: "uint256",
+      },
+      {
+        name: "",
+        type: "bytes",
+      },
     ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "onKIP37Received",
+    outputs: [
+      {
+        name: "",
+        type: "bytes4",
+      },
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "constant": false,
-    "inputs": [
+    constant: false,
+    inputs: [
       {
-        "name": "tokenId",
-        "type": "uint256"
+        name: "newOwner",
+        type: "address",
       },
-      {
-        "name": "unit_price",
-        "type": "uint256"
-      },
-      {
-        "name": "amount",
-        "type": "uint256"
-      }
     ],
-    "name": "addItemToMarket",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
+    name: "transferOwnership",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    constant: false,
+    inputs: [
+      {
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        name: "unit_price",
+        type: "uint256",
+      },
+      {
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "addItemToMarket",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "itemId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "seller",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "unit_price",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "total_amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "remaining_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "MarketItemCreated",
-    "type": "event"
+    inputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "name": "itemId",
-        "type": "uint256"
+        indexed: true,
+        name: "itemId",
+        type: "uint256",
       },
       {
-        "indexed": true,
-        "name": "tokenId",
-        "type": "uint256"
+        indexed: true,
+        name: "tokenId",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "seller",
-        "type": "address"
+        indexed: false,
+        name: "seller",
+        type: "address",
       },
       {
-        "indexed": false,
-        "name": "buyer",
-        "type": "address"
+        indexed: false,
+        name: "unit_price",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "unit_price",
-        "type": "uint256"
+        indexed: false,
+        name: "total_amount",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "total_amount",
-        "type": "uint256"
+        indexed: false,
+        name: "remaining_amount",
+        type: "uint256",
       },
-      {
-        "indexed": false,
-        "name": "buy_amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "remaining_amount",
-        "type": "uint256"
-      }
     ],
-    "name": "MarketItemSelled",
-    "type": "event"
+    name: "MarketItemCreated",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "name": "itemId",
-        "type": "uint256"
+        indexed: true,
+        name: "itemId",
+        type: "uint256",
       },
       {
-        "indexed": true,
-        "name": "tokenId",
-        "type": "uint256"
+        indexed: true,
+        name: "tokenId",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "seller",
-        "type": "address"
+        indexed: false,
+        name: "seller",
+        type: "address",
       },
       {
-        "indexed": false,
-        "name": "unit_price",
-        "type": "uint256"
+        indexed: false,
+        name: "buyer",
+        type: "address",
       },
       {
-        "indexed": false,
-        "name": "total_amount",
-        "type": "uint256"
+        indexed: false,
+        name: "unit_price",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "remaining_amount",
-        "type": "uint256"
-      }
+        indexed: false,
+        name: "total_amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "buy_amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "remaining_amount",
+        type: "uint256",
+      },
     ],
-    "name": "MarketItemCancel",
-    "type": "event"
+    name: "MarketItemSelled",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "name": "user",
-        "type": "address"
+        indexed: true,
+        name: "itemId",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "BuyToken",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "user",
-        "type": "address"
+        indexed: true,
+        name: "tokenId",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "SellToken",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "artist",
-        "type": "address"
+        indexed: false,
+        name: "seller",
+        type: "address",
       },
       {
-        "indexed": false,
-        "name": "token_id",
-        "type": "uint256"
+        indexed: false,
+        name: "unit_price",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "SFTMinted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "user",
-        "type": "address"
+        indexed: false,
+        name: "total_amount",
+        type: "uint256",
       },
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
-      }
+        indexed: false,
+        name: "remaining_amount",
+        type: "uint256",
+      },
     ],
-    "name": "DepositMSToken",
-    "type": "event"
+    name: "MarketItemCancel",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "name": "user",
-        "type": "address"
+        indexed: false,
+        name: "user",
+        type: "address",
       },
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
-      }
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
     ],
-    "name": "WithDrawalDepositMSToken",
-    "type": "event"
+    name: "BuyToken",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "name": "user",
-        "type": "address"
+        indexed: false,
+        name: "user",
+        type: "address",
       },
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
-      }
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
     ],
-    "name": "WithDrawalDistributionMSToken",
-    "type": "event"
+    name: "SellToken",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "MinterAdded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "MinterRemoved",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "previousOwner",
-        "type": "address"
+        indexed: false,
+        name: "artist",
+        type: "address",
       },
       {
-        "indexed": true,
-        "name": "newOwner",
-        "type": "address"
-      }
+        indexed: false,
+        name: "token_id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
     ],
-    "name": "OwnershipTransferred",
-    "type": "event"
-  }
+    name: "SFTMinted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "DepositMSToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithDrawalDepositMSToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithDrawalDistributionMSToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "MinterAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "MinterRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
 ];
-export default service_abi;
+//export default service_abi;
+module.exports = service_abi;
