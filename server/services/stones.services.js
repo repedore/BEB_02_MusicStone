@@ -40,13 +40,14 @@ const getMyStoneList = async (userId) => {
       console.time("label");
       // Contract에서 userAccount가 가진 SFTList 가져오기
       const myStoneList = await ServiceContract.getMySFTs(userAccount);
-      // await ServiceContract.getMySFTs(userAccount).then(() => {
-      // console.timeEnd("label");
-      // });
       console.timeEnd("label");
       if (myStoneList !== []) {
-        const myStoneInfo = myStoneList.map((el) => {
+        const tokenInfo = myStoneList.map((el) => {
           return { token_id: el[0], userBalance: el[1] };
+        });
+
+        const myStoneInfo = tokenInfo.sort(function (a, b) {
+          return Number(a.token_id) - Number(b.token_id);
         });
 
         // stoneIdList
@@ -346,7 +347,7 @@ const getStoneDetail = async (stoneId) => {
   try {
     const stoneDetail = await StoneModel.findOne({ id: stoneId });
     const sellList = await TradeModel.find(
-      { stone_id: stoneId },
+      { stone_id: stoneId, closed: 0 },
       {
         id: 1,
         sell_user_account: 1,
