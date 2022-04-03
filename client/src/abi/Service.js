@@ -1105,5 +1105,4 @@ const service_abi = [
     type: "event",
   },
 ];
-//export default service_abi;
 module.exports = service_abi;
