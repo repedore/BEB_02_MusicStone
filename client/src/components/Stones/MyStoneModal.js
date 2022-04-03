@@ -12,9 +12,9 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
 
     //한영이름 보여주는 함수
     const showName = () => {
-        if (modalStone.musicianInfo) {
-            const kName = modalStone.musicianInfo[0].name_korea;
-            const eName = modalStone.musicianInfo[0].name_english;
+        if (modalStone.stoneInfo) {
+            const kName = modalStone.stoneInfo.musicianInfo[0].name_korea;
+            const eName = modalStone.stoneInfo.musicianInfo[0].name_english;
 
             if (kName && eName) {
                 return `${kName}(${eName})`;
@@ -40,8 +40,8 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                 setPrice(e.target.value);
                 break;
             case "quantity":
-                if (Number(e.target.value) > modalStone.userBalance) {
-                    alert(`현재 보유한 수량은 ${modalStone.userBalance}개 입니다.`);
+                if (Number(e.target.value) > modalStone.myStoneInfo.userBalance) {
+                    alert(`현재 보유한 수량은 ${modalStone.myStoneInfo.userBalance}개 입니다.`);
                 } else {
                     setQuantity(e.target.value)
                 }
@@ -75,7 +75,7 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                         try {
                             service.methods
                                 //(tokenId, unitPrice, amount)
-                                .addItemToMarket(modalStone.token_id, caver.utils.toPeb(price), quantity)
+                                .addItemToMarket(modalStone.myStoneInfo.token_id, caver.utils.toPeb(price), quantity)
                                 .send({
 
                                     from: account.account,
@@ -89,7 +89,7 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                                         seller: account.account,
                                         quantity,
                                         unitPrice: price,
-                                        stoneId: modalStone.id,
+                                        stoneId: modalStone.stoneInfo.id,
                                         itemId: res.events.MarketItemCreated.returnValues.itemId
                                     })
                                         .then(alert('등록이 완료되었습니다.'))
@@ -104,7 +104,8 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
         }
     }
     return (
-        <ModalOverlay display={modalOpen ? "flex" : "none"}  >
+        <ModalOverlay ModalOverlay display={modalOpen ? "flex" : "none"} >
+            {console.log(modalStone)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>
@@ -119,7 +120,7 @@ const MyStoneModal = ({ modalStone, klayPrice, modalOpen, setModalOpen, account 
                     </Nav>
                     <Cart>
                         <Receipt>
-                            <Item>{modalStone.name} - {showName()}</Item>
+                            <Item>{modalStone.stoneInfo ? modalStone.stoneInfo.name : null} - {showName()}</Item>
                             <InputWrapper>
                                 <QuantityInput id="quantity" type="number" min="0" value={quantity} onChange={(e) => handleQuantityInput(e)} />
                             </InputWrapper>
