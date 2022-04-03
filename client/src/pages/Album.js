@@ -150,7 +150,7 @@ export const Album = () => {
     <Body>
       <AlbumContainer>
         <ImgWrapper>
-          <Img src={`${server}/${albumData.albumInfo.originalname}`} alt={albumData.albumInfo.name} />
+          <Img src={`${server}/${albumData.musicianInfo.originalname}`} alt={albumData.albumInfo.name} />
         </ImgWrapper>
         <InfoWrapper>
           <Title>{albumData.albumInfo.name}</Title>
