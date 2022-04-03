@@ -33,7 +33,12 @@ const PreviewStream = ({ stoneId, img }) => {
         const calTotalMin = Math.floor(musicLength / 60);
         const calTotalSec = tempTotalSec >= 10 ? tempTotalSec : `0${tempTotalSec}`;
 
-        return <Timer>{minute}:{calSec} / {calTotalMin}:{calTotalSec}</Timer>
+        return (
+            <Timer>
+                {`${minute}:${calSec} `}
+                /
+                {musicLength !== Infinity ? ` ${calTotalMin}:${calTotalSec}` : ' ∞'}
+            </Timer>)
     }
 
     //interval 관련

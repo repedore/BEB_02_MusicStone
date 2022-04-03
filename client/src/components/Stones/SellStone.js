@@ -4,16 +4,12 @@ const SellStone = ({ trade, klayPrice, handleBuyBtn }) => {
 
     const calPrice = () => (trade.price * klayPrice).toFixed(0);
 
-    //현재 user에 대한 정보가 id값만 넘어와서 그거 보여줌
-    const showUser = () => {
-        return trade.sell_user_id;
-    }
     return (
         <Trade>
             <span>{trade.price}</span>
             <span>₩ {calPrice()}</span>
             <span>{trade.amount}</span>
-            <span>{showUser()}</span>
+            <span>{trade.sell_user_account}</span>
             <ButtonBox>
                 <button onClick={() => handleBuyBtn(trade)}>구매</button>
             </ButtonBox>

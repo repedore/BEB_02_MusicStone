@@ -27,7 +27,7 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
         if (account.isConnect) {
             const tx = await service.methods
-                .purchaseItem(modalTrade.id, quantity)
+                .purchaseItem(modalTrade.item_id, quantity)
                 .send({
                     from: account.account,
                     //value = amount * unitPrice
@@ -48,6 +48,7 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
+            {console.log(modalTrade)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>

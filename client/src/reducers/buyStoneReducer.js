@@ -25,8 +25,7 @@ const buyStoneReducer = (state = initialState, action) => {
                     img: action.payload.albumImgList[i].originalname,
                     price: action.payload.sellList[i].price,
                     //현재 balance 넘어오는 값 없어서 고정값 넣어놓음
-                    myBalance: 100,
-
+                    myBalance: action.payload.userBalanceList[i],
                 }
                 state.stones.push(tempObj)
             }

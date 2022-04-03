@@ -39,6 +39,15 @@ export function TradeStone() {
     }
   }
 
+  const showDesc = () => {
+    const desc = stoneData.stoneDetail.description.split('\n');
+    return (<Desc>
+      {desc.map((line) => {
+        line = line === '\r' ? ' ' : line;
+        return <div>{line}</div>
+      })}
+    </Desc>)
+  }
 
   const showSellList = () => {
 
@@ -114,25 +123,25 @@ const showPriceDif = () => {
       <Body>
         <StoneContainer>
           <PreviewStream img={stoneData.albumImg} stoneId={stoneData.stoneDetail.id} />
-          <StoneWrapper>
-            <Title>
-              <span>
-                {stoneData.stoneDetail.name} - {stoneData.musician ? showName() : 'unknown'}
-              </span>
-              <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
-            </Title>
-            <Info>
-              <Price>
-                <div>최저가 : {stoneData.minPrice} KLAY</div>
-                {/*<div>전일비 : {showPriceDif()}</div>*/}
-              </Price>
-              <Lyricist>작사가 : {stoneData.stoneDetail.lyricist}</Lyricist>
-              <Composer>작곡가 : {stoneData.stoneDetail.composer}</Composer>
-              <Desc>
-                {stoneData.stoneDetail.description}
-              </Desc>
-            </Info>
-          </StoneWrapper>
+          <StoneBox>
+            <StoneWrapper>
+              <Title>
+                <span>
+                  {stoneData.stoneDetail.name} - {stoneData.musician ? showName() : 'unknown'}
+                </span>
+                <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
+              </Title>
+              <Info>
+                <Price>
+                  <div>최저가 : {stoneData.minPrice} KLAY</div>
+                  {/*<div>전일비 : {showPriceDif()}</div>*/}
+                </Price>
+                <Lyricist>작사가 : {stoneData.stoneDetail.lyricist}</Lyricist>
+                <Composer>작곡가 : {stoneData.stoneDetail.composer}</Composer>
+                {showDesc()}
+              </Info>
+            </StoneWrapper>
+          </StoneBox>
         </StoneContainer>
         <TradeContainer>
           <SellListWrapper>
@@ -221,12 +230,30 @@ height: 350px;
 margin: 0 auto;
 display flex;
 `;
+const StoneBox = styled.div`
+width: 100%;
+height: 100%;
+overflow:hidden;
+position: relative;
+display:flex;
+justify-content: center;
+align-items: center;
+`;
 const StoneWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  width: 90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: #0f0f0f;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #333333;
+  }
 `;
 const Title = styled.h2`
   margin: 10px auto;

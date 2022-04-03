@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 
 const MyStoneCard = ({ stone, handleSellBtn }) => {
+    const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
+
 
     const showName = () => {
         const kName = stone.musicianInfo[0].name_korea;
@@ -23,7 +25,7 @@ const MyStoneCard = ({ stone, handleSellBtn }) => {
             <Balance>보유 : {stone.userBalance}</Balance>
             <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }} cursor="pointer">
                 {/*현재 넘어오는 앨범이미지가 없어서 추가되면 수정 필요 */}
-                <Img src={stone.img} />
+                <Img src={`${server}/${stone.img}`} />
                 <Name>{stone.name}</Name>
                 <Musician>{showName()}</Musician>
             </Link>
