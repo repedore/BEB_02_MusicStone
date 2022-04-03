@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import select from "react-select";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Caver from "caver-js";
 import service_abi from "../abi/Service";
 
@@ -10,6 +10,7 @@ export default function RegisterStone() {
   const [stoneName, setStoneName] = useState("");
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
+  const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [stonefile, setStonefile] = useState(null);
   const [lyricist, setLyricist] = useState("");
@@ -67,7 +68,7 @@ export default function RegisterStone() {
       process.env.REACT_APP_SERVICE_ADDRESS
     );
     const tx = await service.methods
-      .mintSFT(1000)
+      .mintSFT(SFTAmount)
       .send({
         from: state.account,
         gas: 1000000,
@@ -107,6 +108,7 @@ export default function RegisterStone() {
         })
         .then((res) => {
           console.log(res.data.message);
+          navigate("/stones/myStone");
         });
     } else if (album == "") {
       alert("앨범을 선택해주세요. 원하는 앨범이 없다면 앨범을 등록해주세요.");

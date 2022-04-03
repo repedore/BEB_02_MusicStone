@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function RegisterAlbum() {
   const [albumName, setAlbumName] = useState("");
@@ -9,6 +10,7 @@ export function RegisterAlbum() {
   const [imgsrc, setImgsrc] = useState("");
   const state = useSelector((state) => state.accountReducer);
   const account = state.account;
+  const navigate = useNavigate();
   const server =
     process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
   const onChangeAlbumName = (e) => {
@@ -36,6 +38,7 @@ export function RegisterAlbum() {
         .then((res) => {
           console.log(res.data);
           alert(res.data.message);
+          navigate("/stones/register");
         });
     } else if (!albumName) {
       alert("이름을 입력해주세요.");
