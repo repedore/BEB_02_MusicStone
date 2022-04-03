@@ -173,11 +173,13 @@ export default function RegisterStone() {
           </select>
         </div>
         <div>
+          <div>mp3 파일만 첨부 가능합니다.</div>
           <input
             className="fileinput"
             type="file"
             onChange={(e) => onChangeStoneFile(e)}
             name="stonefile"
+            accept=".mp3"
           />
         </div>
         <div>
