@@ -116,7 +116,9 @@ const StreamingBtn = styled.button`
 background-color:#333333;
 width: 60px;
 height: 60px;
-border-radius: 30px 30px 30px 30px;
+border: 0;
+outline: none;
+border-radius: 30px;
 cursor: pointer;
 color: white;
 `;

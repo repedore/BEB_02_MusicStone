@@ -113,7 +113,7 @@ const showPriceDif = () => {
       ?
       <Body>
         <StoneContainer>
-          <PreviewStream stone={stoneData} />
+          <PreviewStream img={stoneData.albumImg} stoneId={stoneData.stoneDetail.id} />
           <StoneWrapper>
             <Title>
               <span>

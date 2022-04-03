@@ -48,7 +48,6 @@ const TradeStoneModal = forwardRef(({ klayPrice, stoneData, modalOpen, modalTrad
 
     return (
         <ModalOverlay display={modalOpen ? "flex" : "none"}  >
-            {console.log(modalTrade)}
             <ModalWindow>
                 <Head>
                     <Close onClick={() => handleClose()}>

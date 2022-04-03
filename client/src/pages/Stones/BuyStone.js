@@ -105,7 +105,9 @@ keyword: 서버에 요청할 검색어, search시 현재 검색input창에 있�
             <StoneContainer>
                 <Nav>
                     <Title><h1>Collect Your Stones</h1></Title>
+                    {/*가격변동은 시간관계상 보류하기로 함
                     <Notify>* 가격변동률은 전일의 평균 거래가 기준으로 산출됩니다. </Notify>
+                    */}
                     <Notify>{account.isConnect ? ' ' : '* 나의 stone 보유량을 보려면 지갑을 연결해주세요'}</Notify>
                     <SearchWrap>
                         <SearchInput ref={keywordInput} type="text" placeholder="찾는 음원이나 뮤지션을 검색해 주세요." onKeyPress={handleInputEnter} />
