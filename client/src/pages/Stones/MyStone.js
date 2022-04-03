@@ -88,7 +88,7 @@ export function MyStone() {
     //일단은 현재 연결된 계정 불러오는 거만 연결해놨고 나중에 페이지에서 account 변경시 새로 로드같은거 추가 필요할듯
     const req = `${server}/stones/mystone/${account.userId}`
     axios.get(req)
-      .then((res) => dispatch(loadMyData(res.data)))
+      .then((res) => dispatch(loadMyData(res)))
   }, []);
 
   //data가 load되면 page수 변경

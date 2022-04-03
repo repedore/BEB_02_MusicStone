@@ -43,7 +43,15 @@ export function MusicianInfo() {
       alert("지갑을 연결해 주세요");
     }
   };
-
+  const showDesc = () => {
+    const desc = musicianInfo.description.split('\n');
+    return (<Desc>
+      {desc.map((line) => {
+        line = line === '\r' ? ' ' : line;
+        return <div>{line}</div>
+      })}
+    </Desc>)
+  }
   const showSNS = () => {
     return musicianInfo.snsList
       ? musicianInfo.snsList.map((sns) => handleSNS(sns))
@@ -98,7 +106,7 @@ export function MusicianInfo() {
             <SNS>{showSNS()}</SNS>
             <Like onClick={() => handleLikeBtn()}>{showLike()}</Like>
           </SNSandLike>
-          <DESC>{musicianInfo.description}</DESC>
+          {showDesc()}
         </InfoWrapper>
       </InfoContainer>
       <AlbumContainer>
@@ -187,17 +195,15 @@ const InfoWrapper = styled.div`
   margin: 25px;
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
+  overflow-x: hidden;
+  overflow-y: scroll;
+&::-webkit-scrollbar {
+  width: 2px;
+  background-color: #0f0f0f;
+}
+&::-webkit-scrollbar-thumb {
+  background-color: #333333;
+}
 `;
 
 const Img = styled.img`
@@ -238,7 +244,7 @@ const Like = styled.span`
   }
 `;
 
-const DESC = styled.div``;
+const Desc = styled.div``;
 
 const StyledSlider = styled(Slider)`
   margin: 0 auto;

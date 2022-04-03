@@ -8,8 +8,8 @@ const MyStoneCard = ({ stone, handleSellBtn }) => {
 
 
     const showName = () => {
-        const kName = stone.musicianInfo[0].name_korea;
-        const eName = stone.musicianInfo[0].name_english;
+        const kName = stone.stoneInfo.musicianInfo[0].name_korea;
+        const eName = stone.stoneInfo.musicianInfo[0].name_english;
 
         if (kName && eName) {
             return `${kName}(${eName})`;
@@ -22,11 +22,10 @@ const MyStoneCard = ({ stone, handleSellBtn }) => {
 
     return (
         <CardContainer>
-            <Balance>보유 : {stone.userBalance}</Balance>
+            <Balance>보유 : {stone.myStoneInfo.userBalance}</Balance>
             <Link to={`/stones/tradeStone/${stone.id}`} style={{ textDecoration: "none" }} cursor="pointer">
-                {/*현재 넘어오는 앨범이미지가 없어서 추가되면 수정 필요 */}
                 <Img src={`${server}/${stone.img}`} />
-                <Name>{stone.name}</Name>
+                <Name>{stone.stoneInfo.name}</Name>
                 <Musician>{showName()}</Musician>
             </Link>
             <TradeBox>
