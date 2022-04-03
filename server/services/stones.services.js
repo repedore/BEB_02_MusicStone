@@ -6,6 +6,7 @@ const {
   MusicianModel,
 } = require("../models/index");
 const ServiceContract = require("../contracts/ServiceContract");
+const { AccountKeyPublic } = require("caver-js");
 
 // AlbumList({id, name})
 const getAlbumList = async (userAccount) => {
@@ -38,7 +39,6 @@ const getMyStoneList = async (userId) => {
       const userAccount = user.account;
       // Contract에서 userAccount가 가진 SFTList 가져오기
       const myStoneList = await ServiceContract.getMySFTs(userAccount);
-
       if (myStoneList !== []) {
         const myStoneInfo = myStoneList.map((el) => {
           return { token_id: el[0], userBalance: el[1] };
@@ -173,12 +173,11 @@ const insertStone = async (stoneInfo, fileInfo, account) => {
 const getSellStone = async (userId, listInfo) => {
   const { startIndex, endIndex, keyword } = listInfo;
   try {
-    const account = await UserModel.findOne(
-      { id: userId },
-      { account: 1, _id: 0 }
+    const account = (
+      await UserModel.findOne({ id: userId }, { account: 1, _id: 0 })
     ).account;
+
     if (keyword === undefined || keyword === "") {
-      console.log("와 안와");
       const sellList = await TradeModel.find(
         { closed: 0 },
         { id: 1, stone_id: 1, price: 1, item_id: 1, amount: 1, _id: 0 }
@@ -186,9 +185,6 @@ const getSellStone = async (userId, listInfo) => {
         .skip(startIndex - 1)
         .limit(endIndex - startIndex + 1);
 
-      console.log(`>>>>>>>SellList`);
-      console.log(sellList);
-      console.log(`>>>>>>>SellList`);
       if (sellList !== []) {
         let stoneIdList = [];
         for (el of sellList) {
@@ -232,18 +228,18 @@ const getSellStone = async (userId, listInfo) => {
           );
         }
 
-        // let userBalanceList = [];
-        // for (el of stoneInfo) {
-        //   userBalanceList.push(
-        //     await ServiceContract.getUserSFTs(account, el.token_id)
-        //   );
-        // }
+        let userBalanceList = [];
+        for (el of stoneInfo) {
+          userBalanceList.push(
+            await ServiceContract.getUserSFTs(account, el.token_id)
+          );
+        }
         return {
           sellList,
           stoneInfo,
           musicianInfo,
           albumImgList,
-          //userBalanceList,
+          userBalanceList,
         };
       } else {
         return {};
@@ -314,23 +310,22 @@ const getSellStone = async (userId, listInfo) => {
           );
         }
 
-        // let userBalanceList = [];
-        // for (el of stoneInfo) {
-        //   userBalanceList.push(
-        //     await ServiceContract.getUserSFTs(account, el.token_id)
-        //   );
-        // }
+        let userBalanceList = [];
+        for (el of stoneInfo) {
+          userBalanceList.push(
+            await ServiceContract.getUserSFTs(account, el.token_id)
+          );
+        }
         return {
           sellList,
           stoneInfo,
           musicianInfo,
           albumImgList,
-          //userBalanceList,
+          userBalanceList,
         };
       } else {
         return {};
       }
-      return { sellList };
     }
   } catch (e) {
     throw Error(e);
@@ -375,7 +370,6 @@ const getStoneDetail = async (stoneId) => {
         })
         .map((el) => Number(el.price))
     );
-
     return { stoneDetail, musician, albumImg, sellList, minPrice };
   } catch (e) {
     throw Error(e);
