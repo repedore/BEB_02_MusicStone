@@ -93,6 +93,25 @@ export const Album = () => {
       );
     });
   };
+  const showDesc = () => {
+    const desc = albumData.albumInfo.description.split('\n');
+    return (<Desc>
+      {desc.map((line) => {
+        line = line === '\r' ? ' ' : line;
+        return <div>{line}</div>
+      })}
+    </Desc>)
+  }
+  const showLyrics = () => {
+    const lyrics = stoneList[selectNum].lyrics.split('\n');
+    return (<Lyrics>
+      {lyrics.map((line) => {
+        line = line === '\r' ? ' ' : line;
+        return <div>{line}</div>
+      })}
+    </Lyrics>)
+  }
+
   const loadData = async () => {
     const req = `${server}/album/${id}?userId=${account.userId}`;
     await axios.get(req).then((res) => {
@@ -144,7 +163,7 @@ export const Album = () => {
                 뮤지션 : {albumData.musicianInfo ? showMusicinName() : null}
               </Musician>
               <ReleaseDate>발매일 : {showReleaseDate()}</ReleaseDate>
-              <Desc>소개 : {albumData.albumInfo.description}</Desc>
+              {showDesc()}
             </Info>
             <StoneList>{showStones()}</StoneList>
           </InfoBox>
@@ -152,19 +171,21 @@ export const Album = () => {
       </AlbumContainer>
       {stoneList.length !== 0 ? (
         <StoneContainer>
-          <PreviewStream stone={stoneList[selectNum]} img={albumData.albumInfo.originalname} soundTrack={""} />
-          <StoneWrapper>
-            <StoneTitle>
-              <h2>{stoneList[selectNum].name}</h2>
-              <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
-            </StoneTitle>
-            <StoneInfo>
-              <div>작사 : Dummy</div>
-              <div>작곡 : Dummy</div>
-              <div>장르 : {stoneList[selectNum].category}</div>
-              <div>가사 : Dummy </div>
-            </StoneInfo>
-          </StoneWrapper>
+          <PreviewStream img={albumData.albumInfo.originalname} stoneId={stoneList[selectNum].id} />
+          <StoneBox>
+            <StoneWrapper>
+              <StoneTitle>
+                <h2>{stoneList[selectNum].name}</h2>
+                <AddPlaylistBtn onClick={addPlayList}>+Playlist</AddPlaylistBtn>
+              </StoneTitle>
+              <StoneInfo>
+                <div>작사 : {stoneList[selectNum].lyricist}</div>
+                <div>작곡 : {stoneList[selectNum].composer}</div>
+                <div>장르 : {stoneList[selectNum].category}</div>
+                {showLyrics()}
+              </StoneInfo>
+            </StoneWrapper>
+          </StoneBox>
         </StoneContainer>
       ) : (
         <StoneContainer>
@@ -220,17 +241,6 @@ const InfoWrapper = styled.div`
   margin: 25px;
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
 `;
 
 const Img = styled.img`
@@ -252,11 +262,19 @@ const InfoBox = styled.div`
 `;
 
 const Info = styled.div`
-  max-width: 250px;
+  max-width: 270px;
   width: 100%;
   height: 100%;
   margin: 30px 0 0;
   font-weight: 500;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: #0f0f0f;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #0f0f0f;
+  }
 `;
 
 const Like = styled.div`
@@ -277,7 +295,12 @@ const Musician = styled.div`
 `;
 
 const ReleaseDate = styled.div``;
-const Desc = styled.div``;
+const Desc = styled.div`
+margin-top: 10px;
+div{
+  white-space: pre-wrap;
+}
+`;
 
 const StoneList = styled.li`
   width: 100%;
@@ -290,21 +313,39 @@ const StoneList = styled.li`
     background-color: #0f0f0f;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
+    background-color: #0f0f0f;
   }
   li {
     margin: 5px 0;
   }
 `;
+const StoneBox = styled.div`
+width: 100%;
+height: 400px;
+overflow:hidden;
+position: relative;
+display:flex;
+justify-content: center;
+align-items: center;
+`
 const StoneWrapper = styled.div`
-  width: 100%;
+  position: absolute;
+  width: 90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: start;
-`;
+  overflow-x: hidden;
+  overflow-y: scroll;
+&::-webkit-scrollbar {
+  width: 2px;
+  background-color: #0f0f0f;
+}
+&::-webkit-scrollbar-thumb {
+  background-color: #333333;
+}
+  `;
+
 
 const StoneTitle = styled.div`
   width: 100%;
@@ -330,21 +371,17 @@ const AddPlaylistBtn = styled.button`
   }
 `;
 const StoneInfo = styled.div`
-  width: 100%;
+  width: 550px;
   height: 100%;
-  margin: 20px 50px;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: #0f0f0f;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #333333;
-  }
 `;
+
+const Lyrics = styled.div`
+border-top: double 0.5px #303030;
+margin-top: 10px;
+div{
+  white-space: pre-wrap;
+}
+`
 
 const Notice = styled.div`
   width: 100%;

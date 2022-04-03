@@ -32,10 +32,10 @@ export function Musician() {
   const loadMusicians = () => {
     const server = process.env.REACT_APP_SERVER_ADDRESS || "http://127.0.0.1:12367";
     const req = `${server}/musician?startIndex=${startIdx}&endIndex=${startIdx + 19}&keyword=${keyword}`
+    setLoading(true);
 
     axios.get(req)
       .then((res) => {
-        setLoading(true);
         const musicianData = res.data.data;
         dispatch(loadMusicianList(musicianData));
         if (musicianData.length < 20) setLoadAll(true);
