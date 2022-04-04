@@ -12,18 +12,6 @@ const MyStoneCard = ({ stone, handleSellBtn, account }) => {
     const [balance, setBalance] = useState(0);
     const [canSellBalance, setCanSellBalance] = useState(0);
 
-    const getContractInfo = () => {
-        const service = new caver.klay.Contract(service_abi, process.env.REACT_APP_SERVICE_ADDRESS);
-        return service.methods
-            .getUserSFTs("0x1313b3E8a7375245C2fD93047026Ca761fD547d0", stone.stoneInfo.id)
-            .call()
-            .then((res) => {
-                //console.log(res);
-                //let balance = JSON.parse(res);
-                return res
-            })
-    }
-
     const showName = () => {
         const kName = stone.stoneInfo.musicianInfo[0].name_korea;
         const eName = stone.stoneInfo.musicianInfo[0].name_english;
@@ -40,7 +28,7 @@ const MyStoneCard = ({ stone, handleSellBtn, account }) => {
     useEffect(() => {
         if (balance) {
             const tx = service.methods
-                .getUserCanSellBalances(account.account, stone.stoneInfo.id)
+                .getUserCanSellBalances(account.account, stone.stoneInfo.token_id)
                 .call()
                 .then((res) => {
                     setCanSellBalance(res)
@@ -50,7 +38,7 @@ const MyStoneCard = ({ stone, handleSellBtn, account }) => {
 
     useEffect(() => {
         const tx = service.methods
-            .getUserSFTs(account.account, stone.stoneInfo.id)
+            .getUserSFTs(account.account, stone.stoneInfo.token_id)
             .call()
             .then((res) => {
                 setBalance(res)
