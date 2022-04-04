@@ -48,8 +48,14 @@ const MyStoneCard = ({ stone, handleSellBtn, account }) => {
     return (
         <CardContainer>
             <Balance>
-                <span>{`보유 : ${balance}`}</span>
-                <span>{`판매 가능:${canSellBalance}`}</span>
+                <div>
+                    <span>{`총 발행 : ${stone.stoneInfo.total_balance}`}</span>
+                </div>
+                <div>
+                    <span>{`보유 : ${balance}`}</span>
+                    <span>{`판매 가능:${canSellBalance}`}</span>
+                </div>
+
             </Balance>
             <Link to={`/stones/tradeStone/${stone.stoneInfo.id}`} style={{ textDecoration: "none" }} cursor="pointer">
                 <Img src={`${server}/${stone.img}`} />
@@ -106,7 +112,14 @@ flex-direction: column;
 const Balance = styled.span`
 font-size: 0.7rem;
 display:flex;
-justify-content: space-between;
+flex-direction:column;
+div{
+    display:flex;
+    justify-content:space-betwen;
+}
+span{
+    padding: 0 10px;
+}
 `;
 const TradeBtn = styled.button`
 width: 100px;
