@@ -84,6 +84,7 @@ width: 15rem;
 `;
 const ContentContainer = styled.div`
 width: 1000px;
+margin-bottom: 50px;
 `;
 const SubTitle = styled.div`
 background: linear-gradient(to right top, #861657, #ffa69e);
