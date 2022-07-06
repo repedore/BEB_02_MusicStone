@@ -1,0 +1,35 @@
+// pragma solidity ^0.5.6;
+
+// import "hardhat/console.sol";
+// import "../contracts/token/KIP7/KIP7.sol";
+// import "./MusicStoneToken.sol";
+// contract Dex {
+//     event Bought(uint256 amount);
+//     event Sold(uint256 amount);
+   
+//     IKIP7 public mstoken;
+
+//     constructor() public payable{
+//         require(msg.value > 0 , "You have to at least deposit something to start a DEX");
+//         mstoken = new MusicStoneToken();
+//     }
+
+//     function buy() payable public {
+//         uint256 amountTobuy = msg.value;
+//         uint256 dexBalance = mstoken.balanceOf(address(this));
+//         require(amountTobuy > 0, "You need to send some ether");
+//         require(amountTobuy <= dexBalance, "Not enough tokens in the reserve");
+//         mstoken.transfer(msg.sender, amountTobuy);
+//         emit Bought(amountTobuy);
+//     }
+
+//     function sell(uint256 amount) public {
+//         // TODO
+//         require(amount > 0, "You need to sell at least some tokens");
+//         uint256 allowance = mstoken.allowance(msg.sender, address(this));
+//         require(allowance >= amount, "Check the token allowance");
+//         mstoken.transferFrom(msg.sender, address(this), amount);
+//         msg.sender.transfer(amount);
+//         emit Sold(amount);
+//     }
+// }

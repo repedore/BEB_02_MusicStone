@@ -1,0 +1,9 @@
+    uint256 public constant tokenPrice = 5; // 1 token for 5 wei
+   
+    function buy(uint256 _amount) external payable {
+        console.log(_amount, tokenPrice, msg.sender, msg.value);
+        require(msg.value == _amount * tokenPrice, 'Need to send exact amount of wei');
+        transfer(msg.sender, _amount);
+    }
+
+    
